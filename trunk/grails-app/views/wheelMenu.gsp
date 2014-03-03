@@ -101,7 +101,7 @@ p {
 		</tr>
 			<tr>
 			<td>- <g:link controller="maxWheel" action="inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</g:link></td>
-		</tr>
+		</tr>  
 	</table>
 			
 			
