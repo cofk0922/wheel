@@ -81,7 +81,7 @@ p {
 </head>
 <body>
 			
-			<table>
+			<table> 
 
 		<tr>
 			<td>- <g:link controller="car">ระบบช่วยเลือกล้อแม็กซ์ </g:link></td>
