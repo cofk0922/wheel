@@ -8,7 +8,6 @@ class ProductStock {
 	static hasOne = [
 		branch: Branch,
 		product: Product,
-		//vendor: Vendor
 	]
     static constraints = {
     }

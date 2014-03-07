@@ -4,16 +4,9 @@ class Product {
 	String prodName
 	String prodDesc
 	
-	//Double prodPrice = 0.0
-	
 	Product productPart
 	int productPartAmount
 	ProductType productType
-	
-	//int prodStock
-	
-	// TODO
-	//int prodTransfer
 	
 	static hasMany = [
 			productStocks: ProductStock,
