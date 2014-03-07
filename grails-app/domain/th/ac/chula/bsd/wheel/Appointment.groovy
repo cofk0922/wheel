@@ -2,6 +2,7 @@ package th.ac.chula.bsd.wheel
 
 import java.util.Date;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import th.ac.chula.bsd.security.User;
 
@@ -171,7 +172,7 @@ class Appointment {
 		Boolean isStop = false
 		while(!isStop){
 			// Check Holiday
-			def checkHoliday = startDate
+			def checkHoliday = new Date(startDate.getTime());
 			checkHoliday.set(second:0, minute:0, hourOfDay:0)
 			def lholidays = Holiday.withCriteria {
 				eq('holidayDate', checkHoliday)
