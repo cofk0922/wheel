@@ -95,24 +95,23 @@ class Branch {
 	}
 	
 	public Date getOpenTime(Date date) {
+		Boolean isStop = false
 		def openTime = new GregorianCalendar()
 		openTime.setTime(date)
 		
-		def wd = this.workdays.find{it.workDayCode.value == openTime.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
-		
-		openTime.set(Calendar.HOUR_OF_DAY, wd.startHour)
-		openTime.set(Calendar.MINUTE, wd.startMinute)
+		while(!isStop){
+			def wdlist = this.workdays.findAll{it.workDayCode.value == openTime.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
+			if(wdlist.size() > 0){
+				WorkDay wd = wdlist.find{it}
+				openTime.set(Calendar.HOUR_OF_DAY, wd.startHour)
+				openTime.set(Calendar.MINUTE, wd.startMinute)
+				isStop = true
+			} else {
+				openTime.add(Calendar.DATE, 1)
+			}
+		}
 		
 		return openTime.getTime()
-		/*
-		def openTime = new GregorianCalendar()
-		openTime.setTime(date)
-		// TODO get open time base on workDay
-		openTime.set(Calendar.HOUR_OF_DAY, 9)
-		openTime.set(Calendar.MINUTE, 0)
-		
-		return openTime.getTime()
-		*/
 	}
 	
 	public Date getStartBreakTime(Date date){
