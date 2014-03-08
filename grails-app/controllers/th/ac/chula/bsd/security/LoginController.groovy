@@ -108,20 +108,12 @@ class LoginController {
 	def authenticate = {
 		def user = User.findByUsernameAndPassword(params.username, params.password)
 		if (user) {
-			//Branch b = (Branch.withCriteria {
-				//eq('id', user.branch.id)
-			//})[0]
-			//Branch b = Branch.findByBranch(user.branch)
-			//Branch b = Branch.get(user.branch.id)
-			//println 'Branch workdate : ' + b.workdays.size()
-			//println 'Branch appoint : ' + b.appointments.size()
-			//user.branch = b
 			session.user = user
 			flash.message = "Hello, ${session.user.username}"
-			redirect(action:"index")
+			redirect(uri:'/')
 		} else {
 			flash.message = "Sorry, cannot login. Please try again"
-			redirect(action:"login")
+			redirect(action:"index")
 		}
 	}
 }
