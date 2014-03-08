@@ -21,9 +21,9 @@ environments {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
 //           url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
-			url = "jdbc:mysql://localhost/softwareStudio2?useUnicode=yes&characterEncoding=UTF-8"
+			url = "jdbc:mysql://localhost:8889/softwareStudio2?useUnicode=yes&characterEncoding=UTF-8"
 			username = "root"
-			password = "1234"
+			password = "root"
        }
     }
     test {

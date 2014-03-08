@@ -1,13 +1,15 @@
 package th.ac.chula.bsd.wheel
 
-
-
 import static org.springframework.http.HttpStatus.*
+import th.ac.chula.bsd.security.User;
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
-
+	def springSecurityService
+	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -102,6 +104,59 @@ class AppointmentController {
         }
     }
 	
+	// May
+	@Transactional
+	def test() {
+		
+		//User u = session.user
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		Appointment ap = new Appointment()
+		ap.initialAppointment(u, b)
+		
+		ap.addProduct(1, 1)
+		println '1 Total :' + ap.installTotal
+		println '1 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
+		ap.addProduct(3, 10)
+		println '2 Total :' + ap.installTotal
+		println '2 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
+		
+		ap.setNewCustomer("A", "08xxxxxxx", "Bangkok", "ABC1234")
+		
+		ap.confirmAppointment(false)
+		Boolean isSave = ap.save flush:true
+		if (!ap.save()) {
+			ap.errors.each {
+				println it
+			}
+		}
+		/*
+		Branch b = session.user.branch;
+		def wheelQ = Wheel.where{
+			wheelStocks in WheelStock.where {
+				branch.id == b.id
+			}
+		}.order('wheelName','asc')
+	
+		//def wheelList = Wheel.findAll("from Wheel as wh inner join fetch wh.wheelStocks as whStock where whStock.branch.id = ?", b.id);
+		
+		def wheelList = Wheel.createCriteria().list {
+			createAlias("wheelStocks", "ws", CriteriaSpecification.LEFT_JOIN)
+			createAlias("ws.branch", "br", CriteriaSpecification.LEFT_JOIN)
+			eq("br.id", b.id)
+			order("wheelName","asc")
+		};
+		
+	println("Wheel List: "+ wheelList);
+		def a = wheelList.size();
+	
+		render(view: "index", model: [wheel: wheelList])
+		*/
+	}
+	
+	// Bird
 	def calendar(){
 		
 		def parameter = [:]
