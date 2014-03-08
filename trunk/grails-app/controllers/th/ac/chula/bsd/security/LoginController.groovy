@@ -104,6 +104,7 @@ class LoginController {
 	
 	// May
 	def login = {}
+	//
 	
 	def authenticate = {
 		def user = User.findByUsernameAndPassword(params.username, params.password)
