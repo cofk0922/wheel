@@ -24,11 +24,35 @@
 			<thead>
 					<tr>
 					
+						<g:sortableColumn property="prodName" title="${message(code: 'maxWheel.prodName.label', default: 'Prod Name')}" />
+					
+						<g:sortableColumn property="prodDesc" title="${message(code: 'maxWheel.prodDesc.label', default: 'Prod Desc')}" />
+					
+						<th><g:message code="maxWheel.productPart.label" default="Product Part" /></th>
+					
+						<g:sortableColumn property="productPartAmount" title="${message(code: 'maxWheel.productPartAmount.label', default: 'Product Part Amount')}" />
+					
+						<g:sortableColumn property="band" title="${message(code: 'maxWheel.band.label', default: 'Band')}" />
+					
+						<g:sortableColumn property="model" title="${message(code: 'maxWheel.model.label', default: 'Model')}" />
+					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${maxWheelInstanceList}" status="i" var="maxWheelInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					
+						<td><g:link action="show" id="${maxWheelInstance.id}">${fieldValue(bean: maxWheelInstance, field: "prodName")}</g:link></td>
+					
+						<td>${fieldValue(bean: maxWheelInstance, field: "prodDesc")}</td>
+					
+						<td>${fieldValue(bean: maxWheelInstance, field: "productPart")}</td>
+					
+						<td>${fieldValue(bean: maxWheelInstance, field: "productPartAmount")}</td>
+					
+						<td>${fieldValue(bean: maxWheelInstance, field: "band")}</td>
+					
+						<td>${fieldValue(bean: maxWheelInstance, field: "model")}</td>
 					
 					</tr>
 				</g:each>

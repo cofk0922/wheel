@@ -23,6 +23,98 @@
 			</g:if>
 			<ol class="property-list car">
 			
+				<g:if test="${carInstance?.band}">
+				<li class="fieldcontain">
+					<span id="band-label" class="property-label"><g:message code="car.band.label" default="Band" /></span>
+					
+						<span class="property-value" aria-labelledby="band-label"><g:fieldValue bean="${carInstance}" field="band"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.model}">
+				<li class="fieldcontain">
+					<span id="model-label" class="property-label"><g:message code="car.model.label" default="Model" /></span>
+					
+						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${carInstance}" field="model"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.pcdCode}">
+				<li class="fieldcontain">
+					<span id="pcdCode-label" class="property-label"><g:message code="car.pcdCode.label" default="Pcd Code" /></span>
+					
+						<span class="property-value" aria-labelledby="pcdCode-label"><g:fieldValue bean="${carInstance}" field="pcdCode"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.defaultWheel}">
+				<li class="fieldcontain">
+					<span id="defaultWheel-label" class="property-label"><g:message code="car.defaultWheel.label" default="Default Wheel" /></span>
+					
+						<span class="property-value" aria-labelledby="defaultWheel-label"><g:link controller="maxWheel" action="show" id="${carInstance?.defaultWheel?.id}">${carInstance?.defaultWheel?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.gearRatio}">
+				<li class="fieldcontain">
+					<span id="gearRatio-label" class="property-label"><g:message code="car.gearRatio.label" default="Gear Ratio" /></span>
+					
+						<span class="property-value" aria-labelledby="gearRatio-label"><g:fieldValue bean="${carInstance}" field="gearRatio"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.offSet}">
+				<li class="fieldcontain">
+					<span id="offSet-label" class="property-label"><g:message code="car.offSet.label" default="Off Set" /></span>
+					
+						<span class="property-value" aria-labelledby="offSet-label"><g:fieldValue bean="${carInstance}" field="offSet"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.weight}">
+				<li class="fieldcontain">
+					<span id="weight-label" class="property-label"><g:message code="car.weight.label" default="Weight" /></span>
+					
+						<span class="property-value" aria-labelledby="weight-label"><g:fieldValue bean="${carInstance}" field="weight"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.wheelLists}">
+				<li class="fieldcontain">
+					<span id="wheelLists-label" class="property-label"><g:message code="car.wheelLists.label" default="Wheel Lists" /></span>
+					
+						<g:each in="${carInstance.wheelLists}" var="w">
+						<span class="property-value" aria-labelledby="wheelLists-label"><g:link controller="carWheelList" action="show" id="${w.id}">${w?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.wheelSpace}">
+				<li class="fieldcontain">
+					<span id="wheelSpace-label" class="property-label"><g:message code="car.wheelSpace.label" default="Wheel Space" /></span>
+					
+						<span class="property-value" aria-labelledby="wheelSpace-label"><g:fieldValue bean="${carInstance}" field="wheelSpace"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carInstance?.year}">
+				<li class="fieldcontain">
+					<span id="year-label" class="property-label"><g:message code="car.year.label" default="Year" /></span>
+					
+						<span class="property-value" aria-labelledby="year-label"><g:fieldValue bean="${carInstance}" field="year"/></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:carInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
