@@ -50,6 +50,10 @@ class Installation {
 		this.status = InstallationStatus.CANCEL
 		// TODO return requisit to stock and set status 'Cancel'
 	}
+	
+	public void installing(){
+		this.status = InstallationStatus.INSTALLING
+	}
 }
 
 enum InstallationStatus {
