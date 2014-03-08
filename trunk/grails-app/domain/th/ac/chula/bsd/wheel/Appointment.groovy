@@ -41,6 +41,12 @@ class Appointment {
 		status nullable: false
 	}
 	
+	public void initialAppointment(User u, Branch b){
+		this.branch = b
+		this.createdBy = u
+		this.updatedBy = u
+	}
+	
 	public void addProduct(int pID, int amount) {
 		def order = new AppointmentOrderList(appointment:this)
 		order.setProductWithAmount(pID, amount, this.branch)
@@ -49,7 +55,7 @@ class Appointment {
 				
 		if(order.product.productType == ProductType.WHEEL){
 			int knotTotalAmt = order.product.calPartUsage(amount)
-			def orderKnot = new AppointmentOrderList()
+			def orderKnot = new AppointmentOrderList(appointment:this)
 			orderKnot.setProductWithAmount(order.product.productPart.id, knotTotalAmt, this.branch)
 			this.subOrders.add(orderKnot)
 		}
@@ -225,6 +231,7 @@ class Appointment {
 			endDate = installEndDate
 			
 			// Check Close Time
+			Date closeTTT = this.branch.getCloseTime(endDate)
 			if(endDate > this.branch.getCloseTime(endDate)){
 				startDate = this.branch.getOpenTime(new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(1)))
 				continue
