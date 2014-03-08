@@ -42,7 +42,7 @@ class Appointment {
 	}
 	
 	public void addProduct(int pID, int amount) {
-		def order = new AppointmentOrderList()
+		def order = new AppointmentOrderList(appointment:this)
 		order.setProductWithAmount(pID, amount, this.branch)
 		def o = order
 		this.subOrders.add(order)
@@ -74,22 +74,24 @@ class Appointment {
 	
 	public void confirmAppointment(Boolean isInstallNow){
 		// Park
-		if(this.parking == null)
+		if(!this.parking){
 			this.parking = new Parking()
+			this.parking.initialParking(this)
+		}
 		if(isInstallNow){
 			this.parking.startDate = new Date()
 		} else {
 			this.parking.startDate = this.startDate
 		}
 		this.parking.endDate = this.endDate
-		this.parking.appointment = this
 		
 		// Install
-		if(this.installation == null)
+		if(!this.installation){
 			this.installation = new Installation()
+			this.installation.initialInstall(this)
+		}
 		def calendar = new GregorianCalendar()
 		calendar.setTime(this.startDate)
-		this.installation.appointment = this
 		calendar.add(Calendar.MINUTE, this.branch.branchMaxLate)
 		this.installation.startDate = calendar.getTime()
 		calendar.add(Calendar.MINUTE, this.branch.calInstallTimeSpend())
@@ -256,8 +258,7 @@ class Appointment {
 		this.endDate = endDate
 		if(!this.installation){
 			this.installation = new Installation()
-			this.installation.branch = this.branch
-			this.installation.appointment = this
+			this.installation.initialInstall(this)
 		}
 		this.installation.startDate = installStartDate
 		this.installation.endDate = installEndDate

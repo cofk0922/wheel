@@ -33,6 +33,13 @@ class Installation {
 		status nullable: false
 	}
 	
+	public void initialInstall(Appointment ap){
+		this.appointment = ap
+		this.branch = ap.branch
+		this.createdBy = ap.createdBy
+		this.updatedBy = ap.updatedBy
+	}
+	
 	public void prepareInstall(){
 		this.status = InstallationStatus.PREPARE_INSTALL
 		// TODO set requisition status -> ready requsit
