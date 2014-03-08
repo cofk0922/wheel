@@ -10,10 +10,6 @@ class CarWheelList {
 	Integer	driveStar 
 	Integer tractiveStar 
 	
-	static hasOne = [
-		
-		]
-	
 	static belongsTo = [wheel: MaxWheel,car: Car]
 	
     static constraints = {
