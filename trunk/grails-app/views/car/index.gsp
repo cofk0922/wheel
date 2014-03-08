@@ -24,11 +24,35 @@
 			<thead>
 					<tr>
 					
+						<g:sortableColumn property="band" title="${message(code: 'car.band.label', default: 'Band')}" />
+					
+						<g:sortableColumn property="model" title="${message(code: 'car.model.label', default: 'Model')}" />
+					
+						<g:sortableColumn property="pcdCode" title="${message(code: 'car.pcdCode.label', default: 'Pcd Code')}" />
+					
+						<th><g:message code="car.defaultWheel.label" default="Default Wheel" /></th>
+					
+						<g:sortableColumn property="gearRatio" title="${message(code: 'car.gearRatio.label', default: 'Gear Ratio')}" />
+					
+						<g:sortableColumn property="offSet" title="${message(code: 'car.offSet.label', default: 'Off Set')}" />
+					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${carInstanceList}" status="i" var="carInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					
+						<td><g:link action="show" id="${carInstance.id}">${fieldValue(bean: carInstance, field: "band")}</g:link></td>
+					
+						<td>${fieldValue(bean: carInstance, field: "model")}</td>
+					
+						<td>${fieldValue(bean: carInstance, field: "pcdCode")}</td>
+					
+						<td>${fieldValue(bean: carInstance, field: "defaultWheel")}</td>
+					
+						<td>${fieldValue(bean: carInstance, field: "gearRatio")}</td>
+					
+						<td>${fieldValue(bean: carInstance, field: "offSet")}</td>
 					
 					</tr>
 				</g:each>
