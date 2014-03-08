@@ -101,20 +101,5 @@ class LoginController {
             '*'{ render status: NOT_FOUND }
         }
     }
-	
-	// May
-	def login = {}
-	//
-	
-	def authenticate = {
-		def user = User.findByUsernameAndPassword(params.username, params.password)
-		if (user) {
-			session.user = user
-			flash.message = "Hello, ${session.user.username}"
-			redirect(uri:'/')
-		} else {
-			flash.message = "Sorry, cannot login. Please try again"
-			redirect(action:"index")
-		}
-	}
+
 }
