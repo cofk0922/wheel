@@ -83,8 +83,15 @@ p {
 			
 			<table> 
  
+		
 		<tr>
-			<td>- <g:link controller="car">ระบบช่วยเลือกล้อแม็กซ์ </g:link></td>
+			<td>- <g:link controller="product">รายการสินค้า</g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="car">รายการรถยนต์ </g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="maxWheel">รายการล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="appointment">ระบบจัดตารางการนัดหมายติดตั้ง</g:link></td>
@@ -94,7 +101,7 @@ p {
 			<td>- <g:link controller="orderAndTransfer">ระบบสั่งซื้อและโอนล้อแม็กซ์และอะไหล่</g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="inventory">ระบบคลังสินค้า</g:link></td>
+			<td>- <g:link controller="productStock">ระบบคลังสินค้า</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="login">ระบบสำหรับผู้ดูแลระบบ</g:link></td>
