@@ -75,23 +75,23 @@ class Branch {
 	}
 	
 	public Date getCloseTime(Date date) {
+		Boolean isStop = false
 		def closeTime = new GregorianCalendar()
 		closeTime.setTime(date)
-		def wd = this.workdays.find{it.workDayCode.value == closeTime.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
 		
-		closeTime.set(Calendar.HOUR_OF_DAY, wd.endHour)
-		closeTime.set(Calendar.MINUTE, wd.endMinute)
+		while(!isStop){
+			def wdlist = this.workdays.findAll{it.workDayCode.value == closeTime.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
+			if(wdlist.size() > 0){
+				WorkDay wd = wdlist.find{it}
+				closeTime.set(Calendar.HOUR_OF_DAY, wd.endHour)
+				closeTime.set(Calendar.MINUTE, wd.endMinute)
+				isStop = true
+			} else {
+				closeTime.add(Calendar.DATE, 1)
+			}
+		}
 		
 		return closeTime.getTime()
-		/*
-		def closeTime = new GregorianCalendar()
-		closeTime.setTime(new Date())
-		// TODO get close time base on workDay
-		closeTime.set(Calendar.HOUR_OF_DAY, 17)
-		closeTime.set(Calendar.MINUTE, 0)
-		
-		return closeTime.getTime()
-		*/
 	}
 	
 	public Date getOpenTime(Date date) {
