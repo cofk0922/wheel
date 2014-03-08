@@ -19,6 +19,11 @@ class Parking {
 		status nullable: false
 	}
 	
+	public void initialParking(Appointment ap){
+		this.appointment = ap
+		this.branch = ap.branch
+	}
+	
 	public void cancelPark() {
 		this.status = ParkingStatus.CANCEL
 	}
