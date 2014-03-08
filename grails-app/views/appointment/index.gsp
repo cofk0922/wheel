@@ -37,6 +37,11 @@
 			<div class="pagination">
 				<g:paginate total="${appointmentInstanceCount ?: 0}" />
 			</div>
+			
+			<!-- May -->
+			<div>
+				<a href="${createLink(uri:'/appointment/test') }">Test Appointment</a>
+			</div>
 		</div>
 	</body>
 </html>
