@@ -16,7 +16,7 @@
 				);
 			},
 			eventClick: function(event, element) {
-				var title = prompt('ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½');
+				var title = prompt('¹Ñ´ËÁÒÂ');
 				if (title) {
 					event.title = title;
 				}
@@ -30,7 +30,7 @@
 					$('#calendar').fullCalendar('changeView', 'agendaDay' );
 					$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
 				} else {
-					var title = prompt('ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½');
+					var title = prompt('¹Ñ´ËÁÒÂ');
 					if (title) {
 						$('#calendar').fullCalendar('renderEvent',
 							{
@@ -49,93 +49,11 @@
 		})
 	};
 	
-	var fncGetData = function() {
-		//var data = [];
-		
-		var data = "${remoteFunction(action:'appointment', controller:'getEvents')}";
-		//$.post("../appointment/getEvents/", true, function(result) {
-			//result = '{ { "title": "All Day Event", "start": "2014-03-07" }, { "title": "Long Event", "start": "2014-03-07", "end": "2014-03-10" } }';
-			//var obj = $.parseJSON($('#calendar'));
-			//$.each(obj, function(i, item) {
-			//	data.push(item);
-			//});
-			
-			fncRender(data);
-		//});
-		
-		// var date = new Date();
-		// var d = date.getDate();
-		// var m = date.getMonth();
-		// var y = date.getFullYear();
-		
-		// var data = [
-				// {
-					// title: '[ 1ï¿½ï¿½ 9999 ]',
-					// start: new Date(y, m, 1,11,30),
-					// end: new Date(y, m, 1,12,30),
-					// color: '#acacac',
-					// editable: false,
-					// allDay: false
-				// },
-				// {
-					// title: '[ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ]',
-					// start: new Date(y, m, d-5,8,0),
-					// end: new Date(y, m, d-2,8,0),
-					// color: '#acacac',
-					// editable: false,
-					// allDay: false
-				// },
-				// {
-					// id: 999,
-					// title: '[ 1ï¿½ï¿½ 2222 ]',
-					// start: new Date(y, m, d-3, 16, 0),
-					// end: new Date(y, m, d-3, 18, 0),
-					// color: '#acacac',
-					// editable: false,
-					// allDay: false
-				// },
-				// {
-					// id: 999,
-					// title: '[ Ë¡ 1452 ]',
-					// start: new Date(y, m, d+4, 16, 0),
-					// end: new Date(y, m, d+3, 18, 0),
-					// allDay: false
-				// },
-				// {
-					// title: '[ ï¿½ï¿½ 4532 ]',
-					// start: new Date(y, m, d, 10, 30),
-					// end: new Date(y, m, d, 14, 0),
-					// allDay: false
-				// },
-				// {
-					// title: '[ ï¿½ï¿½     2 ]',
-					// start: new Date(y, m, d, 10, 30),
-					// end: new Date(y, m, d, 14, 0),
-					// allDay: false
-					
-				// },
-				// {
-					// title: '[ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ]',
-					// start: new Date(y, m, d, 12, 30),
-					// end: new Date(y, m, d, 14, 0),
-					// allDay: false
-				// },
-				// {
-					// title: '[ ï¿½ÒµÔ´ï¿½ï¿½ï¿½ï¿½ï¿½ç¡«ï¿½Ñ¹ï¿½ï¿½ï¿½ ]',
-					// start: new Date(y, m, d+1, 19, 0),
-					// end: new Date(y, m, d+1, 22, 30),
-					// allDay: false
-				// },
-				// {
-					// title: '[ Click for Google ]',
-					// start: new Date(y, m, 28,13,0),
-					// end: new Date(y, m, 29,15,30),
-					// url: 'http://google.com/',
-					// allDay: false
-				// }
-			// ];
-			
-		//fncRender(data);
+	var fncGetData = function() {		
+		$.post('../appointment/jSonList', function(result) {
+			fncRender(result);
+		});		
+		$.post( "../appointment/saveDate", { 'koko':  "Jon" } );
 	};
 	
 	$(document).ready(function() {
