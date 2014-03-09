@@ -1,6 +1,11 @@
 package th.ac.chula.bsd.wheel
 
 import java.util.Date;
+import java.util.regex.Pattern.Start;
+
+import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
+import th.ac.chula.bsd.inventory.PreProductTransferLine;
+import th.ac.chula.bsd.inventory.ProductTransfer;
 import th.ac.chula.bsd.security.User;
 
 class Branch {
@@ -30,7 +35,10 @@ class Branch {
 		productVendorTransfers: ProductVendorTransfer,
 		installations: Installation,
 		parkings: Parking,
-		productStocks:ProductStock
+		productStocks:ProductStock,
+		preProductPurchaseLines: PreProductPurchaseLine,
+		preProductTransferLines: PreProductTransferLine,
+		productTransfers: ProductTransfer
 		]
 	
 	static mappedBy = [
@@ -145,7 +153,72 @@ class Branch {
 		}
 		return maxQ
 	}
+	
+	public Boolean checkHoliday(Date checkHoliday){
+		Boolean result = false
+		def lholidays = Holiday.withCriteria {
+			eq('holidayDate', checkHoliday)
+		}
+		if(lholidays.size() > 0){
+			result = true
+		}
+		return result
+	}
 
+	public Object getAllHolidayAndCloseDay(int month, int year){
+		def start = new GregorianCalendar()
+		start.set(Calendar.DATE, 1)
+		start.set(Calendar.MONTH, month)
+		start.set(Calendar.YEAR, year)
+		start.setTime(start.getTime().clearTime())
+		
+		def end = new GregorianCalendar()
+		end.setTime(start.getTime())
+		int lastdate = start.getActualMaximum(Calendar.DATE)
+		end.set(Calendar.DATE, lastdate)
+
+		// Get Holiday
+		def lholidays = Holiday.withCriteria {
+			between('holidayDate', start.getTime(), end.getTime())
+		}
+		
+		def closeDate = new GregorianCalendar()
+		closeDate.setTime(start.getTime())
+		// Get 
+		for(i in 1..lastdate){
+			closeDate.set(Calendar.DATE, i)
+			def wdlist = this.workdays.findAll{it.workDayCode.value == closeDate.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
+			if(wdlist.size() == 0){
+				Holiday holiday = new Holiday()
+				holiday.holidayDate = closeDate.getTime()
+				holiday.holidayName = 'Close'
+				lholidays.add(holiday)
+			}
+		}
+		return lholidays		
+	}
+	
+	public Object getAllAppointmentInMonth(int month, int year){
+		def start = new GregorianCalendar()
+		start.set(Calendar.DATE, 1)
+		start.set(Calendar.MONTH, month)
+		start.set(Calendar.YEAR, year)
+		start.setTime(start.getTime().clearTime())
+		
+		def end = new GregorianCalendar()
+		end.setTime(start.getTime())
+		int lastdate = start.getActualMaximum(Calendar.DATE)
+		end.set(Calendar.DATE, lastdate)
+
+		def lAppoints = Appointment.withCriteria {
+			or {
+				between('startDate', start.getTime(), end.getTime())
+				between('endDate', start.getTime(), end.getTime())
+			}
+		}
+		return lAppoints
+	}
+	
 	public Object getBestTransfer(int amount, Product product) {
 		Object result = null
 		Boolean isPurchase = false
@@ -220,4 +293,22 @@ class Branch {
 		return result
 		
 	}
+
+// Inventory =============================
+	public ProductStock getProductStock(int pID){
+		return this.productStocks.find {it -> it.product.id == pID}
+	}
+	
+	public Object getPrePurchaseWithVendor(int vendorID){
+		Vendor vendor = Vendor.get(vendorID)
+		def prodList = []
+		for(prodVendor in vendor.productVendors){
+			ProductVendorTransfer pv = prodVendor
+			prodList.add(pv.product.id)
+		}
+		
+		def lPrePurchase = this.preProductPurchaseLines.find{it -> prodList.contains(it.product.id)}
+		return lPrePurchase
+	}
+	
 }
