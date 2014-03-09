@@ -106,8 +106,13 @@ class MaxWheelController {
 		def parameter = [:]
 		
 		def honda  = CarBand.get(1)
-		new CarModel(model:'Civic Y2004 ',band:honda).save(flush:true)
-
+		def hondaIn =  new CarModel(model:'Civic Y2004 ',band:honda)
+		
+		if (!hondaIn.save()) {
+			hondaIn.errors.each {
+				println it
+			}
+		}
 		
 		parameter.listCarBand = CarBand.list()
 		parameter.listCarModel = CarModel.list()
