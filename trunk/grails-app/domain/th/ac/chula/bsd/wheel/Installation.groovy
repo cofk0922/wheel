@@ -1,6 +1,7 @@
 package th.ac.chula.bsd.wheel
 
 import java.util.Date;
+import java.util.Set;
 
 import th.ac.chula.bsd.security.User;
 
@@ -21,8 +22,9 @@ class Installation {
 		createdBy: User*/
 		]
 	
+	Set requisitions = []
 	static hasMany = [
-			// TODO Requisition
+		requisitions: RequisitionLine
 		]
 	
 	static constraints = {
@@ -53,6 +55,12 @@ class Installation {
 	
 	public void installing(){
 		this.status = InstallationStatus.INSTALLING
+	}
+	
+	public void addRequisition(Product prod, int amount){
+		RequisitionLine req = new RequisitionLine()
+		req.initialRequisition(this, prod, amount)
+		this.requisitions.add(req)
 	}
 }
 
