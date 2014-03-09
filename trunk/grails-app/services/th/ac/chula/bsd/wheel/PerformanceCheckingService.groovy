@@ -38,10 +38,12 @@ class PerformanceCheckingService {
 			eq("car", lCar)
 			eq("usageType", lUsageType)
 			}
-		query.each {
-			createCarWheelList(it, wheel)
+		//rearrange for avaliable first
+		/*query.each {
+			scoredWheelList.add(it)
 		}
-		return scoredWheelList
+		return scoredWheelList*/
+		return query
 	}
 	
 	public createCarWheelList(CarModel lCar, MaxWheel lWheel){
