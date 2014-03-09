@@ -5,10 +5,10 @@ import org.springframework.aop.aspectj.RuntimeTestWalker.ThisInstanceOfResidueTe
 class CarWheelList {
 	
 	Integer listOrder 
-	String usageType
+	UsageType usageType
 	Double drivingEnergy
 	Double tractiveEnergy 
-	int	UsageScore
+	int	usageScore
 	Integer	driveStar 
 	Integer tractiveStar 
 	
@@ -44,5 +44,6 @@ class CarWheelList {
 	private int usageScoring()
 	{
 		def usageScore = UsageScore.findBySTypeAndUType(this.wheel.spoke,  this.usageType)
+		return usageScore.score
 	}
 }

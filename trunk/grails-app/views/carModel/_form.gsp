@@ -10,22 +10,6 @@
 	<g:textField name="band" value="${carModelInstance?.band}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'model', 'error')} ">
-	<label for="model">
-		<g:message code="carModel.model.label" default="Model" />
-		
-	</label>
-	<g:textField name="model" value="${carModelInstance?.model}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'pcdCode', 'error')} ">
-	<label for="pcdCode">
-		<g:message code="carModel.pcdCode.label" default="Pcd Code" />
-		
-	</label>
-	<g:textField name="pcdCode" value="${carModelInstance?.pcdCode}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'defaultTireSize', 'error')} required">
 	<label for="defaultTireSize">
 		<g:message code="carModel.defaultTireSize.label" default="Default Tire Size" />
@@ -50,12 +34,28 @@
 	<g:field name="gearRatio" value="${fieldValue(bean: carModelInstance, field: 'gearRatio')}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'model', 'error')} ">
+	<label for="model">
+		<g:message code="carModel.model.label" default="Model" />
+		
+	</label>
+	<g:textField name="model" value="${carModelInstance?.model}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'offSet', 'error')} required">
 	<label for="offSet">
 		<g:message code="carModel.offSet.label" default="Off Set" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="offSet" value="${fieldValue(bean: carModelInstance, field: 'offSet')}" required=""/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'pcdCode', 'error')} ">
+	<label for="pcdCode">
+		<g:message code="carModel.pcdCode.label" default="Pcd Code" />
+		
+	</label>
+	<g:textField name="pcdCode" value="${carModelInstance?.pcdCode}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'weight', 'error')} required">
@@ -81,14 +81,6 @@
 </li>
 </ul>
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'wheelSpace', 'error')} required">
-	<label for="wheelSpace">
-		<g:message code="carModel.wheelSpace.label" default="Wheel Space" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="wheelSpace" value="${fieldValue(bean: carModelInstance, field: 'wheelSpace')}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'year', 'error')} required">
