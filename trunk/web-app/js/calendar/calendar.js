@@ -16,7 +16,7 @@
 				);
 			},
 			eventClick: function(event, element) {
-				var title = prompt('¹Ñ´ËÁÒÂ');
+				var title = prompt('ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½');
 				if (title) {
 					event.title = title;
 				}
@@ -30,7 +30,7 @@
 					$('#calendar').fullCalendar('changeView', 'agendaDay' );
 					$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
 				} else {
-					var title = prompt('¹Ñ´ËÁÒÂ');
+					var title = prompt('ï¿½Ñ´ï¿½ï¿½ï¿½ï¿½');
 					if (title) {
 						$('#calendar').fullCalendar('renderEvent',
 							{
@@ -50,10 +50,13 @@
 	};
 	
 	var fncGetData = function() {		
-		$.post('../appointment/jSonList', function(result) {
+//		$.post('../appointment/jSonList', function(result) {
+//			fncRender(result);
+//		});		
+		var date = new Date();
+		$.post( "../appointment/getEvents", { 'month':  date.getMonth(), 'year':  date.getFullYear()}, function(result) {
 			fncRender(result);
-		});		
-		$.post( "../appointment/saveDate", { 'koko':  "Jon" } );
+		} );
 	};
 	
 	$(document).ready(function() {
