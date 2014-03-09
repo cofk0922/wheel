@@ -17,7 +17,7 @@ var ctx;
 var images = [ 
                '${fileCropName}'
 ];
-alert(images);
+
 var iActiveImage = 0;
 
 $(function(){
@@ -74,11 +74,10 @@ $(function(){
 </head>
 <body>
 
-	${outputPath}
-
+	
 <div class="container">
             <div class="column1">
-                <canvas id="panel" width="500" height="333"></canvas>
+                <canvas id="panel" width="450" height="228"></canvas>
             </div>
             <div class="column2">
                 <!--<div><input type="button" value="Next image" id="swImage" /></div>-->
