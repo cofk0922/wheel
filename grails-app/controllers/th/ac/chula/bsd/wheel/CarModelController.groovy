@@ -12,11 +12,11 @@ class CarModelController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond CarModel.list(params), model:[carInstanceCount: CarModel.count()]
+        respond CarModel.list(params), model:[carModelInstanceCount: CarModel.count()]
     }
 
-    def show(CarModel carInstance) {
-        respond carInstance
+    def show(CarModel carModelInstance) {
+        respond carModelInstance
     }
 
     def create() {
@@ -24,68 +24,68 @@ class CarModelController {
     }
 
     @Transactional
-    def save(CarModel carInstance) {
-        if (carInstance == null) {
+    def save(CarModel carModelInstance) {
+        if (carModelInstance == null) {
             notFound()
             return
         }
 
-        if (carInstance.hasErrors()) {
-            respond carInstance.errors, view:'create'
+        if (carModelInstance.hasErrors()) {
+            respond carModelInstance.errors, view:'create'
             return
         }
 
-        carInstance.save flush:true
+        carModelInstance.save flush:true
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'carInstance.label', default: 'Car'), carInstance.id])
-                redirect carInstance
+                flash.message = message(code: 'default.created.message', args: [message(code: 'carModelInstance.label', default: 'CarModel'), carModelInstance.id])
+                redirect carModelInstance
             }
-            '*' { respond carInstance, [status: CREATED] }
+            '*' { respond carModelInstance, [status: CREATED] }
         }
     }
 
-    def edit(CarModel carInstance) {
-        respond carInstance
+    def edit(CarModel carModelInstance) {
+        respond carModelInstance
     }
 
     @Transactional
-    def update(CarModel carInstance) {
-        if (carInstance == null) {
+    def update(CarModel carModelInstance) {
+        if (carModelInstance == null) {
             notFound()
             return
         }
 
-        if (carInstance.hasErrors()) {
-            respond carInstance.errors, view:'edit'
+        if (carModelInstance.hasErrors()) {
+            respond carModelInstance.errors, view:'edit'
             return
         }
 
-        carInstance.save flush:true
+        carModelInstance.save flush:true
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Car.label', default: 'Car'), carInstance.id])
-                redirect carInstance
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.id])
+                redirect carModelInstance
             }
-            '*'{ respond carInstance, [status: OK] }
+            '*'{ respond carModelInstance, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(CarModel carInstance) {
+    def delete(CarModel carModelInstance) {
 
-        if (carInstance == null) {
+        if (carModelInstance == null) {
             notFound()
             return
         }
 
-        carInstance.delete flush:true
+        carModelInstance.delete flush:true
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Car.label', default: 'Car'), carInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -95,7 +95,7 @@ class CarModelController {
     protected void notFound() {
         request.withFormat {
             form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'carInstance.label', default: 'Car'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'carModelInstance.label', default: 'CarModel'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
