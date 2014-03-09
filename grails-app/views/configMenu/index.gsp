@@ -99,6 +99,9 @@ p {
 		<tr>
 			<td>- <g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></td>
 		</tr>
+		<tr>
+			<td>- <g:link controller="carWheelList">รายการล้อและรถยนต์</g:link></td>
+		</tr>
 		
 	</table>
 			

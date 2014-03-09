@@ -26,15 +26,15 @@
 					
 						<g:sortableColumn property="band" title="${message(code: 'carModel.band.label', default: 'Band')}" />
 					
-						<g:sortableColumn property="model" title="${message(code: 'carModel.model.label', default: 'Model')}" />
-					
-						<g:sortableColumn property="pcdCode" title="${message(code: 'carModel.pcdCode.label', default: 'Pcd Code')}" />
-					
 						<g:sortableColumn property="defaultTireSize" title="${message(code: 'carModel.defaultTireSize.label', default: 'Default Tire Size')}" />
 					
 						<th><g:message code="carModel.defaultWheel.label" default="Default Wheel" /></th>
 					
 						<g:sortableColumn property="gearRatio" title="${message(code: 'carModel.gearRatio.label', default: 'Gear Ratio')}" />
+					
+						<g:sortableColumn property="model" title="${message(code: 'carModel.model.label', default: 'Model')}" />
+					
+						<g:sortableColumn property="offSet" title="${message(code: 'carModel.offSet.label', default: 'Off Set')}" />
 					
 					</tr>
 				</thead>
@@ -44,15 +44,15 @@
 					
 						<td><g:link action="show" id="${carModelInstance.id}">${fieldValue(bean: carModelInstance, field: "band")}</g:link></td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "model")}</td>
-					
-						<td>${fieldValue(bean: carModelInstance, field: "pcdCode")}</td>
-					
 						<td>${fieldValue(bean: carModelInstance, field: "defaultTireSize")}</td>
 					
 						<td>${fieldValue(bean: carModelInstance, field: "defaultWheel")}</td>
 					
 						<td>${fieldValue(bean: carModelInstance, field: "gearRatio")}</td>
+					
+						<td>${fieldValue(bean: carModelInstance, field: "model")}</td>
+					
+						<td>${fieldValue(bean: carModelInstance, field: "offSet")}</td>
 					
 					</tr>
 				</g:each>

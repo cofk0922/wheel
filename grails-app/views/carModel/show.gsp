@@ -32,24 +32,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${carModelInstance?.model}">
-				<li class="fieldcontain">
-					<span id="model-label" class="property-label"><g:message code="carModel.model.label" default="Model" /></span>
-					
-						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${carModelInstance}" field="model"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carModelInstance?.pcdCode}">
-				<li class="fieldcontain">
-					<span id="pcdCode-label" class="property-label"><g:message code="carModel.pcdCode.label" default="Pcd Code" /></span>
-					
-						<span class="property-value" aria-labelledby="pcdCode-label"><g:fieldValue bean="${carModelInstance}" field="pcdCode"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${carModelInstance?.defaultTireSize}">
 				<li class="fieldcontain">
 					<span id="defaultTireSize-label" class="property-label"><g:message code="carModel.defaultTireSize.label" default="Default Tire Size" /></span>
@@ -77,11 +59,29 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${carModelInstance?.model}">
+				<li class="fieldcontain">
+					<span id="model-label" class="property-label"><g:message code="carModel.model.label" default="Model" /></span>
+					
+						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${carModelInstance}" field="model"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${carModelInstance?.offSet}">
 				<li class="fieldcontain">
 					<span id="offSet-label" class="property-label"><g:message code="carModel.offSet.label" default="Off Set" /></span>
 					
 						<span class="property-value" aria-labelledby="offSet-label"><g:fieldValue bean="${carModelInstance}" field="offSet"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${carModelInstance?.pcdCode}">
+				<li class="fieldcontain">
+					<span id="pcdCode-label" class="property-label"><g:message code="carModel.pcdCode.label" default="Pcd Code" /></span>
+					
+						<span class="property-value" aria-labelledby="pcdCode-label"><g:fieldValue bean="${carModelInstance}" field="pcdCode"/></span>
 					
 				</li>
 				</g:if>
@@ -102,15 +102,6 @@
 						<g:each in="${carModelInstance.wheelLists}" var="w">
 						<span class="property-value" aria-labelledby="wheelLists-label"><g:link controller="carWheelList" action="show" id="${w.id}">${w?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carModelInstance?.wheelSpace}">
-				<li class="fieldcontain">
-					<span id="wheelSpace-label" class="property-label"><g:message code="carModel.wheelSpace.label" default="Wheel Space" /></span>
-					
-						<span class="property-value" aria-labelledby="wheelSpace-label"><g:fieldValue bean="${carModelInstance}" field="wheelSpace"/></span>
 					
 				</li>
 				</g:if>
