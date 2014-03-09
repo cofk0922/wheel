@@ -32,7 +32,7 @@
 					
 						<g:sortableColumn property="productPartAmount" title="${message(code: 'maxWheel.productPartAmount.label', default: 'Product Part Amount')}" />
 					
-						<g:sortableColumn property="band" title="${message(code: 'maxWheel.band.label', default: 'Band')}" />
+						<th><g:message code="maxWheel.band.label" default="Band" /></th>
 					
 						<g:sortableColumn property="model" title="${message(code: 'maxWheel.model.label', default: 'Model')}" />
 					

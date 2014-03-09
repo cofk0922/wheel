@@ -91,6 +91,9 @@ p {
 			<td>- <g:link controller="carModel">รายการรถยนต์ </g:link></td>
 		</tr>
 		<tr>
+			<td>- <g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="maxWheel">รายการล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>

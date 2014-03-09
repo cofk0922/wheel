@@ -23,20 +23,20 @@
 			</g:if>
 			<ol class="property-list usageScore">
 			
-				<g:if test="${usageScoreInstance?.spoke}">
+				<g:if test="${usageScoreInstance?.sType}">
 				<li class="fieldcontain">
-					<span id="spoke-label" class="property-label"><g:message code="usageScore.spoke.label" default="Spoke" /></span>
+					<span id="sType-label" class="property-label"><g:message code="usageScore.sType.label" default="ST ype" /></span>
 					
-						<span class="property-value" aria-labelledby="spoke-label"><g:fieldValue bean="${usageScoreInstance}" field="spoke"/></span>
+						<span class="property-value" aria-labelledby="sType-label"><g:fieldValue bean="${usageScoreInstance}" field="sType"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${usageScoreInstance?.usage}">
+				<g:if test="${usageScoreInstance?.uType}">
 				<li class="fieldcontain">
-					<span id="usage-label" class="property-label"><g:message code="usageScore.usage.label" default="Usage" /></span>
+					<span id="uType-label" class="property-label"><g:message code="usageScore.uType.label" default="UT ype" /></span>
 					
-						<span class="property-value" aria-labelledby="usage-label"><g:fieldValue bean="${usageScoreInstance}" field="usage"/></span>
+						<span class="property-value" aria-labelledby="uType-label"><g:fieldValue bean="${usageScoreInstance}" field="uType"/></span>
 					
 				</li>
 				</g:if>
