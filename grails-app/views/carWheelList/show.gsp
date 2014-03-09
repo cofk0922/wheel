@@ -27,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="car-label" class="property-label"><g:message code="carWheelList.car.label" default="Car" /></span>
 					
-						<span class="property-value" aria-labelledby="car-label"><g:link controller="car" action="show" id="${carWheelListInstance?.car?.id}">${carWheelListInstance?.car?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="car-label"><g:link controller="carModel" action="show" id="${carWheelListInstance?.car?.id}">${carWheelListInstance?.car?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

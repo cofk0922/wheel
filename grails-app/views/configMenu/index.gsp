@@ -88,7 +88,7 @@ p {
 			<td>- <g:link controller="product">รายการสินค้า</g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="car">รายการรถยนต์ </g:link></td>
+			<td>- <g:link controller="carModel">รายการรถยนต์ </g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="maxWheel">รายการล้อแม็กซ์</g:link></td>
