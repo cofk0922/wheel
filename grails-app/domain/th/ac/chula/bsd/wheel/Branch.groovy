@@ -3,9 +3,9 @@ package th.ac.chula.bsd.wheel
 import java.util.Date;
 import java.util.regex.Pattern.Start;
 
-import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
-import th.ac.chula.bsd.inventory.PreProductTransferLine;
-import th.ac.chula.bsd.inventory.ProductTransfer;
+//import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
+//import th.ac.chula.bsd.inventory.PreProductTransferLine;
+//import th.ac.chula.bsd.inventory.ProductTransfer;
 import th.ac.chula.bsd.security.User;
 
 class Branch {
@@ -36,9 +36,9 @@ class Branch {
 		installations: Installation,
 		parkings: Parking,
 		productStocks:ProductStock,
-		preProductPurchaseLines: PreProductPurchaseLine,
-		preProductTransferLines: PreProductTransferLine,
-		productTransfers: ProductTransfer
+//		preProductPurchaseLines: PreProductPurchaseLine,
+//		preProductTransferLines: PreProductTransferLine,
+//		productTransfers: ProductTransfer
 		]
 	
 	static mappedBy = [
