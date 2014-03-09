@@ -101,11 +101,4 @@ class CarController {
             '*'{ render status: NOT_FOUND }
         }
     }
-	
-	
-	def inputWheel(){
-		
-		return
-		
-	}
 }
