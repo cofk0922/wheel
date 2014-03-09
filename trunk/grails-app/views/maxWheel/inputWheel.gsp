@@ -77,7 +77,14 @@
 					
 					<tr>
 					<td>ยี่ห้อรถ</td>
-					<td><g:textField name="modelName" /></td>
+					<td>
+					
+    
+    						<g:select name="bandName"
+							from="${listCarBand.sort{it.id}}" optionKey="id" optionValue="bandName"
+							noSelection="['':'กรุณาเลือกยี่ห้อรถ']"/>
+
+					</td>
 					</tr>
 					
 					<tr>
