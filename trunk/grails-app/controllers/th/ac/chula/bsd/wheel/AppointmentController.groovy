@@ -5,7 +5,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
@@ -166,6 +166,7 @@ class AppointmentController {
 		def year = params.year
 		def month = params.month
 		
+		println "getEvents"
 		println "y = "+year
 		println "m = "+month
 		
@@ -217,64 +218,26 @@ class AppointmentController {
 //					]
 //		}
 //		def js = [total:results.getTotalCount(),rows:jsonResult]
-		
-		render jsonResult as JSON
+		def js = [maxtime:'22:00',mintime:'8:00',events:jsonResult]
+		render js as JSON
 	}
-	def jSonList(){
 		
-		println("ko");
-		/// loop
-		def jsonResult = []
-		def responseData = [
-			'title': '[ 1�� 9999 ]',
-			'start': '2014-03-07',
-			'end': '2014-03-10',
-			'color': '#acacac'
-		]
-
-		def responseData2 = [
-			'title': 'xxx',
-			'start': '2014-03-08',
-			'end': '2014-03-15',
-			'color': '#acacac'
-		]
-
-		//	{ { "title": "All Day Event", "start": "2014-03-07" }, { "title": "Long Event", "start": "2014-03-07", "end": "2014-03-10" } }
-		jsonResult.add(responseData)
-		jsonResult.add(responseData2)
-		
-		// endloop
-		render jsonResult as JSON
-		
-		//example
-		
-//		def jsonResult = results.collect{
-//			[
-//						customerId:it.customer.id,
-//						customerName:it.customer.customerName,
-//						customerSiteName:it.customerSiteName,
-//						address:(it.addressBillToLine1?it.addressBillToLine1:"")+" "+(it.addressBillToLine2?it.addressBillToLine2:""),
-//						subDistrict:it.addressBillToLine3?it.addressBillToLine3:"",
-//						district:it.addressBillToLine4?it.addressBillToLine4:"",
-//						province:it.provinceBillTo,
-//						zipCode:it.zipBillTo,
-//						creditTerm:it.termName,
-//						customerTax:it.customer.customerTax?it.customer.customerTax:"-",
-//						cdgCode:it.cdgCode,
-//						customerSiteId:it.id,
-//					]
-//		}
-//		def js = [total:results.getTotalCount(),rows:jsonResult]
-//
-//		render  js as JSON
-		
+	def validateTime(){
+		println "validateTime"
+		println "startdate = " + params.startdate
+				
+		def js = [isValid: true]
+		render js as JSON
 	}
+	
 	
 	def saveDate(){
 		
-				println "koko="+params.koko
+				println "saveDate"
+				println "title ="+params.title
+				println "startdate ="+params.startdate
 		
-		render false
+		render true
 //		def dateRecieveInstance = new DateRecieveInstance()
 //		dateRecieveInstance.startTime = xxx
 //
