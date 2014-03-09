@@ -39,7 +39,7 @@
 		<g:message code="maxWheel.band.label" default="Band" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="band" required="" value="${maxWheelInstance?.band}"/>
+	<g:select id="band" name="band.id" from="${th.ac.chula.bsd.wheel.WheelBand.list()}" optionKey="id" required="" value="${maxWheelInstance?.band?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'model', 'error')} required">
@@ -88,6 +88,14 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="offSet" type="number" value="${maxWheelInstance.offSet}" required=""/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'pStatus', 'error')} required">
+	<label for="pStatus">
+		<g:message code="maxWheel.pStatus.label" default="PS tatus" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="pStatus" from="${th.ac.chula.bsd.wheel.ProdStatus?.values()}" keys="${th.ac.chula.bsd.wheel.ProdStatus.values()*.name()}" required="" value="${maxWheelInstance?.pStatus?.name()}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productStocks', 'error')} ">

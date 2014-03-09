@@ -24,9 +24,9 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="spoke" title="${message(code: 'usageScore.spoke.label', default: 'Spoke')}" />
+						<g:sortableColumn property="sType" title="${message(code: 'usageScore.sType.label', default: 'ST ype')}" />
 					
-						<g:sortableColumn property="usage" title="${message(code: 'usageScore.usage.label', default: 'Usage')}" />
+						<g:sortableColumn property="uType" title="${message(code: 'usageScore.uType.label', default: 'UT ype')}" />
 					
 						<g:sortableColumn property="score" title="${message(code: 'usageScore.score.label', default: 'Score')}" />
 					
@@ -36,9 +36,9 @@
 				<g:each in="${usageScoreInstanceList}" status="i" var="usageScoreInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${usageScoreInstance.id}">${fieldValue(bean: usageScoreInstance, field: "spoke")}</g:link></td>
+						<td><g:link action="show" id="${usageScoreInstance.id}">${fieldValue(bean: usageScoreInstance, field: "sType")}</g:link></td>
 					
-						<td>${fieldValue(bean: usageScoreInstance, field: "usage")}</td>
+						<td>${fieldValue(bean: usageScoreInstance, field: "uType")}</td>
 					
 						<td>${fieldValue(bean: usageScoreInstance, field: "score")}</td>
 					

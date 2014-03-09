@@ -2,7 +2,7 @@ package th.ac.chula.bsd.wheel
 
 class MaxWheel extends Product{
 
-	String band
+	WheelBand band
 	String model
 	String pcdCode
 	int offSet
@@ -10,6 +10,7 @@ class MaxWheel extends Product{
 	Float width
 	Float weight
 	SpokeType spoke
+	ProdStatus pStatus
 	
 	//Set wheelList = []
 	static hasMany = [wheelLists: CarWheelList]
@@ -27,4 +28,10 @@ class MaxWheel extends Product{
 	{
 		return this.size * 0.0254
 	}
+}
+
+enum ProdStatus{
+	SOON,
+	AVALIABLE,
+	CANCEL
 }

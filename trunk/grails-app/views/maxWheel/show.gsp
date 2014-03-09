@@ -63,7 +63,7 @@
 				<li class="fieldcontain">
 					<span id="band-label" class="property-label"><g:message code="maxWheel.band.label" default="Band" /></span>
 					
-						<span class="property-value" aria-labelledby="band-label"><g:fieldValue bean="${maxWheelInstance}" field="band"/></span>
+						<span class="property-value" aria-labelledby="band-label"><g:link controller="wheelBand" action="show" id="${maxWheelInstance?.band?.id}">${maxWheelInstance?.band?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -118,6 +118,15 @@
 					<span id="offSet-label" class="property-label"><g:message code="maxWheel.offSet.label" default="Off Set" /></span>
 					
 						<span class="property-value" aria-labelledby="offSet-label"><g:fieldValue bean="${maxWheelInstance}" field="offSet"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${maxWheelInstance?.pStatus}">
+				<li class="fieldcontain">
+					<span id="pStatus-label" class="property-label"><g:message code="maxWheel.pStatus.label" default="PS tatus" /></span>
+					
+						<span class="property-value" aria-labelledby="pStatus-label"><g:fieldValue bean="${maxWheelInstance}" field="pStatus"/></span>
 					
 				</li>
 				</g:if>
