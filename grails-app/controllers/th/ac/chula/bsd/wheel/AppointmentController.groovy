@@ -5,7 +5,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
@@ -172,6 +172,7 @@ class AppointmentController {
 		
 		def jsonResult = []
 		def responseData = [
+			'id': '999',
 			'title': '[ test1 ]',
 			'start': '2014-03-07',
 			'end': '2014-03-10',
@@ -179,6 +180,7 @@ class AppointmentController {
 		]
 
 		def responseData2 = [
+			'id': '20',
 			'title': 'xxx',
 			'start': '2014-03-08',
 			'end': '2014-03-15',
@@ -224,22 +226,51 @@ class AppointmentController {
 		
 	def validateTime(){
 		println "validateTime"
-		println "startdate = " + params.startdate
-				
+		
+		// if id = "null" that's mean add new event else meaning is edit event
+		if (params.id == null){
+			println "act = " : params.act
+			println "startdate = " + params.startdate
+			println "id = " + params.id
+		}else{
+		println "id = " + params.event
+		println "act = " : params.act
+		println "dayDelta = " + params.dayDelta
+		println "minuteDelta = " + params.minuteDelta
+		}
+			
+		//return
 		def js = [isValid: true]
 		render js as JSON
 	}
 	
 	
-	def saveDate(){
+	def editEvent(){
 		
-				println "saveDate"
-				println "title ="+params.title
-				println "startdate ="+params.startdate
-		
-		render true
+		println "editEvent"
+		println "action = "+params.act
+		println "id = "+params.id
+		println "startdate "+ params.startdate
+		println "dayDelta "+ params.dayDelta
+		println "minuteDelta "+ params.minuteDelta
+		def js = []
+		if (params.act == "add"){
+			
+			js = [
+				id: params.title+"-id",
+				title: params.title,
+				start: params.startdate,
+				end:params.end,
+				allDay: params.allDay
+				]
+		}else{
+			js = [isValid: true]
+		}
+		render js as JSON
 //		def dateRecieveInstance = new DateRecieveInstance()
+		
 //		dateRecieveInstance.startTime = xxx
+//		dateRecieveInstance.title = params.title
 //
 //		dateRecieveInstance.save(flush:true)
 	}
