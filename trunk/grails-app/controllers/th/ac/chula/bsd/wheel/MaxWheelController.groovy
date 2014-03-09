@@ -101,4 +101,81 @@ class MaxWheelController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def inputWheel(){		
+		return
+	}
+	def upload() {
+		def parameter = [:]
+		def fileCropName
+		def f = request.getFile('myFile')
+		if (f.empty) {
+			flash.message = 'file cannot be empty'
+			render(view: 'inputWheel')
+			return
+		}
+		def filename = f.originalFilename
+		def fullPath = grailsApplication.config.uploadFolder+filename
+		f.transferTo(new File(fullPath))
+		//response.sendError(200, 'Done')
+		flash.message = 'upload success !'
+		
+		parameter.fileCropName = fileCropName
+		parameter.filename = filename
+		render(view: "inputWheel", model: parameter)
+	}
+	
+	
+	def detectImage() {
+		
+
+		println params
+		
+		
+		return
+	}
+	
+	
+	
+	
+	
+	def cropingImage(){
+		
+		def parameter = [:]
+		//def fileCropName = 'pool.jpg'
+		def fileCropName = params.filename
+		def fullPath = grailsApplication.config.uploadFolder+fileCropName
+		def outputPath  = grailsApplication.config.uploadFolder+'crop'
+		
+		def x = params.x.toInteger()
+		def y = params.y.toInteger()
+		def w = params.w.toInteger()
+		def h = params.h.toInteger()
+		
+		burningImageService.doWith(fullPath, outputPath)
+				   .execute {
+					   it.crop(x,y,w,h)
+				 }
+		parameter.fileCropName = fileCropName
+		parameter.filename = params.filename
+		render(view: "inputWheel", model: parameter)
+
+	}
+	
+	def detectColor(){
+		println params
+		def fileCropName = '../images/'+params.fileCropName
+		//def outputPath  = grailsApplication.config.uploadFolder+'crop/'+fileCropName
+		//println "outputPath="+outputPath
+		render(view: "detectColor", model: [fileCropName:fileCropName])
+	}
+	
+	def imageInput(){
+		return
+	}
+	
+	
+	def detectImageBack(){
+		return
+	}
 }
