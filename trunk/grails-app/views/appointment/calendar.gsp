@@ -27,8 +27,6 @@
 </head>
 <body>
 
-
-${result}
 <div id='calendar'></div>
 <div id='status'></div>
 </body>
