@@ -103,8 +103,18 @@ class MaxWheelController {
     }
 	
 	def inputWheel(){		
-		return
+		def parameter = [:]
+		
+		def honda  = CarBand.get(1)
+		new CarModel(model:'Civic Y2004 ',band:honda).save(flush:true)
+
+		
+		parameter.listCarBand = CarBand.list()
+		parameter.listCarModel = CarModel.list()
+		render(view:'inputWheel',model:parameter)
 	}
+	
+	
 	def upload() {
 		def parameter = [:]
 		def fileCropName
