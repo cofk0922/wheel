@@ -8,7 +8,6 @@ class CarModel {
 	int year
 	String pcdCode
 	Float offSet
-	Float wheelSpace
 	Float weight
 	Float gearRatio
 	MaxWheel defaultWheel
@@ -18,14 +17,11 @@ class CarModel {
 	static hasMany = [wheelLists: CarWheelList]
 	
 	static constraints = {
-		band nullable: false
-		model nullable: false
-		pcdCode nullable: false
 	}
 	
 	public CarModel()
 	{
-		//Constructer
+		//Call service initialWheelListForNewCar()
 	}
 	
 	public void CheckRate()
