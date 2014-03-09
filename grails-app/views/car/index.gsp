@@ -30,11 +30,11 @@
 					
 						<g:sortableColumn property="pcdCode" title="${message(code: 'car.pcdCode.label', default: 'Pcd Code')}" />
 					
+						<g:sortableColumn property="defaultTireSize" title="${message(code: 'car.defaultTireSize.label', default: 'Default Tire Size')}" />
+					
 						<th><g:message code="car.defaultWheel.label" default="Default Wheel" /></th>
 					
 						<g:sortableColumn property="gearRatio" title="${message(code: 'car.gearRatio.label', default: 'Gear Ratio')}" />
-					
-						<g:sortableColumn property="offSet" title="${message(code: 'car.offSet.label', default: 'Off Set')}" />
 					
 					</tr>
 				</thead>
@@ -48,11 +48,11 @@
 					
 						<td>${fieldValue(bean: carInstance, field: "pcdCode")}</td>
 					
+						<td>${fieldValue(bean: carInstance, field: "defaultTireSize")}</td>
+					
 						<td>${fieldValue(bean: carInstance, field: "defaultWheel")}</td>
 					
 						<td>${fieldValue(bean: carInstance, field: "gearRatio")}</td>
-					
-						<td>${fieldValue(bean: carInstance, field: "offSet")}</td>
 					
 					</tr>
 				</g:each>

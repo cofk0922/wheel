@@ -5,8 +5,10 @@ import org.springframework.aop.aspectj.RuntimeTestWalker.ThisInstanceOfResidueTe
 class CarWheelList {
 	
 	Integer listOrder 
+	String usageType
 	Double drivingEnergy
 	Double tractiveEnergy 
+	int	UsageScore
 	Integer	driveStar 
 	Integer tractiveStar 
 	
@@ -15,10 +17,12 @@ class CarWheelList {
     static constraints = {
     }
 	
-	public CarWheelList(Car lCar, MaxWheel lWheel)
+	public CarWheelList(Car lCar, MaxWheel lWheel, String lUsageType)
 	{
 		this.car = lCar
 		this.wheel = lWheel
+		this.usageType = lUsageType
+		this.UsageScore = this.usageScoring()
 		this.drivingEnergy = this.calcDrivingEnergy()
 		this.tractiveEnergy = this.calcTractiveEnergy()
 	}
@@ -35,5 +39,10 @@ class CarWheelList {
 		//Calculate energy using when start "1.3464 mumgL/gear ratio"
 		//mu = 0.55, g = 9.8 m/ss
 		return (7.257096 * car.weight * wheel.getCmSize()) /  car.gearRatio
+	}
+	
+	private int usageScoring()
+	{
+		def usageScore = UsageScore.findBySTypeAndUType(this.wheel.spoke,  this.usageType)
 	}
 }

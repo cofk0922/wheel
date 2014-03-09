@@ -153,6 +153,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${maxWheelInstance?.spoke}">
+				<li class="fieldcontain">
+					<span id="spoke-label" class="property-label"><g:message code="maxWheel.spoke.label" default="Spoke" /></span>
+					
+						<span class="property-value" aria-labelledby="spoke-label"><g:fieldValue bean="${maxWheelInstance}" field="spoke"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${maxWheelInstance?.wheelLists}">
 				<li class="fieldcontain">
 					<span id="wheelLists-label" class="property-label"><g:message code="maxWheel.wheelLists.label" default="Wheel Lists" /></span>
