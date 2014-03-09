@@ -3,7 +3,8 @@ package th.ac.chula.bsd.wheel
 import java.util.Set;
 
 class CarModel {
-	String band
+	
+	CarBand band
 	String model
 	int year
 	String pcdCode
