@@ -26,6 +26,14 @@
 	<g:textField name="pcdCode" value="${carInstance?.pcdCode}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: carInstance, field: 'defaultTireSize', 'error')} required">
+	<label for="defaultTireSize">
+		<g:message code="car.defaultTireSize.label" default="Default Tire Size" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="defaultTireSize" type="number" value="${carInstance.defaultTireSize}" required=""/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: carInstance, field: 'defaultWheel', 'error')} required">
 	<label for="defaultWheel">
 		<g:message code="car.defaultWheel.label" default="Default Wheel" />

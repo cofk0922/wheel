@@ -50,6 +50,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${carInstance?.defaultTireSize}">
+				<li class="fieldcontain">
+					<span id="defaultTireSize-label" class="property-label"><g:message code="car.defaultTireSize.label" default="Default Tire Size" /></span>
+					
+						<span class="property-value" aria-labelledby="defaultTireSize-label"><g:fieldValue bean="${carInstance}" field="defaultTireSize"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${carInstance?.defaultWheel}">
 				<li class="fieldcontain">
 					<span id="defaultWheel-label" class="property-label"><g:message code="car.defaultWheel.label" default="Default Wheel" /></span>

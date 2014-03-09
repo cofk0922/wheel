@@ -132,6 +132,14 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'spoke', 'error')} required">
+	<label for="spoke">
+		<g:message code="maxWheel.spoke.label" default="Spoke" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="spoke" from="${th.ac.chula.bsd.wheel.SpokeType?.values()}" keys="${th.ac.chula.bsd.wheel.SpokeType.values()*.name()}" required="" value="${maxWheelInstance?.spoke?.name()}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'wheelLists', 'error')} ">
 	<label for="wheelLists">
 		<g:message code="maxWheel.wheelLists.label" default="Wheel Lists" />

@@ -11,6 +11,8 @@ class Car {
 	Float wheelSpace
 	Float weight
 	Float gearRatio
+	MaxWheel defaultWheel
+	int defaultTireSize
 
 //	Set wheelList = []
 	static hasMany = [wheelLists: CarWheelList]
@@ -24,20 +26,6 @@ class Car {
 	public Car()
 	{
 		//Constructer
-	}
-	
-	public Car(String cBand, String cModel, int cYear, String cCode, Float cOffSet, Float cSpace, Float cWeight, Float cGearRatio)
-	{
-		this.band = cBand
-		this.model = cModel
-		this.year = cYear
-		this.pcdCode = cCode
-		this.offSet = cOffSet
-		this.wheelSpace = cSpace
-		this.weight = cWeight
-		this.gearRatio = cGearRatio
-		
-		//get all possible wheel by 
 	}
 	
 	public void CheckRate()
