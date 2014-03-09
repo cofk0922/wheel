@@ -5,8 +5,7 @@
 <title>Live Cropping Demo</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 
-<g:javascript src="jquery.min.js" />
-<g:javascript src="jquery.Jcrop.js" />
+
 
 
   <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
@@ -15,30 +14,37 @@
   
 
 
-<script type="text/javascript">
-	$(function() {
+ <script type="text/javascript">
+    function preview(img, selection) {
+        if (!selection.width || !selection.height)
+            return;
 
-		$('#cropbox').Jcrop({
-			aspectRatio : 1,
-			onSelect : updateCoords
-		});
+        var scaleX = 100 / selection.width;
+        var scaleY = 100 / selection.height;
 
-	});
+        $('#preview img').css({
+            width: Math.round(scaleX * 500),
+            height: Math.round(scaleY * 281),
+            marginLeft: -Math.round(scaleX * selection.x1),
+            marginTop: -Math.round(scaleY * selection.y1)
+        });
 
-	function updateCoords(c) {
-		$('#x').val(c.x);
-		$('#y').val(c.y);
-		$('#w').val(c.w);
-		$('#h').val(c.h);
-	};
+        $('#x1').val(selection.x1);
+        $('#y1').val(selection.y1);
+        $('#x2').val(selection.x2);
+        $('#y2').val(selection.y2);
+        $('#w').val(selection.width);
+        $('#h').val(selection.height);
+    }
 
-	function checkCoords() {
-		if (parseInt($('#w').val()))
-			return true;
-		alert('Please select a crop region then press submit.');
-		return false;
-	};
+    $(function () {
+        $('#photo').imgAreaSelect({
+            aspectRatio: '1:1', handles: true,
+            fadeSpeed: 200, onSelectChange: preview
+        });
+    });
 </script>
+
 <style type="text/css">
 #target {
 	background-color: #ccc;
@@ -67,51 +73,40 @@
 					<!-- image Upload-->
 					
 					<g:uploadForm action="upload">
-       					 <input type="file" name="myFile" />
-       				 <input type="submit" />
-    				</g:uploadForm>
+					<table>
 					
-				
-					<!-- This is the image we're attaching Jcrop to -->
+					<tr>
+					<td>ยี่ห้อรถ</td>
+					<td><g:textField name="modelName" /></td>
+					</tr>
+					
+					<tr>
+					<td>รุ่นรถ</td>
+					<td><g:textField name="modelName" /></td>
+					</tr>
+					
+					<tr>
+					<td>รูปภาพรถ</td>
+					<td><input type="file" name="myFile" /></td>
+					</tr>
+			
+					</table>
+					<br>
+       				 <input type="submit" value="ตกลง" />
+    				</g:uploadForm>
+
+					<!-- Detect image -->
+					
 					<g:if test="${filename}">
 						<g:img dir="images" file="${filename}" id="cropbox" />
-					</g:if>
-					<!-- This is the form that our event handler fills -->
-					
-					<form action="cropingImage" method="post"
-						onsubmit="return checkCoords();">
-						<input type="hidden" id="x" name="x" /> 
-						<input type="hidden"id="y" name="y" /> 
-						<input type="hidden" id="w" name="w" /> 
-						<input type="hidden" id="h" name="h" /> 
-						<input type="hidden" id="filename" name="filename"  value ='${filename}'/> 
-						<br>
-						<input type="submit" value="Crop Image" class="btn btn-large btn-inverse" />
-					</form><%--
-
-					<p> 
-						<b>An example server-side crop script.</b> Hidden form values are
-						set when a selection is made. If you press the <i>Crop Image</i>
-						button, the form will be submitted and a 150x150 thumbnail will be
-						dumped to the browser. Try it!
-					</p>						
-						--%>
 						
-						<g:if test="${fileCropName}">
+				
 						
 						<div class="page-header">
-						<h1> รูปภาพที่ใช้งาน</h1>
-					</div>
-						
-						
-							<g:img dir="images/crop" file="${fileCropName}" id="cropbox" />
-						
-						<div class="page-header">
-						<g:link  action="detectColor" params="[fileCropName:fileCropName]"><h1> Step2 >> </h1></g:link>
+						<g:link  action="detectImage" params="[filename:filename]"><h1> Step2 >> </h1></g:link>
 					</div>
 					
 					</g:if>
-					
 					
 				</div>
 			</div>
