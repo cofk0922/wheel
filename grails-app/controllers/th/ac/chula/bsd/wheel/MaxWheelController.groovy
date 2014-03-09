@@ -104,7 +104,7 @@ class MaxWheelController {
 	
 	def inputWheel(){		
 		def parameter = [:]
-		
+		 
 		def honda  = CarBand.get(1)
 		def hondaIn =  new CarModel(model:'Civic Y2004 ',band:honda)
 		
