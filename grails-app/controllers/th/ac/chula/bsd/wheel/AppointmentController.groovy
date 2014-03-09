@@ -2,9 +2,10 @@ package th.ac.chula.bsd.wheel
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
@@ -160,19 +161,64 @@ class AppointmentController {
 		return
 	}
 	
-	def getEvents(boolean event){
-		//def parameter = [:]
-		def valueString
-		if (event){
-			valueString = "[{title: '[ 1ÔøΩÔøΩ 9999 ]',start: new Date(y, m, 1,11,30),end: new Date(y, m, 1,12,30),color: '#acacac',editable: false,allDay: false},{title: '[ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ]',start: new Date(y, m, d-5,8,0),end: new Date(y, m, d-2,8,0),color: '#acacac',editable: false,allDay: false},{id: 999,title: '[ 1ÔøΩÔøΩ 2222 ]',start: new Date(y, m, d-3, 16, 0),end: new Date(y, m, d-3, 18, 0),color: '#acacac',editable: false,allDay: false}]"
-			}else{
-			valueString = "[{id: 999,title: '[ À° 1452 ]',start: new Date(y, m, d+4, 16, 0),end: new Date(y, m, d+3, 18, 0),allDay: false},{title: '[ ÔøΩÔøΩ 4532 ]',start: new Date(y, m, d, 10, 30),end: new Date(y, m, d, 14, 0),allDay: false}]"
-			}
-		respond valueString
-		//parameter.result = valueString
+	def getEvents(){
 		
-		//render(view: "inputWheel", model: parameter)		
+		def year = params.year
+		def month = params.month
 		
+		println "y = "+year
+		println "m = "+month
+		
+		def jsonResult = []
+		def responseData = [
+			'title': '[ test1 ]',
+			'start': '2014-03-07',
+			'end': '2014-03-10',
+			'color': '#acacac'
+		]
+
+		def responseData2 = [
+			'title': 'xxx',
+			'start': '2014-03-08',
+			'end': '2014-03-15',
+			'color': '#acacac'
+		]
+		
+		//{
+		//			id: 999,
+		//			title: '[ 1‡∏Å‡∏î 2222 ]',
+//					start: new Date(y, m, d-3, 16, 0),
+//					end: new Date(y, m, d-3, 18, 0),
+//					color: '#acacac',
+//					editable: false,
+//					url: 'http://google.com/',
+//					allDay: false
+//				},
+
+		jsonResult.add(responseData)
+		jsonResult.add(responseData2)
+		
+		//example
+		
+//		def jsonResult = results.collect{
+//			[
+//						customerId:it.customer.id,
+//						customerName:it.customer.customerName,
+//						customerSiteName:it.customerSiteName,
+//						address:(it.addressBillToLine1?it.addressBillToLine1:"")+" "+(it.addressBillToLine2?it.addressBillToLine2:""),
+//						subDistrict:it.addressBillToLine3?it.addressBillToLine3:"",
+//						district:it.addressBillToLine4?it.addressBillToLine4:"",
+//						province:it.provinceBillTo,
+//						zipCode:it.zipBillTo,
+//						creditTerm:it.termName,
+//						customerTax:it.customer.customerTax?it.customer.customerTax:"-",
+//						cdgCode:it.cdgCode,
+//						customerSiteId:it.id,
+//					]
+//		}
+//		def js = [total:results.getTotalCount(),rows:jsonResult]
+		
+		render jsonResult as JSON
 	}
 	def jSonList(){
 		
@@ -180,7 +226,7 @@ class AppointmentController {
 		/// loop
 		def jsonResult = []
 		def responseData = [
-			'title': '[ 1°¥ 9999 ]',
+			'title': '[ 1ÔøΩÔøΩ 9999 ]',
 			'start': '2014-03-07',
 			'end': '2014-03-10',
 			'color': '#acacac'
@@ -228,7 +274,7 @@ class AppointmentController {
 		
 				println "koko="+params.koko
 		
-	
+		render false
 //		def dateRecieveInstance = new DateRecieveInstance()
 //		dateRecieveInstance.startTime = xxx
 //
