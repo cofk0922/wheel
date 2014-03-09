@@ -7,7 +7,7 @@
 		<g:message code="carWheelList.car.label" default="Car" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="car" name="car.id" from="${th.ac.chula.bsd.wheel.Car.list()}" optionKey="id" required="" value="${carWheelListInstance?.car?.id}" class="many-to-one"/>
+	<g:select id="car" name="car.id" from="${th.ac.chula.bsd.wheel.CarModel.list()}" optionKey="id" required="" value="${carWheelListInstance?.car?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carWheelListInstance, field: 'driveStar', 'error')} required">

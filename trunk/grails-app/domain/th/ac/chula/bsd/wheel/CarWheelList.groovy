@@ -12,12 +12,12 @@ class CarWheelList {
 	Integer	driveStar 
 	Integer tractiveStar 
 	
-	static belongsTo = [wheel: MaxWheel,car: Car]
+	static belongsTo = [wheel: MaxWheel,car: CarModel]
 	
     static constraints = {
     }
 	
-	public CarWheelList(Car lCar, MaxWheel lWheel, String lUsageType)
+	public CarWheelList(CarModel lCar, MaxWheel lWheel, String lUsageType)
 	{
 		this.car = lCar
 		this.wheel = lWheel
