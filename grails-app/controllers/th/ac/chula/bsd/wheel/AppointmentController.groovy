@@ -163,12 +163,9 @@ class AppointmentController {
 	
 	def getEvents(){
 		
-		def year = params.year
-		def month = params.month
-		
 		println "getEvents"
-		println "y = "+year
-		println "m = "+month
+		println "y = "+params.start
+		println "m = "+params.end
 		
 		def jsonResult = []
 		def responseData = [
@@ -189,7 +186,7 @@ class AppointmentController {
 		
 		//{
 		//			id: 999,
-		//			title: '[ 1กด 2222 ]',
+		//			title: '[ 1à¸�à¸” 2222 ]',
 //					start: new Date(y, m, d-3, 16, 0),
 //					end: new Date(y, m, d-3, 18, 0),
 //					color: '#acacac',
@@ -220,7 +217,16 @@ class AppointmentController {
 //					]
 //		}
 //		def js = [total:results.getTotalCount(),rows:jsonResult]
-		def js = [maxtime:'22:00',mintime:'8:00',events:jsonResult]
+		
+		render jsonResult as JSON
+	}
+	
+	def getSettingCalendar(){
+		println "getSettingCalendar"
+		def daysoff = [{ day: 'sat'' },{ day: 'sun' }];
+		def holidays = [{ day: "2014-03-15" },{ day: "2014-03-25" }];
+			
+		def js = [maxtime:'22:00',mintime:'8:00',daysoff:daysoff,holidays:holidays]
 		render js as JSON
 	}
 		
@@ -243,7 +249,6 @@ class AppointmentController {
 		def js = [isValid: true]
 		render js as JSON
 	}
-	
 	
 	def editEvent(){
 		
