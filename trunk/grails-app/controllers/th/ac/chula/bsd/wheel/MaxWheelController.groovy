@@ -101,26 +101,18 @@ class MaxWheelController {
             '*'{ render status: NOT_FOUND }
         }
     }
-	
+	@Transactional
 	def inputWheel(){		
 		def parameter = [:]
-		 
-		def honda  = CarBand.get(1)
-		def hondaIn =  new CarModel(model:'Civic Y2004 ',band:honda)
-		
-		if (!hondaIn.save()) {
-			hondaIn.errors.each {
-				println it
-			}
-		}
-		
 		parameter.listCarBand = CarBand.list()
 		parameter.listCarModel = CarModel.list()
 		render(view:'inputWheel',model:parameter)
 	}
 	
 	
-	def upload() {
+	def preview() {
+		
+		
 		def parameter = [:]
 		def fileCropName
 		def f = request.getFile('myFile')
@@ -129,27 +121,81 @@ class MaxWheelController {
 			render(view: 'inputWheel')
 			return
 		}
-		def filename = f.originalFilename
-		def fullPath = grailsApplication.config.uploadFolder+filename
+		def carImage = f.originalFilename
+		def fullPath = grailsApplication.config.uploadFolder+carImage
 		f.transferTo(new File(fullPath))
 		//response.sendError(200, 'Done')
 		flash.message = 'upload success !'
 		
-		parameter.fileCropName = fileCropName
-		parameter.filename = filename
-		render(view: "inputWheel", model: parameter)
-	}
-	
-	
-	def detectImage() {
 		
+		parameter.carInstance = CarBand.get(params.bandName.toInteger())
+		parameter.modelInstance = CarModel.get(params.modelId.toInteger())
 
-		println params
+		parameter.carImage = carImage
 		
-		
-		return
+		render(view: "preview", model: parameter)
 	}
 	
+
+	def detectImage() {	
+		
+		def parameter = [:]
+		parameter.carImage = params.carImage		
+		parameter.modelInstance = CarModel.get(params.modelId)
+		
+		render(view: "detectImage", model: parameter)
+		
+	}
+	
+	@Transactional
+	def detectImageBack(){
+
+		def modelInstance = CarModel.get(params.modelId)	
+		modelInstance.properties = params
+		
+		
+		
+		modelInstance.properties.each{
+			println it
+			}
+		
+		def parameter = [:]
+		parameter.carImage = params.carImage		
+		parameter.modelInstance = modelInstance
+		
+		render(view: "detectImageBack", model: parameter)
+	}
+	
+	
+	
+	def detectColor(){
+		def modelInstance = CarModel.get(params.modelId)
+		modelInstance.properties = params
+		
+		modelInstance.properties.each{
+			println it
+			}
+		
+		
+		def parameter = [:]
+		def fileSumPath = '../images/'+params.carImage
+		
+		parameter.carImage = fileSumPath
+		parameter.modelInstance = modelInstance		
+		render(view: "detectColor", model: parameter)
+	}
+	//@Transactional
+	def saveCar(){
+		def modelInstance = CarModel.get(params.modelId)
+		
+		println params
+		modelInstance.properties = params
+		
+		modelInstance.properties.each{
+			println it
+			}
+		//modelInstance.save(flush:true)
+	}
 	
 	
 	
@@ -177,20 +223,11 @@ class MaxWheelController {
 
 	}
 	
-	def detectColor(){
-		println params
-		def fileCropName = '../images/'+params.fileCropName
-		//def outputPath  = grailsApplication.config.uploadFolder+'crop/'+fileCropName
-		//println "outputPath="+outputPath
-		render(view: "detectColor", model: [fileCropName:fileCropName])
-	}
 	
 	def imageInput(){
 		return
 	}
 	
 	
-	def detectImageBack(){
-		return
-	}
+
 }
