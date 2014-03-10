@@ -10,99 +10,99 @@ import grails.transaction.Transactional
 class AppointmentController {
 	def springSecurityService
 	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
-    }
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
+	}
 
-    def show(Appointment appointmentInstance) {
-        respond appointmentInstance
-    }
+	def show(Appointment appointmentInstance) {
+		respond appointmentInstance
+	}
 
-    def create() {
-        respond new Appointment(params)
-    }
+	def create() {
+		respond new Appointment(params)
+	}
 
-    @Transactional
-    def save(Appointment appointmentInstance) {
-        if (appointmentInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def save(Appointment appointmentInstance) {
+		if (appointmentInstance == null) {
+			notFound()
+			return
+		}
 
-        if (appointmentInstance.hasErrors()) {
-            respond appointmentInstance.errors, view:'create'
-            return
-        }
+		if (appointmentInstance.hasErrors()) {
+			respond appointmentInstance.errors, view:'create'
+			return
+		}
 
-        appointmentInstance.save flush:true
+		appointmentInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), appointmentInstance.id])
-                redirect appointmentInstance
-            }
-            '*' { respond appointmentInstance, [status: CREATED] }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.created.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), appointmentInstance.id])
+				redirect appointmentInstance
+			}
+			'*' { respond appointmentInstance, [status: CREATED] }
+		}
+	}
 
-    def edit(Appointment appointmentInstance) {
-        respond appointmentInstance
-    }
+	def edit(Appointment appointmentInstance) {
+		respond appointmentInstance
+	}
 
-    @Transactional
-    def update(Appointment appointmentInstance) {
-        if (appointmentInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def update(Appointment appointmentInstance) {
+		if (appointmentInstance == null) {
+			notFound()
+			return
+		}
 
-        if (appointmentInstance.hasErrors()) {
-            respond appointmentInstance.errors, view:'edit'
-            return
-        }
+		if (appointmentInstance.hasErrors()) {
+			respond appointmentInstance.errors, view:'edit'
+			return
+		}
 
-        appointmentInstance.save flush:true
+		appointmentInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-                redirect appointmentInstance
-            }
-            '*'{ respond appointmentInstance, [status: OK] }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
+				redirect appointmentInstance
+			}
+			'*'{ respond appointmentInstance, [status: OK] }
+		}
+	}
 
-    @Transactional
-    def delete(Appointment appointmentInstance) {
+	@Transactional
+	def delete(Appointment appointmentInstance) {
 
-        if (appointmentInstance == null) {
-            notFound()
-            return
-        }
+		if (appointmentInstance == null) {
+			notFound()
+			return
+		}
 
-        appointmentInstance.delete flush:true
+		appointmentInstance.delete flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.deleted.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	protected void notFound() {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), params.id])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 	
 	// May
 	@Transactional
@@ -164,16 +164,14 @@ class AppointmentController {
 	def getEvents(){
 		
 		println "getEvents"
-		println "y = "+params.start
-		println "m = "+params.end
 		
-		def jsonResult = []
+		def events = []
 		def responseData = [
 			'id': '999',
 			'title': '[ test1 ]',
 			'start': '2014-03-07',
 			'end': '2014-03-10',
-			'color': '#acacac'
+			'color': '#00ff00'
 		]
 
 		def responseData2 = [
@@ -181,12 +179,12 @@ class AppointmentController {
 			'title': 'xxx',
 			'start': '2014-03-08',
 			'end': '2014-03-15',
-			'color': '#acacac'
+			'color': '#00ff00'
 		]
 		
 		//{
 		//			id: 999,
-		//			title: '[ 1à¸�à¸” 2222 ]',
+		//			title: '[ 1เธ�เธ” 2222 ]',
 //					start: new Date(y, m, d-3, 16, 0),
 //					end: new Date(y, m, d-3, 18, 0),
 //					color: '#acacac',
@@ -195,8 +193,8 @@ class AppointmentController {
 //					allDay: false
 //				},
 
-		jsonResult.add(responseData)
-		jsonResult.add(responseData2)
+		events.add(responseData)
+		events.add(responseData2)
 		
 		//example
 		
@@ -218,15 +216,12 @@ class AppointmentController {
 //		}
 //		def js = [total:results.getTotalCount(),rows:jsonResult]
 		
-		render jsonResult as JSON
-	}
-	
-	def getSettingCalendar(){
-		println "getSettingCalendar"
-		def daysoff = [{ day: 'sat'' },{ day: 'sun' }];
-		def holidays = [{ day: "2014-03-15" },{ day: "2014-03-25" }];
+		def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
+		def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
 			
-		def js = [maxtime:'22:00',mintime:'8:00',daysoff:daysoff,holidays:holidays]
+		//def js = ['daysoff':daysoff,'holidays':holidays]
+		
+		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays];
 		render js as JSON
 	}
 		
@@ -249,6 +244,7 @@ class AppointmentController {
 		def js = [isValid: true]
 		render js as JSON
 	}
+	
 	
 	def editEvent(){
 		
