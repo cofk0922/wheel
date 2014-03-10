@@ -11,9 +11,8 @@
   <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
   <link rel="stylesheet" href="../css/demos.css" type="text/css" />
   <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
-   
-   <link href="../css/detectImage/main.css" rel="stylesheet" type="text/css"/>
-  <link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css"/>
+   <link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css"/>
+
   
  
   <g:javascript src="jquery.min.js" />
@@ -31,8 +30,10 @@
         var scaleY = 100 / selection.height;
 
         $('#preview img').css({
+
+            //set size Image default
         	width: Math.round(scaleX * 500),
-            height: Math.round(scaleY * 281),
+            height: Math.round(scaleY * 300),
             marginLeft: -Math.round(scaleX * selection.x1),
             marginTop: -Math.round(scaleY * selection.y1)
         });
@@ -73,93 +74,164 @@
 
 					<div class="page-header">
 						<ul class="breadcrumb first">
-							<li><a href="../">Menu</a> <span class="divider">/</span>
-							<a href="../maxWheel/inputWheel">Step1</a> <span class="divider"></span>
-							</li>
-							
+							<li><a href="../">เมนู</a> <span class="divider">/</span>
+							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> <span class="divider">/</span>
+							<a href="../maxWheel/detectImage?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหน้า</a> <span class="divider">/</span></li>
 						</ul>
-						<h1>ซอฟต์แวร์ช่วยเลือกล้อแม็กซ์ </h1>
-						<h1>เลือกตำแหน่งล้อหลัง :</h1>
-					</div>
-					
-					 <div class="column1">
-					
-              <g:img dir="images" file="${params.filename}" id="photo" width="500" height="281"  />
-            </div>
-            <div class="column2">
-             
-               <div class="frame" style="margin: 0 1em; width: 100px; height: 100px;">
-               
-   
-      <div id="preview" style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%;">
-          <g:img dir="images" file="${params.filename}"  />
-          
-      </div>
-      
+						<h1>กำหนดจุด <font color="red">ล้อหหลัง</font></h1>
 
-      
-      
-      
-      
-    </div>
-               <table style="margin-top: 1em;">
-      <thead>
-        <tr>
-          <th colspan="2" style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
-            Coordinates
-          </th>
-          <th colspan="2" style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
-            Dimensions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="width: 10%;"><b>X<sub>1</sub>:</b></td>
- 		      <td style="width: 30%;"><input type="text" id="x1" value="-" /></td>
- 		      <td style="width: 20%;"><b>Width:</b></td>
-   		    <td><input type="text" value="-" id="w" /></td>
-        </tr>
-        <tr>
-          <td><b>Y<sub>1</sub>:</b></td>
-          <td><input type="text" id="y1" value="-" /></td>
-          <td><b>Height:</b></td>
-          <td><input type="text" id="h" value="-" /></td>
-        </tr>
-        <tr>
-          <td><b>X<sub>2</sub>:</b></td>
-          <td><input type="text" id="x2" value="-" /></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><b>Y<sub>2</sub>:</b></td>
-          <td><input type="text" id="y2" value="-" /></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-    	<div class="page-header">
-						<g:link  action="detectColor" params="[fileCropName:params.filename]"><h1> บันทึก >> </h1></g:link>
 					</div>
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-						
+					
+					 
+					 
+					 
+					 
+					<table border="0" >			
+					<tr>
+					<td width="70%">					
+					  <g:img dir="images" file="${carImage}" id="photo" width="500" height="281"  />	
+					</td>
+					<td valign="top">
+					&nbsp; <b>รายละเอียดรถ:</b><br></br>
+					<table>					
+					<tr>
+					<td> &nbsp; <b>ยี่ห้อรถ:</b></td>
+					<td>					
+    						${modelInstance.band.bandName}
+					</td>
+					</tr>					
+					<tr>
+					<td> &nbsp; <b>รุ่นรถ :</b></td>
+					<td>
+    						${modelInstance.model}
+    						</td>
+					</tr>					
+					<tr>
+					<td> &nbsp; <b>น้ำหนัก:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.gearRatio} &nbsp;กิโลกรัม
+					</td>
+					</tr>
+					<tr>
+					<td> &nbsp; <b>อัตราทดเกียร์:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.weight}
+					</td>
+					</tr>
+					<tr>
+					<td> &nbsp; <b>ค่า offSet:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.offSet}
+					</td>
+					</tr>
+					<tr>
+					<td> &nbsp; <b>รหัส PCD:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.pcdCode}
+					</td>
+					</tr>
+					
+					
+					<tr>
+					<td> &nbsp; <b>รูปล้อหน้าที่:</b></td>
+					<td>					
+    					<div id="preview" style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%;">
+         				 <g:img dir="images" file="${carImage}"  />
+      					</div>
+					</td>
+					</tr>
+					
+					</table>
+					
 					
 					
 				
+					</td>
+					</tr>
+					</table>
 					
+					 
+					 
+					 
+					 <form name="input" action="detectColor" method="post">
+
+						<table style="margin-top: 1em;">
+							<thead>
+								<tr>
+									<th colspan="2"
+										style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
+										Coordinates</th>
+									<th colspan="2"
+										style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;">
+										Dimensions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="width: 10%;"><b>X<sub>1</sub>:
+									</b></td>
+									<td style="width: 30%;">
+									
+									<input type="text" id="x1" value="0" name="backX1" />
+										
+										</td>
+									<td style="width: 20%;"><b>Width:</b></td>
+									<td>
+									<input type="text" value="0" id="w" name="backWidth" />
+										
+										
+										</td>
+								</tr>
+								<tr>
+									<td><b>Y<sub>1</sub>:
+									</b></td>
+									<td><input type="text" id="y1" value="0" name="backY1"
+										/></td>
+									<td><b>Height:</b></td>
+									<td><input type="text" id="h" value="0" name="backHeight"
+										/></td>
+								</tr>
+								<tr>
+									<td><b>X<sub>2</sub>:
+									</b></td>
+									<td><input type="text" id="x2" value="0" name="backX2"
+										 /></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><b>Y<sub>2</sub>:
+									</b></td>
+									<td><input type="text" id="y2" value="0" name="backY2"
+										 /></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="page-header" align="right">
+							<input type="hidden" name="carImage" value="${carImage}" /> <input
+								type="hidden" name="modelId" value="${modelInstance.id}" /> <input
+								type="submit" value="บันทึก และ กำหนดสีของรถ>>">
+						</div>
 				</div>
+				<div style="clear: both;"></div>
 			</div>
+
+
+			</form>
+
+
 		</div>
-	
+	</div>
+	</div>
 
 
 
 
-		
 
-    </body>
+
+
+</body>
 </html>

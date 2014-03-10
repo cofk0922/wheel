@@ -1,111 +1,224 @@
-
-
-<html lang="en">
-<head>
-<title>Live Cropping Demo</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-
-         <link href="../css/detectColor/main.css" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="../js/detectColor/jquery-1.5.2.min.js"></script><%--
+<html lang="en" >
+    <head>
+        <meta charset="utf-8"/>
+        <title>HTML5 canvas - Image color picker | Script Tutorials</title>
+        <link href="../css/detectImage/main.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="../js/detectColor/jquery-1.5.2.min.js"></script>
         <script type="text/javascript" src="../js/detectColor/script.js"></script>
---%>
+        
+          <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
+  <link rel="stylesheet" href="../css/demos.css" type="text/css" />
+  <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+   <link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript">
-  var canvas;
-var ctx;
+  
+ 
+  <g:javascript src="jquery.min.js" />
+<g:javascript src="jquery-1.6.1.min.js" />
+<g:javascript src="jquery.imgareaselect.pack.js" />
+        
+        
+        
+        
+        
+        
+  <script type="text/javascript">
+        var canvas;
+        var ctx;
+        var images = [ 
+                      '${carImage}'
+       ];
+        var iActiveImage = 0;
 
-var images = [ 
-               '${fileCropName}'
-];
+        $(function(){
 
-var iActiveImage = 0;
+            // drawing active image
+            var image = new Image();
+            image.onload = function () {
+                ctx.drawImage(image, 0, 0, image.width, image.height); // draw the image on the canvas
+            }
+            image.src = images[iActiveImage];
 
-$(function(){
+            // creating canvas object
+            canvas = document.getElementById('panel');
+            ctx = canvas.getContext('2d');
 
-    // drawing active image
-    var image = new Image();
-    image.onload = function () {
-        ctx.drawImage(image, 0, 0, image.width, image.height); // draw the image on the canvas
-    }
-    image.src = images[iActiveImage];
+            $('#panel').mousemove(function(e) { // mouse move handler
+                var canvasOffset = $(canvas).offset();
+                var canvasX = Math.floor(e.pageX - canvasOffset.left);
+                var canvasY = Math.floor(e.pageY - canvasOffset.top);
 
-    // creating canvas object
-    canvas = document.getElementById('panel');
-    ctx = canvas.getContext('2d');
+                var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
+                var pixel = imageData.data;
 
-    $('#panel').mousemove(function(e) { // mouse move handler
-        var canvasOffset = $(canvas).offset();
-        var canvasX = Math.floor(e.pageX - canvasOffset.left);
-        var canvasY = Math.floor(e.pageY - canvasOffset.top);
+                var pixelColor = "rgba("+pixel[0]+", "+pixel[1]+", "+pixel[2]+", "+pixel[3]+")";
+                $('#preview').css('backgroundColor', pixelColor);
+            });
 
-        var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-        var pixel = imageData.data;
+            $('#panel').click(function(e) { // mouse click handler
+                var canvasOffset = $(canvas).offset();
+                var canvasX = Math.floor(e.pageX - canvasOffset.left);
+                var canvasY = Math.floor(e.pageY - canvasOffset.top);
 
-        var pixelColor = "rgba("+pixel[0]+", "+pixel[1]+", "+pixel[2]+", "+pixel[3]+")";
-        $('#preview').css('backgroundColor', pixelColor);
-    });
+                var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
+                var pixel = imageData.data;
 
-    $('#panel').click(function(e) { // mouse click handler
-        var canvasOffset = $(canvas).offset();
-        var canvasX = Math.floor(e.pageX - canvasOffset.left);
-        var canvasY = Math.floor(e.pageY - canvasOffset.top);
+                $('#rVal').val(pixel[0]);
+                $('#gVal').val(pixel[1]);
+                $('#bVal').val(pixel[2]);
 
-        var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-        var pixel = imageData.data;
+                
 
-        $('#rVal').val(pixel[0]);
-        $('#gVal').val(pixel[1]);
-        $('#bVal').val(pixel[2]);
+                $('#rgbVal').val(pixel[0]+','+pixel[1]+','+pixel[2]);
+                $('#rgbaVal').val(pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]);
+                var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
+                $('#hexVal').val( '#' + dColor.toString(16) );
 
-        $('#rgbVal').val(pixel[0]+','+pixel[1]+','+pixel[2]);
-        $('#rgbaVal').val(pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]);
-        var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
-        $('#hexVal').val( '#' + dColor.toString(16) );
-    }); 
+                rgb2hsv ( $('#rVal').val(),$('#gVal').val(),$('#bVal').val())
+            }); 
 
-    $('#swImage').click(function(e) { // switching images
-        iActiveImage++;
-        if (iActiveImage >= 10) iActiveImage = 0;
-        image.src = images[iActiveImage];
-    });
-});
-</script>
+            $('#swImage').click(function(e) { // switching images
+                iActiveImage++;
+                if (iActiveImage >= 10) iActiveImage = 0;
+                image.src = images[iActiveImage];
+            });
+        });
 
-</head>
-<body>
 
-	
-<div class="container">
+
+
+        
+function rgb2hsv (r,g,b) {
+		var computedH = 0;
+ 		var computedS = 0;
+ 		var computedV = 0;
+
+ //remove spaces from input RGB values, convert to int
+ var r = parseInt( (''+r).replace(/\s/g,''),10 ); 
+ var g = parseInt( (''+g).replace(/\s/g,''),10 ); 
+ var b = parseInt( (''+b).replace(/\s/g,''),10 ); 
+
+ if ( r==null || g==null || b==null ||
+     isNaN(r) || isNaN(g)|| isNaN(b) ) {
+   alert ('Please enter numeric RGB values!');
+   return;
+ }
+ if (r<0 || g<0 || b<0 || r>255 || g>255 || b>255) {
+   alert ('RGB values must be in the range 0 to 255.');
+   return;
+ }
+ r=r/255; g=g/255; b=b/255;
+ var minRGB = Math.min(r,Math.min(g,b));
+ var maxRGB = Math.max(r,Math.max(g,b));
+
+ // Black-gray-white
+ if (minRGB==maxRGB) {
+  computedV = minRGB;
+  return [0,0,computedV];
+ }
+
+ // Colors other than black-gray-white:
+ var d = (r==minRGB) ? g-b : ((b==minRGB) ? r-g : b-r);
+ var h = (r==minRGB) ? 3 : ((b==minRGB) ? 1 : 5);
+ computedH = 60*(h - d/(maxRGB - minRGB));
+ computedS = ((maxRGB - minRGB)/maxRGB)*100;
+ computedV = maxRGB*100;
+ document.getElementById('hVal').value=parseInt(computedH);
+ document.getElementById('sVal').value=parseInt(computedS);
+ document.getElementById('vVal').value=parseInt(computedV);
+
+// return [computedH,computedS,computedV];
+}
+        </script>
+    </head>
+    <body  >
+    
+    <div class="container">
+		<div class="row">
+			<div class="span12">
+				<div class="jc-demo-box">
+
+					<div class="page-header">
+						<ul class="breadcrumb first">
+							<li><a href="../">เมนู</a> <span class="divider">/</span>
+							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> <span class="divider">/</span>
+							<a href="../maxWheel/detectImage?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหน้า</a> <span class="divider">/</span>
+							<a href="../maxWheel/detectImageBack?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหลัง</a> <span class="divider">/</span>
+							
+							</li>
+						</ul>
+						<h1>กำหนดสีของรถ</font></h1>
+					</div>
+     <form name="input" action="saveCar" method="post">
+    
+        <div class="container">
+
             <div class="column1">
-                <canvas id="panel" width="450" height="228"></canvas>
+                <canvas id="panel" width="500" height="300"></canvas>
             </div>
             <div class="column2">
-                <!--<div><input type="button" value="Next image" id="swImage" /></div>-->
+              
                 <div>Preview:</div>
-                <div id="preview"></div>
+                <div id="preview"></div>               
                 <div>Color:</div>
-                <div>R: <input type="text" id="rVal" disabled="disabled" /></div>
-                <div>G: <input type="text" id="gVal" disabled="disabled" /></div>
-                <div>B: <input type="text" id="bVal" disabled="disabled" /></div>
-                <div>RGB: <input type="text" id="rgbVal" disabled="disabled" /></div>
-                <div>RGBA: <input type="text" id="rgbaVal" disabled="disabled" /></div>
-                <div>HEX: <input type="text" id="hexVal" disabled="disabled" /></div>
-                <hr />
+                <div style="display: none;">R: <input type="text" id="rVal" ></div>
+                <div style="display: none;">G: <input type="text" id="gVal" ></div>
+                <div style="display: none;">B: <input type="text" id="bVal" ></div>
+                <div>H: <input type="text" id="hVal" name="hVal"></div>
+                <div>S: <input type="text" id="sVal" name="sVal"></div>
+                <div>V: <input type="text" id="vVal" name="vVal"></div>
+                <div style="display: none;">RGB:<input type="text" id="rgbVal" ></div>
+  				<div style="display: none;">RGBA: <input type="text" id="rgbaVal" ></div>
+                <div>HEX: <input type="text" id="hexVal" name="hexVal" ></div>            
             </div>
             <div style="clear:both;"></div>
         </div>
+        
+        
+        
+  <table border="0" >			
+									
+					<tr>
+					<td> &nbsp; <b>ยี่ห้อรถ:</b>
+    						${modelInstance.band.bandName}
+				 &nbsp; <b>รุ่นรถ :</b>
+    						${modelInstance.model}
+    						</td>
+					</tr>					
+					<tr>
+					<td> &nbsp; <b>น้ำหนัก:</b>
+    						&nbsp;${modelInstance.gearRatio} &nbsp;กิโลกรัม
+					 &nbsp; <b>อัตราทดเกียร์:</b>			
+    						&nbsp;${modelInstance.weight}
+					</td>
+					</tr>
+					<tr>
+					<td> &nbsp; <b>ค่า offSet:</b>	
+    						&nbsp;${modelInstance.offSet}
+					 &nbsp; <b>รหัส PCD:</b>
+    						&nbsp;${modelInstance.pcdCode}
+					</td>
+					</tr>
+					</table>
+        
+        
+        
+        
+<div class="page-header" align="left">
+							<input type="hidden" name="carImage" value="${carImage}" /> <input
+								type="hidden" name="modelId" value="${modelInstance.id}" /> <input
+								type="submit" value="บันทึกข้อมูลรถ">
+						</div>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
 
-					
-					
-					
-					
-					
-					
-					
-					<div class="page-header">
-						<g:link  action="detectColor" params="[fileCropName:fileCropName]"><h1> Step3 >> </h1></g:link>
-					</div>
-	
-</body>
 
+			</form>
+
+
+		</div>
+	</div>
+
+    </body>
 </html>
