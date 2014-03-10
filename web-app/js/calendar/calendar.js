@@ -1,5 +1,5 @@
-	var fncRender = function(min,max,dayoff,holidays) {
-		$('#calendar').fullcalendar({
+	var fncRender = function(data,max,min,daysoff,holidays) {
+		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -12,29 +12,18 @@
 			defaultEventMinutes: 30, 
 			editable: true,
 			allDaySlot: false,
-			events: fncGetData,
+			events: data,
 			eventAfterAllRender: function() {
-				//Case 1: Specify date for holiday
 				
-				//var arr = ["2014-03-15", "2014-03-25"];
-				
-				//for (i = 0; i < arr.length; i += 1) {
-				//	$('[data-date="' + arr[i] + '"]').addClass("holiday");
-				//}
-				// var holidays = [
-					// { day: "2014-03-15" },
-					// { day: "2014-03-25" }
-				// ];
-				
+				console.log(holidays);
 				$.each(holidays, function(i, item) {
 					$('[data-date="' + item.day + '"]').addClass("holiday");
 				});
-
-				//Case 2: Every daysoff
-				$.each(dayoff, function(i, item) {
-				$('.fc-'+item.day+':not(.fc-day-header)').addClass("daysoff");
-				}				
-			}
+				//Case 2: Every dayoff
+				$.each(daysoff, function(i, item) {
+				$('.fc-'+item.day+':not(.fc-day-header)').addClass("dayoff");
+				});				
+			},
 			eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
 				$.post('../appointment/validateTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update' }, function(result){
 					if (result.isValid){
@@ -94,41 +83,15 @@
 					}
 				})
 			}
-		});
+		})
 	};
 	
-	var fncGetData = function(start, end, callback) {
-		//var param = [];
-		//param.push({ start: start });
-		//param.push({ end: end });
-		
-		// var date = new Date();
-			// $.post( "../appointment/getEvents", { 'month':  date.getMonth(), 'year':  date.getFullYear()}, function(result) {
-				// fncRender(result.events,result.maxtime,result.mintime);
-			// } );
-			
-		$.post( "../appointment/getEvents", { 'start':  start, 'end':  end}, function(result) {
-				$.each(result.events, function(i, item) {
-					var eventObj = {
-						id: result.id,
-						title: result.title,
-						start: result.start,
-						end:	end,
-						allDay: result.allDay
-					};
-					$('#calendar').fullcalendar('renderEvent', eventObj);
-				});
-			}
-		});
-	};
-	
-	var fncGetSetting = function() {		
-		var date = new Date();
-		$.post( "../appointment/getSettingCalendar", function(result) {
-			fncRender(result.mintime,result.maxtime,result.dayoff,result.holidays);
+	var fncGetData = function() {		
+		$.post( "../appointment/getEvents", function(result) {
+			fncRender(result.events,result.maxtime,result.mintime,result.daysoff,result.holidays);
 		} );
 	};
 	
 	$(document).ready(function() {
-		fncGetSetting();
+		fncGetData();
 	});
