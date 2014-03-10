@@ -3,6 +3,7 @@
 <head>
 <link href='../css/calendar/fullcalendar.css' rel='stylesheet' />
 <link href='../css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<link href='../css/calendar/calendar.css' rel='stylesheet' />
 <script src='../js/calendar/lib/jquery.min.js'></script>
 <script src='../js/calendar/lib/jquery-ui.custom.min.js'></script>
 <script src='../js/calendar/fullcalendar.min.js'></script>
