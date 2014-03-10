@@ -13,7 +13,7 @@ class MaxWheel extends Product{
 	ProdStatus pStatus
 	
 	//Set wheelList = []
-	static hasMany = [wheelLists: CarWheelList]
+	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel]
 
     static constraints = {
 		band blank: false
