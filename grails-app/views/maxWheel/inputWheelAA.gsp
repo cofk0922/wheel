@@ -87,7 +87,7 @@
     						${carInstance.bandName}
     						</g:if>
     						<g:else>
-    						<g:select name="bandName"
+    						<g:select name="band"
 							from="${listCarBand.sort{it.id}}" optionKey="id" optionValue="bandName"
 							noSelection="['':'กรุณาเลือกยี่ห้อรถ']"/>
 							</g:else>
@@ -100,19 +100,39 @@
 					<td>รุ่นรถ :</td>
 					<td>
 	
-						<g:if test="${modelInstance}">
-    						${modelInstance.model}
-    						</g:if>
-    						<g:else>
-    						<g:select name="modelId"
-							from="${listCarModel.sort{it.id}}" optionKey="id" optionValue="model"
-							noSelection="['':'กรุณาเลือกรุ่นรถ']"/>
-							</g:else>	
-							
-							
-							<a href="#">เพิ่มรุ่นรถ(ในกรณีที่ไม่มีข้อมูลรุ่นรถอยู่)</a>									
-					</td>
+					<input type="text" name="model" /></td>
+					
+					
 					</tr>
+					<tr>
+					<td>น้ำหนักรถ :</td>
+					<td><input type="text" name="weight" /> กก.</td>
+					
+					</tr>
+					
+				
+					<tr>
+					<td>  อัตราทดเกียร์  :</td>
+					<td><input type="text" name="gearRatio" /></td>
+					
+					</tr>
+					
+					<tr>
+					<td> ค่า offSet:</td>
+					<td><input type="text" name="offSet" /></td>
+					
+					</tr>
+					
+					
+						<tr>
+					<td>  รหัส PCD:</td>
+					<td><input type="text" name="pcdCode" /></td>
+					
+					</tr>
+					
+
+					
+					
 					<tr>
 					
 					

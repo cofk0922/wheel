@@ -66,77 +66,68 @@
 					<div class="page-header">
 						<ul class="breadcrumb first">
 							<li><a href="../">เมนู</a> <span class="divider">/</span>
-							
-							
-							
-							</li>
+							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่(อัพโหลดรูปภาพ)</a> <span class="divider">/</span></li>
 						</ul>
-						<h1>ระบบนำเข้าล้อแม็กซ์และอะไหล่</h1>
+						<h1>รายละเอียดข้อมูลพื้นฐานรถ </h1>
 					</div>
 					
 					<!-- image Upload-->
 					
-					<g:uploadForm action="preview">
-					<table>
-					
+			<table border="0" >			
 					<tr>
-					<td>ยี่ห้อรถ  :</td>
-					<td>
-					
-    						<g:if test="${carInstance}">
-    						${carInstance.bandName}
-    						</g:if>
-    						<g:else>
-    						<g:select name="bandName"
-							from="${listCarBand.sort{it.id}}" optionKey="id" optionValue="bandName"
-							noSelection="['':'กรุณาเลือกยี่ห้อรถ']"/>
-							</g:else>
-							
-
+					<td width="70%">					
+					<g:if test="${carImage}">
+						<g:img dir="images" file="${carImage}" id="cropbox" /></g:if>		
+						<%--<g:img dir="images" file="test_car.jpg" id="cropbox" />			
+					--%></td>
+					<td valign="top" align="left" width="30%">					
+					<table>					
+					<tr>
+					<td> &nbsp; <b>ยี่ห้อรถ:</b></td>
+					<td>					
+    						${modelInstance.band.bandName}
 					</td>
-					</tr>
-					
+					</tr>					
 					<tr>
-					<td>รุ่นรถ :</td>
+					<td> &nbsp; <b>รุ่นรถ :</b></td>
 					<td>
-	
-						<g:if test="${modelInstance}">
     						${modelInstance.model}
-    						</g:if>
-    						<g:else>
-    						<g:select name="modelId"
-							from="${listCarModel.sort{it.id}}" optionKey="id" optionValue="model"
-							noSelection="['':'กรุณาเลือกรุ่นรถ']"/>
-							</g:else>	
-							
-							
-							<a href="#">เพิ่มรุ่นรถ(ในกรณีที่ไม่มีข้อมูลรุ่นรถอยู่)</a>									
+    						</td>
+					</tr>					
+					<tr>
+					<td> &nbsp; <b>น้ำหนัก:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.gearRatio} &nbsp;กิโลกรัม
 					</td>
 					</tr>
 					<tr>
-					
-					
-					<td>รูปภาพรถ  :</td>
-					
-				
-					<td><input type="file" name="myFile" />
-					
-					<font color="red"> รูปภาพควรมีขาด 500x300 Pixel</font>
-					
+					<td> &nbsp; <b>อัตราทดเกียร์:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.weight}
 					</td>
 					</tr>
-			
+					<tr>
+					<td> &nbsp; <b>ค่า offSet:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.offSet}
+					</td>
+					</tr>
+					<tr>
+					<td> &nbsp; <b>รหัส PCD:</b></td>
+					<td>					
+    						&nbsp;${modelInstance.pcdCode}
+					</td>
+					</tr>
+					
+
 					</table>
-					<br>
-					
-					
-					
-       				 <input type="submit" value="ตกลง" />
-       				 
-    				</g:uploadForm>
-
-
-					
+					</td>
+				</tr>
+			</table>		
+						<div class="page-header" align="right">
+						<g:link  action="detectImage" params="[carImage:carImage,modelId:modelInstance.id]"><h1> กำหนดจุดล้อหน้า(ขั้นตอนที่ 2) >> </h1></g:link>
+					</div>
+			
 				</div>
 			</div>
 		</div>
