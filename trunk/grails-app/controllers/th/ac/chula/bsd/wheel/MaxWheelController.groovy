@@ -123,7 +123,7 @@ class MaxWheelController {
 		}
 		def carImage = f.originalFilename
 		
-		//grailsApplication.config.uploadFolder config in  cofig.groovy line 89
+		//grailsApplication.config.uploadFolder is Define Path image in local config in  cofig.groovy line 89
 		
 		def fullPath = grailsApplication.config.uploadFolder+carImage
 		f.transferTo(new File(fullPath))
