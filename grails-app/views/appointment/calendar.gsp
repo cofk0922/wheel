@@ -7,7 +7,7 @@
 <script src='../js/calendar/lib/jquery.min.js'></script>
 <script src='../js/calendar/lib/jquery-ui.custom.min.js'></script>
 <script src='../js/calendar/fullcalendar.min.js'></script>
-<script src='../js/calendar/appointment.js'></script>
+<script src='../js/calendar/calendar.js'></script>
 <style>
 
 	body {
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<div id='appointment'></div>
+<div id='calendar'></div>
 <div id='status'></div>
 </body>
 </html>
