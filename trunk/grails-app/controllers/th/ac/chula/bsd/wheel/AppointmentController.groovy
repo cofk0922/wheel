@@ -168,23 +168,23 @@ class AppointmentController {
 		def events = []
 		def responseData = [
 			'id': '999',
-			'title': '[ test1 ]',
-			'start': '2014-03-07',
-			'end': '2014-03-10',
-			'color': '#00ff00'
+			'start': '2014-03-17 9:30',
+			'end': '2014-03-17 10:30',
+			'color': '#008e8e',
+			'allDay': false
 		]
 
 		def responseData2 = [
 			'id': '20',
-			'title': 'xxxx',
-			'start': '2014-03-08',
-			'end': '2014-03-15',
-			'color': '#00ff00'
+			'start': '2014-03-14 12:00',
+			'end': '2014-03-14 12:30',
+			'color': '#008e8e',
+			'allDay': false
 		]
 		
 		//{
 		//			id: 999,
-		//			title: '[ 1à¹€à¸˜ï¿½à¹€à¸˜â€� 2222 ]',
+		//			title: '[ CR7 2222 ]',
 //					start: new Date(y, m, d-3, 16, 0),
 //					end: new Date(y, m, d-3, 18, 0),
 //					color: '#acacac',
