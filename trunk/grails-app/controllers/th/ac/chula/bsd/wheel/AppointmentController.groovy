@@ -157,7 +157,7 @@ class AppointmentController {
 	}
 	
 	// Bird
-	def calendar(){
+	def appointmentCalendar(){
 		return
 	}
 	
@@ -184,7 +184,7 @@ class AppointmentController {
 		
 		//{
 		//			id: 999,
-		//			title: '[ 1เธ�เธ” 2222 ]',
+		//			title: '[ 1à¹€à¸˜ï¿½à¹€à¸˜â€� 2222 ]',
 //					start: new Date(y, m, d-3, 16, 0),
 //					end: new Date(y, m, d-3, 18, 0),
 //					color: '#acacac',
