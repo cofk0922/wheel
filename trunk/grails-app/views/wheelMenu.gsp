@@ -85,7 +85,13 @@ p {
  
 		
 		<tr>
-			<td>- <g:link controller="appointment">ระบบจัดตารางการนัดหมายติดตั้ง</g:link></td>
+			<td>- <g:link controller="appointment">ระบบนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="appointment" action="appointmentCalendar">ระบบเพิ่มการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="appointment" action="manageCalendar">ระบบจัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="orderAndTransfer">ระบบสั่งซื้อและโอนล้อแม็กซ์และอะไหล่</g:link></td>
@@ -99,9 +105,6 @@ p {
 		<tr>
 			<td>- <g:link controller="maxWheel" action="inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</g:link></td>
 		</tr>  
-		<tr>
-			<td>- <g:link controller="appointment" action="appointmentCalendar">ตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
-		</tr> 
 		<tr>
 			<td>- <g:link controller="configMenu">การตั้งค่าระบบ</g:link></td>
 		</tr>
