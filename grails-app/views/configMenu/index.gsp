@@ -88,6 +88,9 @@ p {
 			<td>- <g:link controller="product">รายการสินค้า</g:link></td>
 		</tr>
 		<tr>
+			<td>- <g:link controller="carBand">ยี่ห้อรถ</g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="carModel">รุ่นรถยนต์ </g:link></td>
 		</tr>
 		<tr>
