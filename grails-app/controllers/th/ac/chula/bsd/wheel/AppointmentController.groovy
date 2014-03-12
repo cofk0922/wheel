@@ -161,6 +161,10 @@ class AppointmentController {
 		return
 	}
 	
+	def manageCalendar(){
+		return
+	}
+	
 	def getEvents(){
 		
 		println "getEvents"
@@ -170,7 +174,7 @@ class AppointmentController {
 			'id': '999',
 			'start': '2014-03-17 9:30',
 			'end': '2014-03-17 10:30',
-			'color': '#008e8e',
+			'color': '#00ff00',
 			'allDay': false
 		]
 
@@ -178,7 +182,7 @@ class AppointmentController {
 			'id': '20',
 			'start': '2014-03-14 12:00',
 			'end': '2014-03-14 12:30',
-			'color': '#008e8e',
+			'color': '#00ff00',
 			'allDay': false
 		]
 		
