@@ -176,7 +176,7 @@ class AppointmentController {
 
 		def responseData2 = [
 			'id': '20',
-			'title': 'xxx',
+			'title': 'xxxx',
 			'start': '2014-03-08',
 			'end': '2014-03-15',
 			'color': '#00ff00'
