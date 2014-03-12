@@ -100,7 +100,7 @@ p {
 			<td>- <g:link controller="maxWheel" action="inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</g:link></td>
 		</tr>  
 		<tr>
-			<td>- <g:link controller="appointment" action="calendar">ตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+			<td>- <g:link controller="appointment" action="appointmentCalendar">ตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 		</tr> 
 		<tr>
 			<td>- <g:link controller="configMenu">การตั้งค่าระบบ</g:link></td>
