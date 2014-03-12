@@ -4,7 +4,6 @@ import java.util.Set;
 
 class CarModel {
 	
-	CarBand band
 	String model
 	int year
 	String pcdCode
@@ -39,6 +38,8 @@ class CarModel {
 	
 //	Set wheelList = []
 	static hasMany = [wheelLists: CarWheelList]
+	
+	static hasOne = [band: CarBand]
 	
 	static constraints = {
 		
