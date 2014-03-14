@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
+import th.ac.chula.bsd.inventory.PreProductTransferLine;
 import th.ac.chula.bsd.security.User;
 
 class Appointment {
@@ -11,6 +13,7 @@ class Appointment {
 	Date updatedDate = new Date()
 	Date startDate = new Date()
 	Date endDate = new Date()
+	Date endAppointmentDate = new Date()
 	Double installTotal = 0.0
 	AppointmentStatus status = AppointmentStatus.NEW
 	
@@ -25,8 +28,12 @@ class Appointment {
 		]
 	
 	Set subOrders = []
+	Set preProductTransfer = []
+	Set preProductPurchase = []
 	static hasMany = [
-		subOrders: AppointmentOrderList
+		subOrders: AppointmentOrderList,
+		preProductTransfer: PreProductTransferLine,
+		preProductPurchase: PreProductPurchaseLine
 		]
 	
 	Customer customer
@@ -37,6 +44,7 @@ class Appointment {
 		updatedDate blank: false
 		startDate blank: false
 		endDate blank: false
+		endAppointmentDate blank:false 
 		installTotal blank: false
 		status nullable: false
 	}
@@ -47,28 +55,31 @@ class Appointment {
 		this.updatedBy = u
 	}
 	
-	public void addProduct(int pID, int amount) {
-		def order = new AppointmentOrderList(appointment:this)
+	public void addProduct(User u, int pID, int amount) {
+		this.updateByUser(u)
+		def order = new AppointmentOrderList(appointment:this, branch: this.branch)
 		order.setProductWithAmount(pID, amount, this.branch)
 		def o = order
 		this.subOrders.add(order)
-				
+		/*		
 		if(order.product.productType == ProductType.WHEEL){
 			int knotTotalAmt = order.product.calPartUsage(amount)
 			def orderKnot = new AppointmentOrderList(appointment:this)
 			orderKnot.setProductWithAmount(order.product.productPart.id, knotTotalAmt, this.branch)
 			this.subOrders.add(orderKnot)
-		}
+		}*/
 		this.calNetTotal()
 		this.calStartEndAppointment()
 	}
 	
-	public void removeProduct(int pID) {
+	public void removeProduct(User u, int pID) {
+		this.updateByUser(u)
 		def order = this.subOrders.find{it.product.id == pID}
+		/*
 		if(order.product.productType == ProductType.WHEEL) {
 			def orderKnot = this.subOrders.find{it.product.id == order.product.productPart.id}
 			this.subOrders.remove(orderKnot)
-		}
+		}*/
 		this.subOrders.remove(order)
 		this.calNetTotal()
 		this.calStartEndAppointment()
@@ -102,15 +113,25 @@ class Appointment {
 		this.installation.startDate = calendar.getTime()
 		calendar.add(Calendar.MINUTE, this.branch.calInstallTimeSpend())
 		this.installation.endDate = calendar.getTime()
+		this.endAppointmentDate = new Date(this.installation.endDate.getTime())
+		for(o in this.subOrders){
+			if(o.product.productType == ProductType.WHEEL || o.product.productType == ProductType.KNOT){
+				this.installation.addRequisition(o.product, o.amount)
+			}
+		}
 		
-		//Requisition and Purchase
-		for(or in this.subOrders){
-			if (or.isRequisit) {
-				// TODO create requisition
+		//Brunch Transfer and Purchase
+		for(o in this.subOrders){
+			if (o.isTransfer) {
+				PreProductTransferLine transfer = new PreProductTransferLine()
+				transfer.initialPreProductTransfer(this, o.product, o.amount)
+				this.preProductTransfer.add(transfer)
 			}
 			
-			if (or.isPurchase){
-				// TODO create purchase
+			if (o.isPurchase){
+				PreProductPurchaseLine purchase = new PreProductPurchaseLine()
+				purchase.initialPreProductPurchase(this, o.product, o.amount)
+				this.preProductPurchase.add(purchase)
 			}
 		}
 	}
@@ -146,7 +167,11 @@ class Appointment {
 		return result
 	}
 	
-//========================= Inclass Method
+//====== Private Method ======
+	private void updateByUser(User u){
+		this.updatedBy = u
+		this.updatedDate = new Date()
+	}
 	
 	private AppointmentOrderList findOrderByProductID(int pID){
 		return this.subOrders.findAllByProduct(Product.get(pID))
@@ -182,10 +207,7 @@ class Appointment {
 			// Check Holiday
 			def checkHoliday = new Date(startDate.getTime());
 			checkHoliday.set(second:0, minute:0, hourOfDay:0)
-			def lholidays = Holiday.withCriteria {
-				eq('holidayDate', checkHoliday)
-			}
-			if(lholidays.size() > 0){
+			if(this.branch.checkHoliday(checkHoliday)){
 				startDate = this.branch.getOpenTime(new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(1)))
 				continue
 			}
@@ -199,7 +221,7 @@ class Appointment {
 				continue
 			}
 			
-			// Check Lunch and Close Time
+			// Check Open Lunch and Close Time
 			Boolean isInstallNow = true
 			if(startDate == today){
 				Date calDateEnd = new Date(startDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calTotalTimeSpend()))
@@ -230,8 +252,13 @@ class Appointment {
 			}
 			endDate = installEndDate
 			
+			// Check Open Time
+			if(startDate < this.branch.getOpenTime(startDate)){
+				startDate = this.branch.getOpenTime(new Date(startDate.getTime()))
+				continue
+			}
+			
 			// Check Close Time
-			Date closeTTT = this.branch.getCloseTime(endDate)
 			if(endDate > this.branch.getCloseTime(endDate)){
 				startDate = this.branch.getOpenTime(new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(1)))
 				continue

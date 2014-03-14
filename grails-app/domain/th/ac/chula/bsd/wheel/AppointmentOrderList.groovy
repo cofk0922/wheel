@@ -7,10 +7,11 @@ class AppointmentOrderList {
 	Double unitPrice = 0.0
 	
 	Product product
+	Branch branch
 	
 	static belongsTo = [appointment : Appointment]
 	
-	Boolean isRequisit = false
+	Boolean isTransfer = false
 	Boolean isPurchase = false
 	
 	static constraints = {
@@ -39,7 +40,7 @@ class AppointmentOrderList {
 			
 			if (tranP instanceof ProductBranchTransfer){
 				ProductBranchTransfer pbt = (ProductBranchTransfer) tranP
-				this.isRequisit = true
+				this.isTransfer = true
 				
 				if(pbt.transferDay > 0){
 					calendar.setTime(b.getOpenTime(startDate))
