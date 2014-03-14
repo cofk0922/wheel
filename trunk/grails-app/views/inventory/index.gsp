@@ -37,6 +37,11 @@
 			<div class="pagination">
 				<g:paginate total="${inventoryInstanceCount ?: 0}" />
 			</div>
+			
+			<!-- May -->
+			<div>
+				<a href="${createLink(uri:'/inventory/showPrePurchase') }">Test Appointment</a>
+			</div>
 		</div>
 	</body>
 </html>
