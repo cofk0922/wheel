@@ -1,15 +1,24 @@
 import th.ac.chula.bsd.wheel.CarBand
 import th.ac.chula.bsd.wheel.CarModel
 
+import th.ac.chula.bsd.security.Role;
+import th.ac.chula.bsd.security.User;
+import th.ac.chula.bsd.security.UserRole;
+import th.ac.chula.bsd.wheel.Branch;
+
 class BootStrap {
 
     def init = { servletContext ->
 		/*
 		Branch b = Branch.get(1)
+		Branch b2 = Branch.get(2)
 		
 		def adminRole = Role.findOrSaveWhere(authority:'ROLE_ADMIN')
 		def userRole = Role.findOrSaveWhere(authority:'ROLE_USER')
 		def user = User.findOrSaveWhere(username:'user1', password:'user1', branch: b, firstName:'Userfirstname', lastName:'Userlastname', email:'user1@wheel.bsd.chula.ac.th')
+		
+		def user2 = User.findOrSaveWhere(username:'user2', password:'user2', branch: b2, firstName:'Userfirstname', lastName:'Userlastname', email:'user2@wheel.bsd.chula.ac.th')
+		
 		
 		if(!user.authorities.contains(adminRole)){
 			UserRole.create(user, adminRole,true)
@@ -17,6 +26,15 @@ class BootStrap {
 		
 		if(!user.authorities.contains(userRole)){
 			UserRole.create(user, userRole,true)
+		}
+		
+		
+		if(!user2.authorities.contains(adminRole)){
+			UserRole.create(user2, adminRole,true)
+		}
+		
+		if(!user2.authorities.contains(userRole)){
+			UserRole.create(user2, userRole,true)
 		}
 		*/
 		
