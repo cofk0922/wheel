@@ -1,108 +1,118 @@
 package th.ac.chula.bsd.wheel
 
 import static org.springframework.http.HttpStatus.*
+import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
+import th.ac.chula.bsd.inventory.PreProductPurchaseStatus;
+import th.ac.chula.bsd.inventory.PreProductTransferLine;
+import th.ac.chula.bsd.inventory.ProductPurchase;
+import th.ac.chula.bsd.inventory.ProductPurchaseLine;
+import th.ac.chula.bsd.inventory.ProductPurchaseStatus;
+import th.ac.chula.bsd.inventory.ProductTransferLine;
+import th.ac.chula.bsd.inventory.PurchasePaymentType;
+import th.ac.chula.bsd.inventory.ReceivePurchase;
+import th.ac.chula.bsd.security.User;
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
 	
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
-		respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
-	}
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
+    }
 
-	def show(Appointment appointmentInstance) {
-		respond appointmentInstance
-	}
+    def show(Appointment appointmentInstance) {
+        respond appointmentInstance
+    }
 
-	def create() {
-		respond new Appointment(params)
-	}
+    def create() {
+        respond new Appointment(params)
+    }
 
-	@Transactional
-	def save(Appointment appointmentInstance) {
-		if (appointmentInstance == null) {
-			notFound()
-			return
-		}
+    @Transactional
+    def save(Appointment appointmentInstance) {
+        if (appointmentInstance == null) {
+            notFound()
+            return
+        }
 
-		if (appointmentInstance.hasErrors()) {
-			respond appointmentInstance.errors, view:'create'
-			return
-		}
+        if (appointmentInstance.hasErrors()) {
+            respond appointmentInstance.errors, view:'create'
+            return
+        }
 
-		appointmentInstance.save flush:true
+        appointmentInstance.save flush:true
 
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.created.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), appointmentInstance.id])
-				redirect appointmentInstance
-			}
-			'*' { respond appointmentInstance, [status: CREATED] }
-		}
-	}
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), appointmentInstance.id])
+                redirect appointmentInstance
+            }
+            '*' { respond appointmentInstance, [status: CREATED] }
+        }
+    }
 
-	def edit(Appointment appointmentInstance) {
-		respond appointmentInstance
-	}
+    def edit(Appointment appointmentInstance) {
+        respond appointmentInstance
+    }
 
-	@Transactional
-	def update(Appointment appointmentInstance) {
-		if (appointmentInstance == null) {
-			notFound()
-			return
-		}
+    @Transactional
+    def update(Appointment appointmentInstance) {
+        if (appointmentInstance == null) {
+            notFound()
+            return
+        }
 
-		if (appointmentInstance.hasErrors()) {
-			respond appointmentInstance.errors, view:'edit'
-			return
-		}
+        if (appointmentInstance.hasErrors()) {
+            respond appointmentInstance.errors, view:'edit'
+            return
+        }
 
-		appointmentInstance.save flush:true
+        appointmentInstance.save flush:true
 
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.updated.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-				redirect appointmentInstance
-			}
-			'*'{ respond appointmentInstance, [status: OK] }
-		}
-	}
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
+                redirect appointmentInstance
+            }
+            '*'{ respond appointmentInstance, [status: OK] }
+        }
+    }
 
-	@Transactional
-	def delete(Appointment appointmentInstance) {
+    @Transactional
+    def delete(Appointment appointmentInstance) {
 
-		if (appointmentInstance == null) {
-			notFound()
-			return
-		}
+        if (appointmentInstance == null) {
+            notFound()
+            return
+        }
 
-		appointmentInstance.delete flush:true
+        appointmentInstance.delete flush:true
 
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.deleted.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
-				redirect action:"index", method:"GET"
-			}
-			'*'{ render status: NO_CONTENT }
-		}
-	}
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Appointment.label', default: 'Appointment'), appointmentInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
 
-	protected void notFound() {
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.not.found.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), params.id])
-				redirect action: "index", method: "GET"
-			}
-			'*'{ render status: NOT_FOUND }
-		}
-	}
+    protected void notFound() {
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'appointmentInstance.label', default: 'Appointment'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
 	
 	// May
 	@Transactional
@@ -113,13 +123,23 @@ class AppointmentController {
 		Branch b = u.branch
 		b.refresh()
 		
+		
+		// Test Calendar
+		def holidayList = b.getAllHolidayAndCloseDay(2, 2014)
+		println('Holiday num : '+holidayList.size())
+		
+		def appointmentList = b.getAllAppointmentInMonth(2, 2014)
+		println('Appoint num : '+appointmentList.size())
+		
+		/*
+		// Test Appointment
 		Appointment ap = new Appointment()
 		ap.initialAppointment(u, b)
 		
-		ap.addProduct(1, 1)
+		ap.addProduct(u, 1, 1)
 		println '1 Total :' + ap.installTotal
 		println '1 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
-		ap.addProduct(3, 10)
+		ap.addProduct(u, 3, 20)
 		println '2 Total :' + ap.installTotal
 		println '2 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
 		
@@ -132,6 +152,164 @@ class AppointmentController {
 				println it
 			}
 		}
+		*/
+		/*
+		// Test Transfer - request Transfer
+		b.refresh()
+		Branch b2 = Branch.get(2)
+		User u2 = User.get(2)
+		def b1pre = PreProductTransferLine.withCriteria {
+			eq('branch.id', b.id)
+		}
+		if(b1pre.size() > 0){
+			PreProductTransferLine.withTransaction{ session ->
+				PreProductTransferLine exampleTran = b1pre.find{it}
+				int transAmt = exampleTran.amount - 2
+				exampleTran.addProductTransferLine(u2, b2, transAmt)
+				Boolean isSave = exampleTran.save flush:true
+				if (!isSave) {
+					exampleTran.errors.each {
+						println it
+					}
+				} else {
+					println ('Request Transfer Success : '+ exampleTran.status)
+				}
+			}
+		}
+		
+		// Test Transfer - make Transfer
+		b2.refresh()
+		def transToB2Lists = b2.getTransferFromOtherBranch()
+		println("Branch 2 Transfer list : "+ transToB2Lists.size())
+		if(transToB2Lists.size() > 0){
+			ProductTransferLine.withTransaction{ session ->
+				ProductTransferLine pTransfer = transToB2Lists.find{it}	
+				println("Transfer amt : "+ pTransfer.amount)
+				pTransfer.beginTransferProduct(u2)
+				Boolean isSave = pTransfer.save flush:true
+				if (!isSave) {
+					pTransfer.errors.each {
+						println it
+					}
+				} else {
+					println ('Transfer Success : '+ pTransfer.status)
+				}
+			}
+		}
+		
+		// Test Transfer - receive Transfer
+		b.refresh()
+		def transFromB1Lists = b.getTransferOfBranch()
+		println("Branch 1 Transfer list : "+transFromB1Lists.size())
+		if(transFromB1Lists.size() > 0){
+			ProductTransferLine.withTransaction{ session ->
+				ProductTransferLine pTransfer = transFromB1Lists.find{it}
+				println("Receive amt : "+ pTransfer.amount)
+				pTransfer.receiveTransfer(u)
+				Boolean isSave = pTransfer.save flush:true
+				if (!isSave) {
+					pTransfer.errors.each {
+						println it
+					}
+				} else {
+					println ('Receive Transfer Success : '+ pTransfer.status)
+				}
+			}
+		}
+		*/
+		/*
+		// Test Purchase - make Purchase
+		b.refresh()
+		def b1prePur = PreProductPurchaseLine.withCriteria {
+			and{
+				eq('branch.id', b.id)
+				eq('status', PreProductPurchaseStatus.NEW)
+			}
+		}
+		if(b1prePur.size() > 0){
+			PreProductPurchaseLine.withTransaction{ session ->
+				PurchasePaymentType payType = PurchasePaymentType.get(1)
+				Vendor vendor = Vendor.get(1)
+				
+				// Create PO Header
+				ProductPurchase purchase = new ProductPurchase()
+				purchase.initialProductPurchase(b, u, "PO0001", payType, vendor)
+				
+				for(preItem in b1prePur){				
+					PreProductPurchaseLine examplePurchase = preItem
+					examplePurchase.purchasing(u)
+					purchase.addProductPurchaseLine(u, examplePurchase.product, examplePurchase.amount, 0)
+				}
+
+				println('Vat rate = '+purchase.vat)
+				Boolean isSuccess = purchase.confirmPurchasing()
+				println('purchase success = ' + isSuccess + ' with line : ' + purchase.purchaseLines.size())
+				
+				isSave = purchase.save flush:true
+				if (!isSave) {
+					purchase.errors.each {
+						println it
+					}
+				} else {
+					println ('Create PO Success status:'+ purchase.status+', Total = '+ purchase.calTotal()+' , Vat = ' + purchase.calVat() + ', Net Total = '+ purchase.totalPrice)
+				}
+			}
+		}
+		*/
+		// Test Purchase - receive Purchase
+		 b.refresh()
+		 def purs = ProductPurchase.withCriteria {
+			 and{
+				 eq('branch.id', b.id)
+				 or{
+					 eq('status', ProductPurchaseStatus.WAITING_RECEIVE)
+					 eq('status', ProductPurchaseStatus.NEW)
+					 eq('status', ProductPurchaseStatus.PURCHASING)
+				 }
+			 }
+		 }
+		 if(purs.size() > 0){
+			 ProductPurchase.withTransaction{ session ->
+				 ProductPurchase pur = purs.find{it}
+				 
+				 String recID = 'REC001'
+				 ReceivePurchase recHeader = new ReceivePurchase()
+				 recHeader.initialReceivePurchase(pur, u, recID)
+				 
+				 for(pl in pur.purchaseLines){
+					 ProductPurchaseLine purline = pl
+					 
+					 println('Product: '+purline.product.prodName + ' stock befor rec: ' + b.getProductStock(purline.product).stock)
+					 
+					 recHeader.addReceivePurchaseLine(purline.product, purline.amount)
+					 println('Product: '+purline.product.prodName + ' stock after rec: ' + b.getProductStock(purline.product).stock)
+					 
+					 //println('purchase line status : '+ purline.status)
+				 }
+				 
+				 pur.receivePurchase(recHeader, u)
+				 //pur.checkReceivePurchaseStatus()
+				 println('PO status = ' + pur.status)
+				 Boolean isSave = pur.save flush:true
+				 if (!isSave) {
+					 pur.errors.each {
+						 println it
+					 }
+				 } else {
+					 println ('Create PO Success : '+ pur.status)
+				 }
+			 }
+		 }
+		
+		// Test Install - Prepare
+		
+		// Test Install - Installing
+		
+		// Test Install - Install Finish
+		
+		// Test Appointment - Receive Car
+		
+		
 		/*
 		Branch b = session.user.branch;
 		def wheelQ = Wheel.where{
