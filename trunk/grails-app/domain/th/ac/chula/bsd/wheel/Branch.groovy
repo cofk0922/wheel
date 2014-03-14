@@ -3,9 +3,11 @@ package th.ac.chula.bsd.wheel
 import java.util.Date;
 import java.util.regex.Pattern.Start;
 
-//import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
-//import th.ac.chula.bsd.inventory.PreProductTransferLine;
-//import th.ac.chula.bsd.inventory.ProductTransfer;
+import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
+import th.ac.chula.bsd.inventory.PreProductTransferLine;
+import th.ac.chula.bsd.inventory.ProductPurchase;
+import th.ac.chula.bsd.inventory.ProductTransferLine;
+import th.ac.chula.bsd.inventory.ProductTransferStatus;
 import th.ac.chula.bsd.security.User;
 
 class Branch {
@@ -36,14 +38,18 @@ class Branch {
 		installations: Installation,
 		parkings: Parking,
 		productStocks:ProductStock,
-//		preProductPurchaseLines: PreProductPurchaseLine,
-//		preProductTransferLines: PreProductTransferLine,
-//		productTransfers: ProductTransfer
+		preProductPurchaseLines: PreProductPurchaseLine,
+		preProductTransferLines: PreProductTransferLine,
+		productPurchases: ProductPurchase,
+		productTransferLineFroms: ProductTransferLine,
+		productTransferLineTos: ProductTransferLine
 		]
 	
 	static mappedBy = [
 		productBranchTransferFroms: 'branchFrom',
-		productBranchTransferTos: 'branchTo'
+		productBranchTransferTos: 'branchTo',
+		productTransferLineFroms: 'branchFrom',
+		productTransferLineTos: 'branchTo'
 		]
 	/*
 	static mapping = {
@@ -227,7 +233,7 @@ class Branch {
 		def listBranchTransfer = ProductBranchTransfer.withCriteria {
 			or {
 				eq('branchFrom.id', this.id)
-				eq('branchTo.id', this.id)
+				//eq('branchTo.id', this.id)
 			}
 			and {
 				order("transferDay", "desc")
@@ -248,6 +254,9 @@ class Branch {
 					result = pb
 					break
 				}
+			}
+			if(!result) {
+				isPurchase = true
 			}
 		} else {
 			isPurchase = true
@@ -295,8 +304,18 @@ class Branch {
 	}
 
 // Inventory =============================
-	public ProductStock getProductStock(int pID){
-		return this.productStocks.find {it -> it.product.id == pID}
+	public ProductStock getProductStock(Product prod){
+		return this.productStocks.find {it -> it.product.id == prod.id}
+	}
+	
+	public void increaseProductStock(Product prod, int amount){
+		ProductStock stock = this.getProductStock(prod)
+		stock.increaseStock(amount)
+	}
+	
+	public void decreaseProductStock(Product prod, int amount){
+		ProductStock stock = this.getProductStock(prod)
+		stock.decreaseStock(amount)
 	}
 	
 	public Object getPrePurchaseWithVendor(int vendorID){
@@ -311,4 +330,13 @@ class Branch {
 		return lPrePurchase
 	}
 	
+	public Object getTransferFromOtherBranch(){
+		def tranLists = this.productTransferLineTos.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED}
+		return tranLists
+	}
+	
+	public Object getTransferOfBranch(){
+		def tranLists = this.productTransferLineFroms.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED || it.status == ProductTransferStatus.TRANSFERED}
+		return tranLists
+	}
 }
