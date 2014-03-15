@@ -97,6 +97,9 @@ p {
 			<td>- <g:link controller="carModel">รุ่นรถยนต์ </g:link></td>
 		</tr>
 		<tr>
+			<td>- <g:link controller="carColor">รายการรถยนต์ </g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
