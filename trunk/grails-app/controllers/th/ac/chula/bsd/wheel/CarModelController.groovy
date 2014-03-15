@@ -22,6 +22,15 @@ class CarModelController {
     def create() {
         respond new CarModel(params)
     }
+	
+	def initialWheelListForNewCar(CarModel carModelInstance){
+		try{
+			performanceCheckingService.initialWheelListForNewCar(carModelInstance.id)
+		}
+		catch(e){
+			flash.message "Can't Initial Wheel List"
+		}
+	}
 
     @Transactional
     def save(CarModel carModelInstance) {
@@ -35,6 +44,7 @@ class CarModelController {
             return
         }
 
+		
         carModelInstance.save flush:true
 
         request.withFormat {
