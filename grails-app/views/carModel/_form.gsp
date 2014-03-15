@@ -50,6 +50,14 @@
 	<g:field name="backY1" type="number" value="${carModelInstance.backY1}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'band', 'error')} required">
+	<label for="band">
+		<g:message code="carModel.band.label" default="Band" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="band" name="band.id" from="${th.ac.chula.bsd.wheel.CarBand.list()}" optionKey="id" optionValue="bandName" required="" value="${carModelInstance?.band?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'carImage', 'error')} ">
 	<label for="carImage">
 		<g:message code="carModel.carImage.label" default="Car Image" />
@@ -64,14 +72,6 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="defaultTireSize" type="number" value="${carModelInstance.defaultTireSize}" required=""/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'defaultWheel', 'error')} required">
-	<label for="defaultWheel">
-		<g:message code="carModel.defaultWheel.label" default="Default Wheel" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="defaultWheel" name="defaultWheel.id" from="${th.ac.chula.bsd.wheel.MaxWheel.list()}" optionKey="id" required="" value="${carModelInstance?.defaultWheel?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'frontHeight', 'error')} required">
@@ -152,14 +152,6 @@
 		
 	</label>
 	<g:textField name="model" value="${carModelInstance?.model}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'modelBand', 'error')} required">
-	<label for="modelBand">
-		<g:message code="carModel.modelBand.label" default="Model Band" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="modelBand" name="modelBand.id" from="${th.ac.chula.bsd.wheel.CarBand.list()}" optionKey="id" required="" value="${carModelInstance?.modelBand?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'offSet', 'error')} required">
