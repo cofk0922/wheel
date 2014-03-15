@@ -18,12 +18,12 @@
 	<g:textField name="prodName" required="" value="${maxWheelInstance?.prodName}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'model', 'error')} required">
-	<label for="model">
-		<g:message code="maxWheel.model.label" default="Model" />
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'series', 'error')} required">
+	<label for="series">
+		<g:message code="maxWheel.series.label" default="series" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="model" required="" value="${maxWheelInstance?.model}"/>
+	<g:textField name="series" required="" value="${maxWheelInstance?.series}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'size', 'error')} required">

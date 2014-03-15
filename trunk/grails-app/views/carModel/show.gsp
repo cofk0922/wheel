@@ -95,6 +95,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${carModelInstance?.nutSize}">
+				<li class="fieldcontain">
+					<span id="nutSize-label" class="property-label"><g:message code="carModel.nutSize.label" default="Nut Size" /></span>
+					
+						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${carModelInstance}" field="nutSize"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${carModelInstance?.wheelLists}">
 				<li class="fieldcontain">
 					<span id="wheelLists-label" class="property-label"><g:message code="carModel.wheelLists.label" default="Wheel Lists" /></span>
