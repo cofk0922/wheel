@@ -7,10 +7,10 @@ class CarWheelList {
 	Integer listOrder 
 	UsageType usageType
 	Double drivingEnergy
-	Double tractiveEnergy 
+	Double tractiveEnergy
 	int	usageScore
-	Integer	driveStar 
-	Integer tractiveStar 
+	Integer	driveStar
+	Integer tractiveStar
 	
 	static belongsTo = [wheel: MaxWheel,car: CarModel]
 	
@@ -22,7 +22,7 @@ class CarWheelList {
 		this.car = lCar
 		this.wheel = lWheel
 		this.usageType = lUsageType
-		this.UsageScore = this.usageScoring()
+		this.usageScoring()
 		this.drivingEnergy = this.calcDrivingEnergy()
 		this.tractiveEnergy = this.calcTractiveEnergy()
 	}
@@ -41,9 +41,10 @@ class CarWheelList {
 		return (7.257096 * car.weight * wheel.getCmSize()) /  car.gearRatio
 	}
 	
-	private int usageScoring()
+	private void usageScoring()
 	{
-		def usageScore = UsageScore.findBySTypeAndUType(this.wheel.spoke,  this.usageType)
-		return usageScore.score
+		def uScore = UsageScore.findBySTypeAndUType(this.wheel.spoke,  this.usageType)
+		this.usageScore =  uScore.score
+		println("[PONG]usageScore: "+ this.usageScore)
 	}
 }

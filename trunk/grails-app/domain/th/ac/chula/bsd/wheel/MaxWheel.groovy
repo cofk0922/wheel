@@ -2,22 +2,23 @@ package th.ac.chula.bsd.wheel
 
 class MaxWheel extends Product{
 
+	// Inherit [prodName, prodDesc] from Product
 	WheelBand band
-	String model
-	String pcdCode
+	String series
+	String pcdCode //Number of nuts depend on integer part of PCD Code (5-6)
 	int offSet
 	Float size
 	Float width
 	Float weight
 	SpokeType spoke
 	ProdStatus pStatus
+	Float nutSize
 	
-	//Set wheelList = []
-	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel]
+	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel, maxWheelColor: MaxWheelColor]
 
     static constraints = {
 		band blank: false
-		model blank: false
+		series blank: false
 		size nullable: false
 		width nullable: false;
 		weight nullable: true;

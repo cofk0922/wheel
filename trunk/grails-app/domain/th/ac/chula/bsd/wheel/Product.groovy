@@ -45,5 +45,5 @@ class Product {
 enum ProductType {
 	INSTALLATION,
 	WHEEL,
-	KNOT
+	NUT
 }
