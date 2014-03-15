@@ -85,6 +85,9 @@ p {
  
 		
 		<tr>
+			<td>- <g:link controller="branch">สาขา</g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="product">รายการสินค้า</g:link></td>
 		</tr>
 		<tr>
@@ -103,7 +106,7 @@ p {
 			<td>- <g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="carWheelList">รายการล้อและรถยนต์</g:link></td>
+			<td>- <g:link controller="carWheelList">รายการจับคู่ล้อและรถยนต์</g:link></td>
 		</tr>
 		
 	</table>

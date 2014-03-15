@@ -2,44 +2,20 @@
 
 
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'band', 'error')} required">
+	<label for="band">
+		<g:message code="maxWheel.band.label" default="Band" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="band" name="band.id" from="${th.ac.chula.bsd.wheel.WheelBand.list()}" optionKey="id" optionValue="name" required="" value="${maxWheelInstance?.band?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
 		<g:message code="maxWheel.prodName.label" default="Prod Name" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="prodName" required="" value="${maxWheelInstance?.prodName}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'prodDesc', 'error')} ">
-	<label for="prodDesc">
-		<g:message code="maxWheel.prodDesc.label" default="Prod Desc" />
-		
-	</label>
-	<g:textField name="prodDesc" value="${maxWheelInstance?.prodDesc}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productPart', 'error')} ">
-	<label for="productPart">
-		<g:message code="maxWheel.productPart.label" default="Product Part" />
-		
-	</label>
-	<g:select id="productPart" name="productPart.id" from="${th.ac.chula.bsd.wheel.Product.list()}" optionKey="id" value="${maxWheelInstance?.productPart?.id}" class="many-to-one" noSelection="['null': '']"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productPartAmount', 'error')} required">
-	<label for="productPartAmount">
-		<g:message code="maxWheel.productPartAmount.label" default="Product Part Amount" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="productPartAmount" type="number" value="${maxWheelInstance.productPartAmount}" required=""/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'band', 'error')} required">
-	<label for="band">
-		<g:message code="maxWheel.band.label" default="Band" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="band" name="band.id" from="${th.ac.chula.bsd.wheel.WheelBand.list()}" optionKey="id" required="" value="${maxWheelInstance?.band?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'model', 'error')} required">
@@ -56,6 +32,22 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="size" value="${fieldValue(bean: maxWheelInstance, field: 'size')}" required=""/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'prodDesc', 'error')} ">
+	<label for="prodDesc">
+		<g:message code="maxWheel.prodDesc.label" default="Prod Desc" />
+		
+	</label>
+	<g:textField name="prodDesc" value="${maxWheelInstance?.prodDesc}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productPartAmount', 'error')} required">
+	<label for="productPartAmount">
+		<g:message code="maxWheel.productPartAmount.label" default="Product Part Amount" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="productPartAmount" type="number" value="${maxWheelInstance.productPartAmount}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'width', 'error')} required">
@@ -115,13 +107,8 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productType', 'error')} required">
-	<label for="productType">
-		<g:message code="maxWheel.productType.label" default="Product Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductType?.values()}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${maxWheelInstance?.productType?.name()}"/>
-</div>
+
+<g:hiddenField name="productType" value="WHEEL" />
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productVendorTransfers', 'error')} ">
 	<label for="productVendorTransfers">

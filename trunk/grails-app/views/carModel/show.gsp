@@ -77,6 +77,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${carModelInstance?.band}">
+				<li class="fieldcontain">
+					<span id="band-label" class="property-label"><g:message code="carModel.band.label" default="Band" /></span>
+					
+						<span class="property-value" aria-labelledby="band-label"><g:link controller="carBand" action="show" id="${carModelInstance?.band?.id}">${carModelInstance?.band?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${carModelInstance?.carImage}">
 				<li class="fieldcontain">
 					<span id="carImage-label" class="property-label"><g:message code="carModel.carImage.label" default="Car Image" /></span>
@@ -91,15 +100,6 @@
 					<span id="defaultTireSize-label" class="property-label"><g:message code="carModel.defaultTireSize.label" default="Default Tire Size" /></span>
 					
 						<span class="property-value" aria-labelledby="defaultTireSize-label"><g:fieldValue bean="${carModelInstance}" field="defaultTireSize"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carModelInstance?.defaultWheel}">
-				<li class="fieldcontain">
-					<span id="defaultWheel-label" class="property-label"><g:message code="carModel.defaultWheel.label" default="Default Wheel" /></span>
-					
-						<span class="property-value" aria-labelledby="defaultWheel-label"><g:link controller="maxWheel" action="show" id="${carModelInstance?.defaultWheel?.id}">${carModelInstance?.defaultWheel?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -190,15 +190,6 @@
 					<span id="model-label" class="property-label"><g:message code="carModel.model.label" default="Model" /></span>
 					
 						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${carModelInstance}" field="model"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${carModelInstance?.modelBand}">
-				<li class="fieldcontain">
-					<span id="modelBand-label" class="property-label"><g:message code="carModel.modelBand.label" default="Model Band" /></span>
-					
-						<span class="property-value" aria-labelledby="modelBand-label"><g:link controller="carBand" action="show" id="${carModelInstance?.modelBand?.id}">${carModelInstance?.modelBand?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

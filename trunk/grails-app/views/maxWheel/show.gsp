@@ -23,11 +23,38 @@
 			</g:if>
 			<ol class="property-list maxWheel">
 			
+				<g:if test="${maxWheelInstance?.band}">
+				<li class="fieldcontain">
+					<span id="band-label" class="property-label"><g:message code="maxWheel.band.label" default="Band" /></span>
+					
+						<span class="property-value" aria-labelledby="band-label"><g:link controller="wheelBand" action="show" id="${maxWheelInstance?.band?.id}">${maxWheelInstance?.band?.name}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${maxWheelInstance?.prodName}">
 				<li class="fieldcontain">
 					<span id="prodName-label" class="property-label"><g:message code="maxWheel.prodName.label" default="Prod Name" /></span>
 					
 						<span class="property-value" aria-labelledby="prodName-label"><g:fieldValue bean="${maxWheelInstance}" field="prodName"/></span>
+					
+				</li>
+				</g:if>
+						
+				<g:if test="${maxWheelInstance?.model}">
+				<li class="fieldcontain">
+					<span id="model-label" class="property-label"><g:message code="maxWheel.model.label" default="Model" /></span>
+					
+						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${maxWheelInstance}" field="model"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${maxWheelInstance?.size}">
+				<li class="fieldcontain">
+					<span id="size-label" class="property-label"><g:message code="maxWheel.size.label" default="Size" /></span>
+					
+						<span class="property-value" aria-labelledby="size-label"><g:fieldValue bean="${maxWheelInstance}" field="size"/></span>
 					
 				</li>
 				</g:if>
@@ -58,34 +85,7 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${maxWheelInstance?.band}">
-				<li class="fieldcontain">
-					<span id="band-label" class="property-label"><g:message code="maxWheel.band.label" default="Band" /></span>
-					
-						<span class="property-value" aria-labelledby="band-label"><g:link controller="wheelBand" action="show" id="${maxWheelInstance?.band?.id}">${maxWheelInstance?.band?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${maxWheelInstance?.model}">
-				<li class="fieldcontain">
-					<span id="model-label" class="property-label"><g:message code="maxWheel.model.label" default="Model" /></span>
-					
-						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${maxWheelInstance}" field="model"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${maxWheelInstance?.size}">
-				<li class="fieldcontain">
-					<span id="size-label" class="property-label"><g:message code="maxWheel.size.label" default="Size" /></span>
-					
-						<span class="property-value" aria-labelledby="size-label"><g:fieldValue bean="${maxWheelInstance}" field="size"/></span>
-					
-				</li>
-				</g:if>
-			
+
 				<g:if test="${maxWheelInstance?.width}">
 				<li class="fieldcontain">
 					<span id="width-label" class="property-label"><g:message code="maxWheel.width.label" default="Width" /></span>
