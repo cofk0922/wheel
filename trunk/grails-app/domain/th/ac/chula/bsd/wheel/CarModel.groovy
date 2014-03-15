@@ -4,7 +4,7 @@ import java.util.Set;
 
 class CarModel {
 	
-	String model
+	String modelName
 	int year
 	String pcdCode
 	Float offSet
@@ -13,31 +13,8 @@ class CarModel {
 	//MaxWheel defaultWheel
 	int defaultTireSize
 	
-	// Position Wheel front 
-	Integer frontX1
-	Integer frontY1
-	Integer frontX2
-	Integer frontY2
-	Integer frontWidth
-	Integer frontHeight
-		
-	//Position Wheel back	
-	Integer backX1
-	Integer backY1
-	Integer backX2
-	Integer backY
-	Integer backWidth
-	Integer backHeight
-	
-	String  hVal
-	String  sVal
-	String  vVal
-	String  hexVal
-	
-	String carImage
-	
 //	Set wheelList = []
-	static hasMany = [wheelLists: CarWheelList]
+	static hasMany = [wheelLists: CarWheelList, carColor: CarColor]
 	
 	static hasOne = [band: CarBand]
 	
@@ -54,4 +31,5 @@ class CarModel {
 	{
 		//TO DO Calculate score for all wheel avaliable for this car
 	}
+
 }
