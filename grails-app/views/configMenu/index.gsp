@@ -91,19 +91,25 @@ p {
 			<td>- <g:link controller="product">รายการสินค้า</g:link></td>
 		</tr>
 		<tr>
+			<td>- <g:link controller="nut">ตัวน๊อต</g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="carBand">ยี่ห้อรถ</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="carModel">รุ่นรถยนต์ </g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="carColor">รายการรถยนต์ </g:link></td>
+			<td>- <g:link controller="carColor" action="ตรงนี้เบย">นำเข้าภาพรถยนต์ </g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="maxWheel">รุ่นล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="maxWheelColor" action="ตรงนี้เบย">นำเข้าล้อแม็กซ์ </g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></td>

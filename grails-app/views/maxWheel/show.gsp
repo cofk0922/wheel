@@ -41,11 +41,11 @@
 				</li>
 				</g:if>
 						
-				<g:if test="${maxWheelInstance?.model}">
+				<g:if test="${maxWheelInstance?.series}">
 				<li class="fieldcontain">
-					<span id="model-label" class="property-label"><g:message code="maxWheel.model.label" default="Model" /></span>
+					<span id="model-label" class="property-label"><g:message code="maxWheel.series.label" default="Series" /></span>
 					
-						<span class="property-value" aria-labelledby="model-label"><g:fieldValue bean="${maxWheelInstance}" field="model"/></span>
+						<span class="property-value" aria-labelledby="series-label"><g:fieldValue bean="${maxWheelInstance}" field="series"/></span>
 					
 				</li>
 				</g:if>

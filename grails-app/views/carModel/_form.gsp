@@ -66,6 +66,14 @@
 	<g:field name="weight" value="${fieldValue(bean: carModelInstance, field: 'weight')}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'nutSize', 'error')} required">
+	<label for="nutSize">
+		<g:message code="carModel.nutSize.label" default="Nut Size" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="nutSize" value="${fieldValue(bean: carModelInstance, field: 'nutSize')}" required=""/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'wheelLists', 'error')} ">
 	<label for="wheelLists">
 		<g:message code="carModel.wheelLists.label" default="Wheel Lists" />
