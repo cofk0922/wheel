@@ -1,5 +1,5 @@
 
-<%@ page import="th.ac.chula.bsd.wheel.Car" %>
+<%@ page import="th.ac.chula.bsd.wheel.CarColor" %>
 <!DOCTYPE html>
 <html>
 	<head>
