@@ -27,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="band-label" class="property-label"><g:message code="carModel.band.label" default="Band" /></span>
 					
-						<span class="property-value" aria-labelledby="band-label"><g:link controller="carBand" action="show" id="${carModelInstance?.band?.id}">${carModelInstance?.band?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="band-label"><g:link controller="carBand" action="show" id="${carModelInstance?.band?.id}">${carModelInstance?.band?.bandName}</g:link></span>
 					
 				</li>
 				</g:if>
