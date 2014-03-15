@@ -12,7 +12,6 @@ class MaxWheel extends Product{
 	Float weight
 	SpokeType spoke
 	ProdStatus pStatus
-	Float nutSize
 	
 	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel, maxWheelColor: MaxWheelColor]
 
