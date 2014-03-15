@@ -27,15 +27,15 @@
 					
 						<th><g:message code="carModel.band.label" default="Band" /></th>
 					
-						<g:sortableColumn property="model" title="${message(code: 'carModel.model.label', default: 'Model')}" />
+						<g:sortableColumn property="modelName" title="${message(code: 'carModel.modelName.label', default: 'Model Name')}" />
 					
-						<g:sortableColumn property="backX1" title="${message(code: 'carModel.backX1.label', default: 'Back X1')}" />
+						<g:sortableColumn property="year" title="${message(code: 'carModel.year.label', default: 'Year')}" />
 					
-						<g:sortableColumn property="backX2" title="${message(code: 'carModel.backX2.label', default: 'Back X2')}" />
+						<g:sortableColumn property="pcdCode" title="${message(code: 'carModel.pcdCode.label', default: 'Pcd Code')}" />
 					
-						<g:sortableColumn property="backY" title="${message(code: 'carModel.backY.label', default: 'Back Y')}" />
+						<g:sortableColumn property="offSet" title="${message(code: 'carModel.offSet.label', default: 'OffSet No.')}" />
 					
-						<g:sortableColumn property="backY1" title="${message(code: 'carModel.backY1.label', default: 'Back Y1')}" />
+						<g:sortableColumn property="gearRatio" title="${message(code: 'carModel.gearRatio.label', default: 'Gear Ratio')}" />
 					
 					</tr>
 				</thead>
@@ -45,15 +45,15 @@
 					
 						<td><g:link action="show" id="${carModelInstance.id}">${fieldValue(bean: carModelInstance, field: "band.bandName")}</g:link></td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "model")}</td>
+						<td>${fieldValue(bean: carModelInstance, field: "modelName")}</td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "backX1")}</td>
+						<td>${fieldValue(bean: carModelInstance, field: "year")}</td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "backX2")}</td>
+						<td>${fieldValue(bean: carModelInstance, field: "pcdCode")}</td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "backY")}</td>
+						<td>${fieldValue(bean: carModelInstance, field: "offSet")}</td>
 					
-						<td>${fieldValue(bean: carModelInstance, field: "backY1")}</td>
+						<td>${fieldValue(bean: carModelInstance, field: "gearRatio")}</td>
 					
 					</tr>
 				</g:each>
