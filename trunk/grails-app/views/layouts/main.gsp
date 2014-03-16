@@ -1,28 +1,73 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+<g:applyLayout name="masterpage">
+<%@ page import="grails.plugin.springsecurity.SpringSecurityService" %>
+<% def springSecurityService %>
+<html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title><g:layoutTitle default="Grails"/></title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
-		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
-		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
+		<title><g:layoutTitle/></title>
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+		<style>
+		.nav ul li ul 
+		{
+			display: none;
+			background-color: #EFEFEF;
+			border-radius:10px;
+		}
+		
+		.nav ul li ul li 
+		{
+			padding: 0.2em;
+			text-align: left;
+		}
+
+		.nav ul li:hover ul, .nav ul li:focus ul
+		{
+			position:absolute;
+    		display:block;
+    		z-index:1000
+		}
+		
+		.nav ul li ul li 
+		{
+			float: none;
+		}
+		</style>
 		<g:layoutHead/>
-		<g:javascript library="application"/>		
-		<r:layoutResources />
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="http://grails.org"><img src="${resource(dir: 'images', file: 'bannerWheel.png')}" alt="Grails"/></a></div>
+		<div class="nav">
+			<ul>
+				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+				<li><a class="choose_wheel" href="${createLink(uri: '/')}"><g:message code="default.chooseWheel.label"/></a></li>
+				<li>
+					<a class="appointment" href="${createLink(uri: '/appointment')}"><g:message code="default.appointment.label"/></a>
+					<ul>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.checkin.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.changeappoint.label"/></a></li>
+					</ul>
+				</li>
+				<li><a class="install" href="${createLink(uri: '/')}"><g:message code="default.install.label"/></a></li>
+				<li>
+					<a class="inventory" href="${createLink(uri: '/')}"><g:message code="default.inventory.label"/></a>
+					<ul>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.transferto.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.transferfrom.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.purchase.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.receive.label"/></a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.setting.label"/></a>
+					<ul>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.branch.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.user.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.wheel.label"/></a></li>
+						<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.car.label"/></a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 		<g:layoutBody/>
-		<div class="footer" role="contentinfo"></div>
-		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
-		<r:layoutResources />
 	</body>
 </html>
+</g:applyLayout>
