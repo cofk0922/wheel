@@ -1,27 +1,20 @@
 <html lang="en" >
     <head>
         <meta charset="utf-8"/>
-        <title>HTML5 canvas - Image color picker | Script Tutorials</title>
+        <title>Image color picker</title>
         <link href="../css/detectImage/main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="../js/detectColor/jquery-1.5.2.min.js"></script>
         <script type="text/javascript" src="../js/detectColor/script.js"></script>
         
-          <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
-  <link rel="stylesheet" href="../css/demos.css" type="text/css" />
-  <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
-   <link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
+ 		<link rel="stylesheet" href="../css/demos.css" type="text/css" />
+  		<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+   		<link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css"/>
 
-  
- 
-  <g:javascript src="jquery.min.js" />
-<g:javascript src="jquery-1.6.1.min.js" />
-<g:javascript src="jquery.imgareaselect.pack.js" />
-        
-        
-        
-        
-        
-        
+		<g:javascript src="jquery.min.js" />
+		<g:javascript src="jquery-1.6.1.min.js" />
+		<g:javascript src="jquery.imgareaselect.pack.js" />
+             
   <script type="text/javascript">
         var canvas;
         var ctx;
@@ -138,7 +131,7 @@ function rgb2hsv (r,g,b) {
 			<div class="span12">
 				<div class="jc-demo-box">
 
-					<div class="page-header">
+					<div class="page-header"  style="height: 60px;">
 						<ul class="breadcrumb first">
 							<li><a href="../">เมนู</a> <span class="divider">/</span>
 							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> <span class="divider">/</span>
@@ -149,8 +142,9 @@ function rgb2hsv (r,g,b) {
 						</ul>
 						<h1>กำหนดสีของรถ</font></h1>
 					</div>
-     <form name="input" action="saveCar" method="post">
-    
+     <form name="input" action="detectImage" method="post">
+						<g:hiddenField name="modelId" value="${modelInstance.id}" />
+						<g:hiddenField name="carImage" value="${carImage}" />
         <div class="container">
 
             <div class="column1">
@@ -169,7 +163,8 @@ function rgb2hsv (r,g,b) {
                 <div>V: <input type="text" id="vVal" name="vVal"></div>
                 <div style="display: none;">RGB:<input type="text" id="rgbVal" ></div>
   				<div style="display: none;">RGBA: <input type="text" id="rgbaVal" ></div>
-                <div>HEX: <input type="text" id="hexVal" name="hexVal" ></div>            
+                <div>HEX: <input type="text" id="hexVal" name="hexVal" ></div>   
+                <div>Color Name: <input type="text" id="colorName" name="colorName" ></div>           
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -182,7 +177,7 @@ function rgb2hsv (r,g,b) {
 					<td> &nbsp; <b>ยี่ห้อรถ:</b>
     						${modelInstance.band.bandName}
 				 &nbsp; <b>รุ่นรถ :</b>
-    						${modelInstance.model}
+    						${modelInstance.modelName}
     						</td>
 					</tr>					
 					<tr>
@@ -200,15 +195,9 @@ function rgb2hsv (r,g,b) {
 					</td>
 					</tr>
 					</table>
-        
-        
-        
-        
-<div class="page-header" align="left">
-							<input type="hidden" name="carImage" value="${carImage}" /> <input
-								type="hidden" name="modelId" value="${modelInstance.id}" /> <input
-								type="submit" value="บันทึกข้อมูลรถ">
-						</div>
+					<div class="page-header" align="left">
+						<g:submitButton name="กำหนดตำแหน่งล้อ"/>
+					</div>
 				</div>
 				<div style="clear: both;"></div>
 			</div>

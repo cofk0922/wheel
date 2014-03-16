@@ -24,7 +24,7 @@
 
         $('#preview img').css({
             width: Math.round(scaleX * 500),
-            height: Math.round(scaleY * 281),
+            height: Math.round(scaleY * 300),
             marginLeft: -Math.round(scaleX * selection.x1),
             marginTop: -Math.round(scaleY * selection.y1)
         });
@@ -62,8 +62,7 @@
 		<div class="row">
 			<div class="span12">
 				<div class="jc-demo-box">
-
-					<div class="page-header">
+					<div class="page-header" style="height: 60px;">
 						<ul class="breadcrumb first">
 							<li><a href="../">เมนู</a> <span class="divider">/</span>
 							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่(อัพโหลดรูปภาพ)</a> <span class="divider">/</span></li>
@@ -73,9 +72,9 @@
 					
 					<!-- image Upload-->
 					
-			<table border="0" >			
+			<table style="margin-top:0;margin-left:0;">			
 					<tr>
-					<td width="70%">					
+					<td>					
 					<g:if test="${carImage}">
 						<g:img dir="images" file="${carImage}" id="cropbox" /></g:if>		
 						<%--<g:img dir="images" file="test_car.jpg" id="cropbox" />			
@@ -91,7 +90,7 @@
 					<tr>
 					<td> &nbsp; <b>รุ่นรถ :</b></td>
 					<td>
-    						${modelInstance.model}
+    						${modelInstance.modelName}
     						</td>
 					</tr>					
 					<tr>
@@ -124,8 +123,10 @@
 					</td>
 				</tr>
 			</table>		
-						<div class="page-header" align="right">
-						<g:link  action="detectImage" params="[carImage:carImage,modelId:modelInstance.id]"><h1> กำหนดจุดล้อหน้า(ขั้นตอนที่ 2) >> </h1></g:link>
+					<div class="page-header" align="right">
+						<g:link  action="detectImage" params="[carImage:carImage,modelId:modelInstance.id,colorId:colorInstance.id]">
+							<input type="button" value="กำหนดจุดล้อหน้า" class="button"/> 
+						</g:link>
 					</div>
 			
 				</div>
