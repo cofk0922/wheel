@@ -15,7 +15,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService

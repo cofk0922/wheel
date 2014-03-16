@@ -40,24 +40,86 @@ class BootStrap {
 		
 		
 		 
-		//new CarBand(bandName:'HONDA').save(flush:true)
-//		new CarModel(model:'Jazz Y2003 ',band: CarBand.get(1),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-//		new CarModel(model:'City Y2005 ',band: CarBand.get(1),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
+//		new CarBand(bandName:'HONDA').save(flush:true)
+		new CarModel(modelName:'Jazz Y2003 ',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+		new CarModel(modelName:'City Y2005 ',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+				
+//		new CarBand(bandName:'TOYOTA').save(flush:true)		
+		new CarModel(modelName:'Yaris Y2013 ',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+		new CarModel(modelName:'Altris Y2011 ',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
 		
-		
-		//new CarBand(bandName:'TOYOTA').save(flush:true)
-		
-//		new CarModel(model:'Yaris Y2013 ',band:CarBand.get(2),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-//		new CarModel(model:'Altris Y2011 ',band:CarBand.get(2),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-		
-		//new CarBand(bandName:'MAZDA').save(flush:true)
-//		new CarModel(model:'Mazda 2 spirit',band:CarBand.get(3),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-//		new CarModel(model:'New Mazda 3 ',band:CarBand.get(3),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-		
-		
-		//new CarBand(bandName:'SUZUKI').save(flush:true)
-//		new CarModel(model:'Swiff 1.5',band:CarBand.get(4),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
-//		new CarModel(model:'Swiff Eco Car 1.2',band:CarBand.get(4),gearRatio:1.0,offSet:1.0,pcdCode:"xx",weight:2.0).save(flush:true)
+//		new CarBand(bandName:'MAZDA').save(flush:true)
+		new CarModel(modelName:'Mazda 2 spirit',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+		new CarModel(modelName:'New Mazda 3 ',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+				
+//		new CarBand(bandName:'SUZUKI').save(flush:true)
+		new CarModel(modelName:'Swiff 1.5',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
+		new CarModel(
+			modelName:'Swiff Eco Car 1.2',
+			year: '2012',
+			band:CarBand.get(4),
+			gearRatio:1.0,
+			offSet:1.0,
+			pcdCode:"xx",
+			weight:2.0,
+			defaultTireSize:13,
+			netSize:0.3).save(flush:true)
 	
 		
     }

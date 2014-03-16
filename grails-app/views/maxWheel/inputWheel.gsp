@@ -5,15 +5,10 @@
 <title>Live Cropping Demo</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 
-
-
-
   <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
   <link rel="stylesheet" href="../css/demos.css" type="text/css" />
   <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
   
-
-
  <script type="text/javascript">
     function preview(img, selection) {
         if (!selection.width || !selection.height)
@@ -24,7 +19,7 @@
 
         $('#preview img').css({
             width: Math.round(scaleX * 500),
-            height: Math.round(scaleY * 281),
+            height: Math.round(scaleY * 300),
             marginLeft: -Math.round(scaleX * selection.x1),
             marginTop: -Math.round(scaleY * selection.y1)
         });
@@ -76,7 +71,7 @@
 					
 					<!-- image Upload-->
 					
-					<g:uploadForm action="preview">
+					<g:uploadForm action="detectColor">
 					<table>
 					
 					<tr>
@@ -91,7 +86,7 @@
 							from="${listCarBand.sort{it.id}}" optionKey="id" optionValue="bandName"
 							noSelection="['':'กรุณาเลือกยี่ห้อรถ']"/>
 							</g:else>
-							
+							<a href="../carBand/create.gsp">เพิ่มยี่ห้อรถ(ในกรณีที่ไม่มีข้อมูลยี่ห้อรถอยู่)</a>
 
 					</td>
 					</tr>
@@ -101,24 +96,21 @@
 					<td>
 	
 						<g:if test="${modelInstance}">
-    						${modelInstance.model}
+    						${modelInstance.modelName}
     						</g:if>
     						<g:else>
     						<g:select name="modelId"
-							from="${listCarModel.sort{it.id}}" optionKey="id" optionValue="model"
+							from="${listCarModel.sort{it.id}}" optionKey="id" optionValue="modelName"
 							noSelection="['':'กรุณาเลือกรุ่นรถ']"/>
 							</g:else>	
 							
 							
-							<a href="#">เพิ่มรุ่นรถ(ในกรณีที่ไม่มีข้อมูลรุ่นรถอยู่)</a>									
+							<a href="../carModel/index.gsp">เพิ่มรุ่นรถ(ในกรณีที่ไม่มีข้อมูลรุ่นรถอยู่)</a>									
 					</td>
 					</tr>
-					<tr>
-					
-					
+			
 					<td>รูปภาพรถ  :</td>
-					
-				
+
 					<td><input type="file" name="myFile" />
 					
 					<font color="red"> รูปภาพควรมีขาด 500x300 Pixel</font>
@@ -128,23 +120,15 @@
 			
 					</table>
 					<br>
-					
-					
-					
-       				 <input type="submit" value="ตกลง" />
+
+						<g:submitButton name="กำหนดข้อมูลรถ"/>
        				 
     				</g:uploadForm>
-
-
-					
+	
 				</div>
 			</div>
 		</div>
 	</div>
-	
-
-
-	
 	
 </body>
 
