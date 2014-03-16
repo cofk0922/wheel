@@ -4,6 +4,13 @@
  * (c) 2013 Adam Shaw
  */
 
+tr>td:first-child, tr>th:first-child {
+	padding-left: 0em;
+}
+
+tr>td:last-child, tr>th:last-child {
+	padding-right: 0em;
+}
 
 .fc {
 	direction: ltr;
