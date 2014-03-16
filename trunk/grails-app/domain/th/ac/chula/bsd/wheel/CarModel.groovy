@@ -12,7 +12,7 @@ class CarModel {
 	Float gearRatio
 	//MaxWheel defaultWheel
 	int defaultTireSize
-	float netSize
+	float nutSize
 	
 //	Set wheelList = []
 	static hasMany = [wheelLists: CarWheelList, carColor: CarColor]

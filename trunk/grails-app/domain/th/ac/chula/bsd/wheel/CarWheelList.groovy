@@ -17,7 +17,7 @@ class CarWheelList {
     static constraints = {
     }
 	
-	public CarWheelList(CarModel lCar, MaxWheel lWheel, String lUsageType)
+	public CarWheelList(CarModel lCar, MaxWheel lWheel, UsageType lUsageType)
 	{
 		this.car = lCar
 		this.wheel = lWheel

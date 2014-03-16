@@ -6,7 +6,7 @@ class MaxWheel extends Product{
 	WheelBand band
 	String series
 	String pcdCode //Number of nuts depend on integer part of PCD Code (5-6)
-	int offSet
+	Float offSet
 	Float size
 	Float width
 	Float weight
