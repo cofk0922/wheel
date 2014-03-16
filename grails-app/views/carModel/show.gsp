@@ -95,11 +95,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${carModelInstance?.netSize}">
+				<g:if test="${carModelInstance?.nutSize}">
 				<li class="fieldcontain">
-					<span id="netSize-label" class="property-label"><g:message code="carModel.netSize.label" default="Nut Size" /></span>
+					<span id="nutSize-label" class="property-label"><g:message code="carModel.nutSize.label" default="Nut Size" /></span>
 					
-						<span class="property-value" aria-labelledby="netSize-label"><g:fieldValue bean="${carModelInstance}" field="netSize"/></span>
+						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${carModelInstance}" field="nutSize"/></span>
 					
 				</li>
 				</g:if>
