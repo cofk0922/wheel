@@ -109,7 +109,7 @@ p {
 			<td>- <g:link controller="maxWheel">รุ่นล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="maxWheelColor" action="ตรงนี้เบย">นำเข้าล้อแม็กซ์ </g:link></td>
+			<td>- <g:link controller="maxWheel" action="inputWheel">นำเข้าล้อแม็กซ์ </g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></td>
