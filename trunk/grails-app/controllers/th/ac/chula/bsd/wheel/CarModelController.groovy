@@ -12,7 +12,7 @@ class CarModelController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond CarModel.list(params), modelName:[carModelInstanceCount: CarModel.count()]
+        respond CarModel.list(params), model:[carModelInstanceCount: CarModel.count()]
     }
 
     def show(CarModel carModelInstance) {
@@ -23,12 +23,64 @@ class CarModelController {
         respond new CarModel(params)
     }
 	
-	def initialWheelListForNewCar(CarModel carModelInstance){
-		try{
-			performanceCheckingService.initialWheelListForNewCar(carModelInstance.id)
+	@Transactional
+	def initialCarWheelList(CarModel carModelInstance, MaxWheel maxWheelInstance)
+	{
+		println("Match: ["+carModelInstance.modelName+"] with ["+maxWheelInstance.prodName+"]")
+		def usageResult = UsageScore.withCriteria {
+			eq('sType', maxWheelInstance.spoke)
+			ne('score', 0)
 		}
-		catch(e){
-			flash.message "Can't Initial Wheel List"
+		if(usageResult.size() > 0){
+			for(item in usageResult)
+			{
+				def carWheelList = new CarWheelList(carModelInstance, maxWheelInstance, item.uType, item.score)
+				Boolean isSave = carWheelList.save flush:true
+				 if (!isSave) {
+					 carWheelList.errors.each {
+						 println it
+					 }
+				 } else {
+					 println ('Create PO Success : '+ carWheelList.car.modelName+" : "+carWheelList.wheel.prodName + " : "+carWheelList.usageScore)
+				 }
+			}
+		}
+	}
+	
+	def assignStar(CarModel carModelInstance, UsageType uType){
+		//find mean
+		//SD = root(sum((x-mean)^2)/N)
+		def listResult = CarWheelList.withCriteria {
+			eq('carModel', carModelInstance)
+			eq('usageType', uType)
+		}
+		Float wCount = listResult.size()
+		Float sumTractive = (Float)listResult.sum(tractiveEnergy)
+		Float TractiveBar = sumTractive/wCount
+		Float sumDrive = (Float)listResult.sum(drivingEnergy)
+		Float DriveBar = sumDrive/wCount
+		
+		for (item in listResult){
+			
+		}
+	}
+	
+	def initialWheelListForNewCar(CarModel carModelInstance){
+		
+		def wheelResult = MaxWheel.withCriteria {
+			float cond1 = carModelInstance.defaultTireSize -10
+//			float cond2 = offSet + carModelInstance.offSet
+//			float cond3 = cond2 + 1
+//			float cond4 = cond2 - 1
+			eq('pcdCode', carModelInstance.pcdCode)
+			le('size', cond1)
+//			le('width'/2-'offSet', carModelInstance.offSet)
+		}
+		if(wheelResult.size() > 0){
+			for (item in wheelResult) {
+				println(item.band.name+item.prodName)
+				initialCarWheelList(carModelInstance, item)
+			}
 		}
 	}
 
@@ -44,8 +96,8 @@ class CarModelController {
             return
         }
 
-		
         carModelInstance.save flush:true
+		initialWheelListForNewCar(carModelInstance)
 
         request.withFormat {
             form {
