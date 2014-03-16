@@ -115,7 +115,7 @@ class Appointment {
 		this.installation.endDate = calendar.getTime()
 		this.endAppointmentDate = new Date(this.installation.endDate.getTime())
 		for(o in this.subOrders){
-			if(o.product.productType == ProductType.WHEEL || o.product.productType == ProductType.KNOT){
+			if(o.product.productType == ProductType.WHEEL || o.product.productType == ProductType.NUT){
 				this.installation.addRequisition(o.product, o.amount)
 			}
 		}
