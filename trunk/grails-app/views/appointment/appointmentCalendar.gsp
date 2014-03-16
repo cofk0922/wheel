@@ -10,7 +10,7 @@
 <script src='../js/calendar/fullcalendar.min.js'></script>
 <script>
 
-var fncRender = function(data,max,min,daysoff,holidays) {
+var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -19,15 +19,35 @@ var fncRender = function(data,max,min,daysoff,holidays) {
 		},
 		maxTime: max,
 		minTime: min,
-		//hiddenDays: [ 0, 6 ],
-		//weekends : false,
 		defaultEventMinutes: 30, 
 		editable: false,
 		allDaySlot: false,
+		defaultView: 'agendaWeek',
 		events: data,
+		eventRender: function(event, element) {
+		      element.find(".fc-event-time").append(" " + event.title);
+		    },
+	    timeFormat:'h(:mm)t',        
 		eventAfterAllRender: function() {
 			$.each(holidays, function(i, item) {
-				$('[data-date="' + item.day + '"]').addClass("holiday");
+				if ($('[data-date="' + item.day + '"]').length > 0) {
+					$('[data-date="' + item.day + '"]').addClass("holiday");
+				} else {
+					var dateStr = item.day.split("-");
+					var monthStr = dateStr.length === 3 ? dateStr[1] : ""; 
+					var dateStr = dateStr.length === 3 ? dateStr[2] : "";
+					if (monthStr !== "" && dateStr !== "") {
+						var selectorStr = parseInt(monthStr, 10) + '/' + parseInt(dateStr, 10);
+						var col = $(':contains("' + selectorStr + '")');
+						if (col.length > 0) {
+							var classSelector = col.last().attr("class");
+							if (classSelector.split(" ").length > 1)	{
+								var classArr = classSelector.split(" ");
+								$('.' + classArr[0] + '.' + classArr[1]).addClass("holiday");
+							}								
+						}
+					}
+				}					
 			});
 			//Case 2: Every dayoff
 			$.each(daysoff, function(i, item) {
@@ -67,7 +87,8 @@ var fncRender = function(data,max,min,daysoff,holidays) {
 				}
 			})
 		}
-	})
+	}),
+	$('#calendar').fullCalendar('gotoDate', gotoStart.getFullYear(), gotoStart.getMonth(), gotoStart.getDate());
 };
 
 var fncGetData = function() {
@@ -76,12 +97,23 @@ var fncGetData = function() {
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
 			item.end = new Date(item.end);
-			item.textColor = '#008e8e';
 			item.color = '#008e8e';
-			item.tile = '';
+			item.title = '';
 			data.push(item);
 		});
-		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays);
+
+		var newevent = result.newevent;
+		newevent.start = new Date(newevent.start);
+		newevent.end = new Date(newevent.end);
+		newevent.textColor = '#000000';
+		newevent.color = '#00ff00';
+		newevent.title = newevent.title;
+		newevent.editable = true;
+		newevent.durationEditable = false;
+		newevent.borderColor = '#000000';
+		data.push(newevent);
+		
+		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent.start);
 	} );
 };
 

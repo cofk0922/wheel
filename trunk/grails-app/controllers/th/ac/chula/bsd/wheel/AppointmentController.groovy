@@ -350,17 +350,25 @@ class AppointmentController {
 		def events = []
 		def responseData = [
 			'id': '999',
+			'title':'Panda',
 			'start': '2014-03-17 9:30',
 			'end': '2014-03-17 10:30',
-			'color': '#00ff00',
 			'allDay': false
 		]
 
 		def responseData2 = [
 			'id': '20',
+			'title':'Scott',
 			'start': '2014-03-14 12:00',
 			'end': '2014-03-14 12:30',
-			'color': '#00ff00',
+			'allDay': false
+		]
+		
+		def newevent = [
+			'id': '1',
+			'title':'Barny',
+			'start': '2014-03-20 12:00',
+			'end': '2014-03-20 12:30',
 			'allDay': false
 		]
 		
@@ -403,7 +411,7 @@ class AppointmentController {
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
-		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays];
+		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent];
 		render js as JSON
 	}
 		
