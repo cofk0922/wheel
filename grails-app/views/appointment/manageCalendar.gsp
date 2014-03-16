@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="layout" content="main">
 <link href='../css/calendar/fullcalendar.css' rel='stylesheet' />
 <link href='../css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <link href='../css/calendar/calendar.css' rel='stylesheet' />
@@ -111,16 +112,19 @@ $(document).ready(function() {
 </script>
 <style>
 
-	body {
+	.calendar body {
 		margin-top: 40px;
 		text-align: center;
 		font-size: 14px;
 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		overflow: auto
+		
 		}
 
 	#calendar {
 		width: 900px;
 		margin: 0 auto;
+		
 		}
 
 </style>
@@ -128,7 +132,7 @@ $(document).ready(function() {
 <title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
 </head>
 <body>
-<div id='calendar'></div>
+<div class = 'calendar' id='calendar'></div>
 <div id='status'></div>
 </body>
 </html>
