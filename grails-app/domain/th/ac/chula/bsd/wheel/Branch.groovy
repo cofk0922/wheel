@@ -171,6 +171,28 @@ class Branch {
 		return result
 	}
 
+	public Object getAllHoliday(Date today){
+		def start = new GregorianCalendar()
+		start.setTime(today)
+		start.clearTime()
+		start.set(Calendar.DATE, 1)
+		//start.set(Calendar.MONTH, month)
+		//start.set(Calendar.YEAR, year)
+		start.setTime(start.getTime().clearTime())
+		
+		def end = new GregorianCalendar()
+		end.setTime(start.getTime())
+		end.add(Calendar.YEAR, 1)
+		int lastdate = end.getActualMaximum(Calendar.DATE)
+		end.set(Calendar.DATE, lastdate)
+
+		// Get Holiday
+		def lholidays = Holiday.withCriteria {
+			between('holidayDate', start.getTime(), end.getTime())
+		}
+		return lholidays
+	}
+	
 	public Object getAllHolidayAndCloseDay(int month, int year){
 		def start = new GregorianCalendar()
 		start.set(Calendar.DATE, 1)
@@ -204,22 +226,29 @@ class Branch {
 		return lholidays		
 	}
 	
-	public Object getAllAppointmentInMonth(int month, int year){
+	public Object getAllAppointmentInMonth(Date today){
 		def start = new GregorianCalendar()
+		start.setTime(today)
+		start.clearTime()
 		start.set(Calendar.DATE, 1)
-		start.set(Calendar.MONTH, month)
-		start.set(Calendar.YEAR, year)
-		start.setTime(start.getTime().clearTime())
+		//start.set(Calendar.MONTH, month)
+		//start.set(Calendar.YEAR, year)
 		
 		def end = new GregorianCalendar()
 		end.setTime(start.getTime())
+		end.add(Calendar.YEAR, 1)
 		int lastdate = start.getActualMaximum(Calendar.DATE)
 		end.set(Calendar.DATE, lastdate)
 
+		Date sDate = start.getTime()
+		Date eDate = end.getTime()
 		def lAppoints = Appointment.withCriteria {
-			or {
-				between('startDate', start.getTime(), end.getTime())
-				between('endDate', start.getTime(), end.getTime())
+			and {
+				between('startDate', sDate, eDate)
+				//le('endDate', end.getTime())
+				//between('startDate', start.getTime(), end.getTime())
+				//between('endDate', start.getTime(), end.getTime())
+				eq('branch.id', this.id)
 			}
 		}
 		return lAppoints
