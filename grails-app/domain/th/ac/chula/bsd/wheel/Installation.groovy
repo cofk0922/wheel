@@ -45,16 +45,32 @@ class Installation {
 	public void prepareInstall(){
 		this.status = InstallationStatus.PREPARE_INSTALL
 		// TODO set requisition status -> ready requsit
-		// for(req in list)
+		 for(req in this.requisitions){		 
+			 RequisitionLine r = req
+			 r.readyRequisit();
+			 this.status = InstallationStatus.PREPARE_INSTALL		 
+		 }
 	}
 	
 	public void cancelInstall(){
 		this.status = InstallationStatus.CANCEL
 		// TODO return requisit to stock and set status 'Cancel'
+		for(req in this.requisitions){
+			RequisitionLine r =req
+			r.cancelRequisit()
+		}
 	}
 	
 	public void installing(){
 		this.status = InstallationStatus.INSTALLING
+		for(req in this.requisitions){
+			RequisitionLine r = req
+			r.requisited()
+		 }
+	}	
+	
+	public void finishedInstall(){
+		this.status = InstallationStatus.FINISHED;	 
 	}
 	
 	public void addRequisition(Product prod, int amount){
@@ -62,6 +78,49 @@ class Installation {
 		req.initialRequisition(this, prod, amount)
 		this.requisitions.add(req)
 	}
+	
+	public Boolean checkprepareInstall(){
+		Boolean result = false
+		if(status==InstallationStatus.NEW){
+		   def isProductstock = checkProdstock()  
+		    if (isProductstock) {    
+			prepareInstall() 
+			result =true
+		    }
+		}
+		return result
+	}
+	
+	public Boolean checkinstalling(){  
+		Boolean result = false
+		if(status==InstallationStatus.PREPARE_INSTALL ){ 
+		  installing()	
+		  result=true
+		}
+		return result
+	}
+	
+	public Boolean checkfinished(){
+		Boolean result = false
+		if(status==InstallationStatus.INSTALLING){
+			finishedInstall()
+			result = true
+		}
+		return result
+	}
+	
+	public Boolean checkProdstock(){
+		Boolean result = true
+		for(req in this.requisitions){
+		   RequisitionLine r = req	  
+		   if (!r.checkProductStock()){
+		     result = false
+			 break
+		   }
+		}
+		return result
+	}
+ 
 }
 
 enum InstallationStatus {
