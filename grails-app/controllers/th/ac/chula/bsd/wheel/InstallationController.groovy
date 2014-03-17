@@ -5,8 +5,9 @@ package th.ac.chula.bsd.wheel
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
+import grails.converters.JSON
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class InstallationController {
 
@@ -49,6 +50,52 @@ class InstallationController {
         respond installationInstance
     }
 
+	
+	// Bird
+	def installCalendar(){
+		return
+	}
+	
+	def getAllEvents(){
+		
+		println "getEvents"
+		
+		def events = []
+		def responseData = [
+			'id': '999',
+			'title':'Panda',
+			'start': '2014-03-17 9:30',
+			'end': '2014-03-17 10:30',
+			'allDay': false
+		]
+
+		def responseData2 = [
+			'id': '20',
+			'title':'Scott',
+			'start': '2014-03-14 12:00',
+			'end': '2014-03-14 12:30',
+			'allDay': false
+		]
+		
+		def responseData3 = [
+			'id': '1',
+			'title':'Barny',
+			'start': '2014-03-20 12:00',
+			'end': '2014-03-20 12:30',
+			'allDay': false
+		]
+
+		events.add(responseData)
+		events.add(responseData2)
+		events.add(responseData3)
+		
+		def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
+		def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
+		
+		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays];
+		render js as JSON
+	}
+	
     def create() {
         respond new Installation(params)
     }

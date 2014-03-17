@@ -97,6 +97,9 @@ p {
 			<td>- <g:link controller="appointment" action="manageCalendar">ระบบจัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
+			<td>- <g:link controller="installation" action="installCalendar">ระบบจัดการติดตั้งล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
 			<td>- <g:link controller="orderAndTransfer">ระบบสั่งซื้อและโอนล้อแม็กซ์และอะไหล่</g:link></td>
 		</tr>
 		<tr>

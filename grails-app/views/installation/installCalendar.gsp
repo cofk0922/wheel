@@ -19,15 +19,15 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 		},
 		maxTime: max,
 		minTime: min,
-		defaultEventMinutes: 30, 
+		defaultView: 'agendaDay',
+		defaultEventMinutes: 30,
 		editable: false,
 		allDaySlot: false,
-		defaultView: 'agendaWeek',
 		events: data,
 		eventRender: function(event, element) {
 		      element.find(".fc-event-time").append(" " + event.title);
-		    },
-	    timeFormat:'h(:mm)t',        
+		},
+	    timeFormat:'h(:mm)t',
 		eventAfterAllRender: function() {
 			$.each(holidays, function(i, item) {
 				if ($('[data-date="' + item.day + '"]').length > 0) {
@@ -54,6 +54,25 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 			$('.fc-'+item.day+':not(.fc-day-header)').addClass("dayoff");
 			});				
 		},
+		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+			$.post('../appointment/validateTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update' }, function(result){
+				if (result.isValid){
+					if (!confirm("Are you sure about this change?")) {
+						revertFunc();
+					}else{
+						$.post( "../appointment/editEvent", { 'id':  event.id, 'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update'});
+						$('#status').text(
+						event.title + " was moved " +
+						dayDelta + " days and " +
+						minuteDelta + " minutes."
+						);
+					}
+				}else{
+					alert("Event can't change for this time");
+					revertFunc();
+				}
+			});				
+		},
 		eventClick: function(event, element) {
 			if (confirm("Are you sure to remove this event?")) {
 				$.post( "../appointment/editEvent", { 'id':  event.id,'act': 'remove'});
@@ -72,13 +91,14 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 						var title = prompt('Appointment');
 						if (title) {
 							$.post( "../appointment/editEvent", { 'title':  title, 'startdate': start, 'act': 'add'}, function(result){
+								console.log(result);
 								$('#calendar').fullCalendar('renderEvent',
 									{
 										id: result.id,
 										title: result.title,
 										start: result.start,
-										end: end,
-										allDay: false,
+										end:	end,
+										allDay: result.allDay
 									},
 								$('#status').text(title + " was added "),
 								true // make the event "stick"
@@ -89,37 +109,24 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 						}
 					}
 				}else{
-					alert("You can't Add this day!!!");
+					alert("can't Add this day!!!");
 				}
 			})
 		}
-	}),
-	$('#calendar').fullCalendar('gotoDate', gotoStart.getFullYear(), gotoStart.getMonth(), gotoStart.getDate());
+	})
 };
 
-var fncGetData = function() {
-	$.post( "../appointment/getEvents", function(result) {
+var fncGetData = function() {		
+	$.post( "../installation/getAllEvents", function(result) {
 		var data =[];
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
 			item.end = new Date(item.end);
-			item.color = '#008e8e';
-			item.title = '';
+			item.tile = item.tile;
 			data.push(item);
 		});
 
-		var newevent = result.newevent;
-		newevent.start = new Date(newevent.start);
-		newevent.end = new Date(newevent.end);
-		newevent.textColor = '#000000';
-		newevent.color = '#00ff00';
-		newevent.title = newevent.title;
-		newevent.editable = true;
-		newevent.durationEditable = false;
-		newevent.borderColor = '#000000';
-		data.push(newevent);
-		
-		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent.start);
+		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays);
 	} );
 };
 
@@ -137,16 +144,18 @@ $(document).ready(function() {
 		font-size: 14px;
 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 		overflow: auto
+		
 		}
 
 	#calendar {
 		width: 900px;
 		margin: 0 auto;
+		
 		}
 
 </style>
 
-<title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
+<title>ตารางติดตั้งล้อแม็กซ์</title>
 </head>
 <body>
 <div class = 'calendar' id='calendar'></div>
