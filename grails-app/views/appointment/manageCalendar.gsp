@@ -171,6 +171,7 @@ $(document).ready(function() {
 <title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
 </head>
 <body>
+<p>&nbsp;</p>
 <div class = 'calendar' id='calendar'></div>
 <div id='status'></div>
 </body>
