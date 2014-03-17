@@ -335,6 +335,63 @@ class AppointmentController {
 	}
 	
 	// Bird
+	def appointmentGrid(){
+		return
+	}
+	def getEventsGrid(){
+		
+		// default search all when "searchStr" = string empty
+		println "getEventsGrid"
+		println "searchStr = " + params.searchStr;
+		
+		def events = []
+		
+		//appointmentID is hidden fields
+		def responseData = [
+			'appointmentID': '001',
+			'appointmentNo': '1',
+			'CustomerName':'Panda',
+			'CarCode': 'PD 1234',
+			'StartDate': '2014-03-17 9:30',
+			'EndDate': '2014-03-17 10:30',
+			'Status': 'New'
+		]
+
+		def responseData2 = [
+			'appointmentID': '002',
+			'appointmentNo': '2',
+			'CustomerName':'Barny',
+			'CarCode': 'Barny 1234',
+			'StartDate': '2014-03-14 12:00',
+			'EndDate': '2014-03-14 12:30',
+			'Status': 'miss'
+		]
+		
+		def responseData3 = [
+			'appointmentID': '003',
+			'appointmentNo': '3',
+			'CustomerName':'Scott',
+			'CarCode': 'Scott 1234',
+			'StartDate': '2014-03-20 12:00',
+			'EndDate': '2014-03-20 12:30',
+			'Status': 'Cancel'
+			
+		]
+		
+		if (params.searchStr == ""){
+		events.add(responseData)
+		events.add(responseData2)
+		events.add(responseData3)
+		}
+		else{
+			events.add(responseData)
+			events.add(responseData2)
+		}
+		
+		render events as JSON
+		
+	}
+	
 	def appointmentCalendar(){
 		return
 	}

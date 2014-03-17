@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<title>Welcome to Grails</title>
+<title>Welcome to MAX SHOP</title>
 <style type="text/css" media="screen">
 #status {
 	background-color: #eee;
@@ -92,6 +92,9 @@ p {
 		</tr>
 		<tr>
 			<td>- <g:link controller="appointment" action="appointmentCalendar">ระบบเพิ่มการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+		</tr>
+		<tr>
+			<td>- <g:link controller="appointment" action="appointmentGrid">ระบบค้นหาการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="appointment" action="manageCalendar">ระบบจัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>

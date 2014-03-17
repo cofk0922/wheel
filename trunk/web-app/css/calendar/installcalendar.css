@@ -1,0 +1,12 @@
+.holiday {
+	background-color: #ff0000 !important;
+}
+
+.dayoff {
+	background-color: #acacac !important;
+}
+
+.fc-event-vert .fc-event-time {
+font-weight: bold;
+font-size: .85em;
+}
