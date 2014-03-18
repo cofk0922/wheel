@@ -1,6 +1,10 @@
 package th.ac.chula.bsd.wheel
 
 import static org.springframework.http.HttpStatus.*
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat
+
 import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
 import th.ac.chula.bsd.inventory.PreProductPurchaseStatus;
 import th.ac.chula.bsd.inventory.PreProductTransferLine;
@@ -15,7 +19,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
@@ -23,10 +27,64 @@ class AppointmentController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		params.max = Math.min(max ?: 10, 100)
+		params.offset = params.int('offset') ?: 0
+		
+		params.keyword = params.keyword ?: ''
+		params.keyword = params.keyword.trim()
+		def key = '%'+params.keyword+'%'
+		println 'keyword = '+key
+		
+		println 'params.offser='+params.offset
+		println 'params.max='+params.max
+		def appointLists = Appointment.withCriteria {
+			eq('branch.id', b.id)
+			or{
+			like('customer.carCode', key)
+			like('customer.customerName', key)
+			like('customer.customerTel', key)
+		}
+			and {
+				order('startDate', 'asc')
+				order('customerName', 'asc')
+			}
+			//maxResults(new Integer( params.max))
+            //firstResult(new Integer(params.offset))
+		}
+		println('appoint size = ' + appointLists.size())
+		//respond appointLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: appointLists.size()]
         respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
     }
-
+	
+	def showSearch = {
+		render (view: 'index')
+	}
+	
+	def search = {
+		def key = '%%'
+		if(params.keyword) {
+			key = '%'+params.keyword+'%'
+		} 
+		def appointLists = Appointment.withCriteria {
+			eq('branch.id', b.id)
+			or{
+			like('customer.carCode', key)
+			like('customer.customerName', key)
+			like('customer.customerTel', key)
+		}
+			and {
+				order('startDate', 'asc')
+				order('customerName', 'asc')
+			}
+			//maxResults(new Integer( params.max))
+			//firstResult(new Integer(params.offset))
+		}
+		render(template:'searchResults', model:[appointmentInstanceList: appointLists, appointmentInstanceCount: appointLists.size()])
+	}
+	
     def show(Appointment appointmentInstance) {
         respond appointmentInstance
     }
@@ -114,7 +172,7 @@ class AppointmentController {
         }
     }
 	
-	// May
+	
 	@Transactional
 	def test() {
 		
@@ -125,13 +183,13 @@ class AppointmentController {
 		
 		
 		// Test Calendar
-		def holidayList = b.getAllHolidayAndCloseDay(2, 2014)
+		def holidayList = b.getAllHoliday(new Date()) //b.getAllHolidayAndCloseDay(new Date())
 		println('Holiday num : '+holidayList.size())
 		
-		def appointmentList = b.getAllAppointmentInMonth(2, 2014)
+		def appointmentList = b.getAllAppointmentInMonth(new Date())
 		println('Appoint num : '+appointmentList.size())
 		
-		/*
+		
 		// Test Appointment
 		Appointment ap = new Appointment()
 		ap.initialAppointment(u, b)
@@ -139,7 +197,7 @@ class AppointmentController {
 		ap.addProduct(u, 1, 1)
 		println '1 Total :' + ap.installTotal
 		println '1 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
-		ap.addProduct(u, 3, 20)
+		ap.addProduct(u, 3, 4)
 		println '2 Total :' + ap.installTotal
 		println '2 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
 		
@@ -152,7 +210,7 @@ class AppointmentController {
 				println it
 			}
 		}
-		*/
+		
 		/*
 		// Test Transfer - request Transfer
 		b.refresh()
@@ -256,6 +314,7 @@ class AppointmentController {
 			}
 		}
 		*/
+		/*
 		// Test Purchase - receive Purchase
 		 b.refresh()
 		 def purs = ProductPurchase.withCriteria {
@@ -290,7 +349,7 @@ class AppointmentController {
 				 pur.receivePurchase(recHeader, u)
 				 //pur.checkReceivePurchaseStatus()
 				 println('PO status = ' + pur.status)
-				 Boolean isSave = pur.save flush:true
+				 isSave = pur.save flush:true
 				 if (!isSave) {
 					 pur.errors.each {
 						 println it
@@ -300,7 +359,7 @@ class AppointmentController {
 				 }
 			 }
 		 }
-		
+		*/
 		// Test Install - Prepare
 		
 		// Test Install - Installing
@@ -400,10 +459,61 @@ class AppointmentController {
 		return
 	}
 	
+	
+	static String appointmentColorCode = '00ff00'
 	def getEvents(){
 		
 		println "getEvents"
 		
+		// May
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		Date today = new Date()
+		DateFormat shortDateFormat = new SimpleDateFormat('yyyy-MM-dd')
+		DateFormat dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm')
+		
+		// Get workoff
+		def workOffDBs = b.workdays.findAll{it -> it.workActive == false}
+		def daysoff = []
+		for(doff in workOffDBs){
+			WorkDay wdayoff = doff
+			def jsonItem = [day: wdayoff.convertDayCodeToStiong()]
+			daysoff.add(jsonItem)
+		}
+		
+		// Get Holiday
+		def holidayDBs = b.getAllHoliday(today)
+		def holidays = []
+		for(hitem in holidayDBs){
+			Holiday holiday = hitem
+			def jsonItem = [ day: shortDateFormat.format(holiday.holidayDate) ]
+			holidays.add(jsonItem)
+		}
+		
+		// Get Appointment
+		def appointDBs = b.getAllAppointmentInMonth(today)
+		def events = []
+		for(app in appointDBs){
+			Appointment appoint = app
+			def jsonItem = [
+				id: appoint.id,
+				title: appoint.customer.carCode,
+				start: dateTimeFormat.format(appoint.startDate),
+				end: dateTimeFormat.format(appoint.endDate),
+				color: appointmentColorCode,
+				editable: false,
+				allDay: false
+				]
+			events.add(jsonItem)
+		}
+		
+		// end May
+		
+		
+		
+		/*
 		def events = []
 		def responseData = [
 			'id': '999',
@@ -420,7 +530,7 @@ class AppointmentController {
 			'end': '2014-03-14 12:30',
 			'allDay': false
 		]
-		
+		*/
 		def newevent = [
 			'id': '1',
 			'title':'Barny',
@@ -428,7 +538,7 @@ class AppointmentController {
 			'end': '2014-03-20 12:30',
 			'allDay': false
 		]
-		
+		/*
 		//{
 		//			id: 999,
 		//			title: '[ CR7 2222 ]',
@@ -442,7 +552,7 @@ class AppointmentController {
 
 		events.add(responseData)
 		events.add(responseData2)
-		
+		*/
 		//example
 		
 //		def jsonResult = results.collect{
@@ -463,8 +573,8 @@ class AppointmentController {
 //		}
 //		def js = [total:results.getTotalCount(),rows:jsonResult]
 		
-		def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
-		def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
+		//def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
+		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
