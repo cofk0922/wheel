@@ -4,8 +4,6 @@ package th.ac.chula.bsd.wheel
 
 import static org.springframework.http.HttpStatus.*
 
-import java.awt.geom.Arc2D.Double;
-
 import th.ac.chula.bsd.security.RoleName;
 import th.ac.chula.bsd.security.User;
 import th.ac.chula.bsd.security.Role;
