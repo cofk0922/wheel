@@ -8,7 +8,10 @@ import th.ac.chula.bsd.inventory.PreProductTransferLine;
 import th.ac.chula.bsd.inventory.ProductPurchase;
 import th.ac.chula.bsd.inventory.ProductTransferLine;
 import th.ac.chula.bsd.inventory.ProductTransferStatus;
+import th.ac.chula.bsd.security.Role;
+import th.ac.chula.bsd.security.RoleName;
 import th.ac.chula.bsd.security.User;
+import th.ac.chula.bsd.security.UserRole;
 
 class Branch {
 	
@@ -28,6 +31,7 @@ class Branch {
 	//int branchTransportMinute
 	//int branchTransportHour
 	
+	Set workdays = []
 	static hasMany = [
 		workdays : WorkDay,
 		appointments : Appointment,
@@ -74,6 +78,26 @@ class Branch {
 		branchMaxLate blank: false
 		//branchTransportMinute: false
 		//branchTransportHour: false
+	}
+	
+	String toString() {
+		return this.branchName
+	}
+	
+	public void initialWorkDay(){
+		for(int i=1; i <= 7; i++){
+			def workDay = new WorkDay()
+			workDay.initialWorkDay(this, i)
+			this.workdays.add(workDay)
+		}
+	}
+	
+	public User genAdminUser(){
+		def adminUser = "admin"+".branch"+this.id
+
+		def adminMail = adminUser+"@maxwheel.com"
+		def admin = new User(username:adminUser, password:'password', branch: this, firstName:'Admin', lastName:this.branchName, email:adminMail)
+		return admin
 	}
 	
 	public int calInstallTimeSpend() {

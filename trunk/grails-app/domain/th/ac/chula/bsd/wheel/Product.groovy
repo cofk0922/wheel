@@ -8,6 +8,8 @@ class Product {
 	int productPartAmount
 	ProductType productType
 	
+	Set productStocks = []
+	Set productVendorTransfers = []
 	static hasMany = [
 			productStocks: ProductStock,
 			productVendorTransfers: ProductVendorTransfer
@@ -18,6 +20,16 @@ class Product {
 		prodDesc nullable: true
 		productPart nullable: true
 		productPartAmount nullable: true
+	}
+	
+	public void initialProductWithBranch(String prodName, String prodDesc, Branch b){
+		this.prodName = prodName
+		this.prodDesc = prodDesc
+		
+		// initial stock
+		ProductStock stock = new ProductStock()
+		stock.initialProductStock(b, this)
+		this.productStocks.add(stock)
 	}
 	
 	public int getProductStock(Branch b) {

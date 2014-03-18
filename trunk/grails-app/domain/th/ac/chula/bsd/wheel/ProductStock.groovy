@@ -12,6 +12,11 @@ class ProductStock {
     static constraints = {
     }
 	
+	public void initialProductStock(Branch b, Product p){
+		this.branch = b
+		this.product = p
+	}
+	
 	public void increaseStock(int amount){
 		this.stock += amount
 	}

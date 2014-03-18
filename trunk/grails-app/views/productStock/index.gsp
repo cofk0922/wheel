@@ -1,20 +1,16 @@
-
 <%@ page import="th.ac.chula.bsd.wheel.ProductStock" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="submain">
 		<g:set var="entityName" value="${message(code: 'productStock.label', default: 'ProductStock')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#list-productStock" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+	<content tag="navleft">
+		<g:render template="/layouts/submenu" />
+	</content>
+	<content tag="content">
 		<div id="list-productStock" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -23,10 +19,11 @@
 			<table>
 			<thead>
 					<tr>
-					
+					<!-- 
 						<th><g:message code="productStock.branch.label" default="Branch" /></th>
 					
-						<th><g:message code="productStock.product.label" default="Product" /></th>
+						<th><g:message code="productStock.product.label" default="Product" /></th>  -->
+						
 					
 						<g:sortableColumn property="stock" title="${message(code: 'productStock.stock.label', default: 'Stock')}" />
 					
@@ -54,5 +51,6 @@
 				<g:paginate total="${productStockInstanceCount ?: 0}" />
 			</div>
 		</div>
+	</content>
 	</body>
 </html>

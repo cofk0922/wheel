@@ -66,6 +66,16 @@ p {
 	margin: 0.25em 0;
 }
 
+.configMenu div.menuSection  {
+	padding-left:1em;
+	margin: 10px;
+}
+
+.configMenu .menuSection ul {
+	padding-left:2em;
+	list-style-type:circle;
+}
+
 @media screen and (max-width: 480px) {
 	#status {
 		display: none;
@@ -80,7 +90,50 @@ p {
 </style>
 </head>
 <body>
+	<div class="configMenu">
+		<div class="menuSection">
+			<h1>สาขา และ ผู้ใช้งาน</h1>
+			<ul>
+				<li><g:link controller="branch">สาขา</g:link></li>
+				<li><g:link controller="user">ผู้ใช้</g:link></li>
+				<li><g:link controller="role">สิทธิการใช้งาน</g:link></li>
+				<li><g:link controller="userRole">ผูกสิทธิการใช้งาน</g:link></li>
+				<li>แก้ไขข้อมูลส่วนตัว</li>
+			</ul>
+		</div>
+		<hr />
+		<div class="menuSection">
+			<h1>ล้อแม็กซ์ และ อะไหล่</h1>
+			<ul>
+				<li><g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></li>
+				<li><g:link controller="maxWheel">รุ่นล้อแม็กซ์</g:link></li>
+				<li><g:link controller="maxWheel" action="inputWheel">นำเข้าล้อแม็กซ์ </g:link></li>
+				<li><g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></li>
+				<li><g:link controller="nut">อะไหล่</g:link></li>
+				<li><g:link controller="product">รายการล้อแม็กซ์ และ อะไหล่ ทั้งหมด</g:link></li>
+			</ul>
+		</div>
+		<hr/>
+		<div class="menuSection">
+			<h1>รถ</h1>
+			<ul>
+				<li><g:link controller="carBand">ยี่ห้อรถ</g:link></li>
+				<li><g:link controller="carModel">รุ่นรถยนต์ </g:link></li>
+				<li><g:link controller="carColor" action="carInput">นำเข้าภาพรถยนต์ </g:link></li>
+				<g:link controller="carWheelList">รายการจับคู่ล้อและรถยนต์</g:link>
+			</ul>
+		</div>
+		<hr/>
+		<div class="menuSection">
+			<h1>ตั้งค่าอื่นๆ</h1>
+			<ul>
+				<li></li>
+			</ul>
+		</div>
+	</div>		
 			
+			
+			<!-- 
 			<table> 
  
 		
@@ -100,7 +153,7 @@ p {
 			<td>- <g:link controller="carModel">รุ่นรถยนต์ </g:link></td>
 		</tr>
 		<tr>
-			<td>- <g:link controller="carColor" action="ตรงนี้เบย">นำเข้าภาพรถยนต์ </g:link></td>
+			<td>- <g:link controller="carColor" action="carInput">นำเข้าภาพรถยนต์ </g:link></td>
 		</tr>
 		<tr>
 			<td>- <g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></td>
@@ -119,7 +172,7 @@ p {
 		</tr>
 		
 	</table>
-			
+			 -->
 			
 			
 			
