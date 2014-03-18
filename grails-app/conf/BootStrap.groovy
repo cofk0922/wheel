@@ -1,7 +1,10 @@
 import th.ac.chula.bsd.wheel.CarBand
 import th.ac.chula.bsd.wheel.CarModel
-
+import th.ac.chula.bsd.wheel.Product
+import th.ac.chula.bsd.wheel.ProductType;
+import th.ac.chula.bsd.wheel.ProductStock
 import th.ac.chula.bsd.security.Role;
+import th.ac.chula.bsd.security.RoleName;
 import th.ac.chula.bsd.security.User;
 import th.ac.chula.bsd.security.UserRole;
 import th.ac.chula.bsd.wheel.Branch;
@@ -9,6 +12,43 @@ import th.ac.chula.bsd.wheel.Branch;
 class BootStrap {
 
     def init = { servletContext ->
+		
+		// Initial Branch and User
+		if(Branch.count() <= 0) {
+
+			def superAdminRole = new Role(authority:'ROLE_SUPERADMIN')
+			superAdminRole.save(flush:true)
+			def adminRole = new Role(authority:RoleName.ROLE_ADMIN)
+			adminRole.save(flush:true)
+			
+			def initBranch = new Branch()
+			initBranch.branchName = "Main Branch"
+			initBranch.branchAddress = "-"
+			initBranch.initialWorkDay()
+			initBranch.save(flush:true)
+			
+			def user = new User(username:'superadmin', password:'superadmin', branch: initBranch, firstName:'Superadmin', lastName:'Superadmin', email:'superadmin@wheel.com')
+			user.save(flush:true)
+			
+			def userRole = new UserRole(user:user, role:superAdminRole)
+			userRole.save(flush:true)
+			
+			def adminUser = initBranch.genAdminUser()
+			adminUser.save(flush:true)
+			def useradminRole = new UserRole(user:adminUser, role:adminRole)
+			useradminRole.save(flush:true)
+
+			// Initial Installation Product
+			def installation = new Product(prodName:'Installation', prodDesc:'Installation Price', productType:ProductType.INSTALLATION)
+			installation.save(flush:true)
+			def installStock = new ProductStock(stock:1, branch: initBranch, product: installation)
+			installStock.save(flush:true)
+			
+			
+//			def superAdminRole = Role.findOrSaveWhere(authority:'ROLE_SUPERADMIN')
+//			def user = User.findOrSaveWhere(username:'superadmin', password:'superadmin', branch: initBranch, firstName:'Superadmin', lastName:'Superadmin', email:'superadmin@wheel.com')
+//			UserRole.create(user, superAdminRole, true)
+		}
 		/*
 		Branch b = Branch.get(1)
 		Branch b2 = Branch.get(2)
@@ -39,7 +79,7 @@ class BootStrap {
 		*/
 		
 		
-		 
+		 /*
 //		new CarBand(bandName:'HONDA').save(flush:true)
 		new CarModel(modelName:'Jazz Y2003 ',
 			year: '2012',
@@ -121,7 +161,7 @@ class BootStrap {
 			defaultTireSize:13,
 			netSize:0.3).save(flush:true)
 	
-		
+		*/
     }
     def destroy = {
     }

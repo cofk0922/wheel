@@ -167,7 +167,6 @@ $(document).ready(function() {
 		}
 
 </style>
-
 <title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
 </head>
 <body>

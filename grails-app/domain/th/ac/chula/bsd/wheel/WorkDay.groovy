@@ -22,6 +22,14 @@ class WorkDay {
 		workDayCode inList: WorkDayCode.values()*.id
 	}
 	
+	public void initialWorkDay(Branch b, int i){
+		this.branch = b
+		this.workDayCode = i
+		this.workDayName = this.convertDayCodeToStiongFullFormat()
+		if(i == 1) this.workActive = false
+		else this.workActive = true
+	}
+	
 	public String convertDayCodeToStiong(){
 		String result = ''
 		switch(this.workDayCode){
@@ -51,6 +59,39 @@ class WorkDay {
 				
 			case 7:
 				result = 'sat'
+				break
+		}
+	}
+	
+	public String convertDayCodeToStiongFullFormat(){
+		String result = ''
+		switch(this.workDayCode){
+			case 1:
+				result = 'Sunday'
+				break
+			
+			case 2:
+				result = 'Monday'
+				break
+			
+			case 3:
+				result = 'Tuesday'
+				break
+				
+			case 4:
+				result = 'Wednesday'
+				break
+				
+			case 5:
+				result = 'Thursday'
+				break
+				
+			case 6:
+				result = 'Friday'
+				break
+				
+			case 7:
+				result = 'Saturday'
 				break
 		}
 	}
