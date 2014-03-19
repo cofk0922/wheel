@@ -112,6 +112,12 @@ class Branch {
 		return this.calTotalTimeSpend() + this.branchMaxLate
 	}
 	
+	public Double getInstallPrice(){
+		def installation = Product.findByProductType(ProductType.INSTALLATION)
+		def installStock = this.getProductStock(installation)
+		return installStock.unitPrice
+	}
+	
 	public Date getCloseTime(Date date) {
 		Boolean isStop = false
 		def closeTime = new GregorianCalendar()

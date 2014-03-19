@@ -9,6 +9,7 @@ import th.ac.chula.bsd.inventory.PreProductTransferLine;
 import th.ac.chula.bsd.security.User;
 
 class Appointment {
+	String appointmentNo = "AP"
 	Date createdDate = new Date()
 	Date updatedDate = new Date()
 	Date startDate = new Date()
@@ -50,6 +51,8 @@ class Appointment {
 	}
 	
 	public void initialAppointment(User u, Branch b){
+		Date today = new Date()
+		this.appointmentNo += (today.getTime()).toString()
 		this.branch = b
 		this.createdBy = u
 		this.updatedBy = u
@@ -253,13 +256,15 @@ class Appointment {
 			endDate = installEndDate
 			
 			// Check Open Time
-			if(startDate < this.branch.getOpenTime(startDate)){
+			Date openTime = this.branch.getOpenTime(startDate)
+			Date closeTime = this.branch.getCloseTime(startDate)
+			if(startDate < openTime){
 				startDate = this.branch.getOpenTime(new Date(startDate.getTime()))
 				continue
 			}
 			
 			// Check Close Time
-			if(endDate > this.branch.getCloseTime(endDate)){
+			if(endDate > closeTime){
 				startDate = this.branch.getOpenTime(new Date(startDate.getTime() + TimeUnit.DAYS.toMillis(1)))
 				continue
 			}

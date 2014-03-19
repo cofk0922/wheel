@@ -34,6 +34,7 @@
 	<g:field name="productPartAmount" type="number" value="${productInstance.productPartAmount}" required=""/>
 </div>
 
+<%--
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="product.productStocks.label" default="Product Stocks" />
@@ -50,15 +51,18 @@
 </ul>
 
 </div>
-
+ --%>
+ 
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'productType', 'error')} required">
 	<label for="productType">
 		<g:message code="product.productType.label" default="Product Type" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductType?.values()}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${productInstance?.productType?.name()}"/>
+	<%--<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductType?.values()}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${productInstance?.productType?.name()}"/> --%>
+	<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductTypeCreate?.values()}" keys="${th.ac.chula.bsd.wheel.ProductTypeCreate.values()*.name()}" required="" value="${params.prodType}"/>
 </div>
 
+<%--
 <div class="fieldcontain ${hasErrors(bean: productInstance, field: 'productVendorTransfers', 'error')} ">
 	<label for="productVendorTransfers">
 		<g:message code="product.productVendorTransfers.label" default="Product Vendor Transfers" />
@@ -73,6 +77,14 @@
 <g:link controller="productVendorTransfer" action="create" params="['product.id': productInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'productVendorTransfer.label', default: 'ProductVendorTransfer')])}</g:link>
 </li>
 </ul>
+</div>
+ --%>
 
+<div class="fieldcontain initialStock required">
+	<label for="initialStock">
+		<g:message code="product.initialStock.label" default="Initial Stock" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:field name="initialStock" type="number" required="" value="${params.initialStock}"/>
 </div>
 

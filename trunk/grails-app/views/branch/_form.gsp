@@ -38,7 +38,7 @@
 <hr />
 <div class="fieldcontain ${hasErrors(bean: branchInstance, field: 'branchStartBreakHour', 'error')} ">
 	<label for="branchStartBreakHour">
-		<g:message code="branch.branchStartBreakHour.label" default="Start Break Hour" />
+		<g:message code="branch.branchStartBreak.label" default="Start Break Hour" />
 		
 	</label>
 	<g:field name="branchStartBreakHour" type="number" value="${branchInstance?.branchStartBreakHour}" required=""/>
@@ -48,7 +48,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: branchInstance, field: 'branchEndBreakHour', 'error')} ">
 	<label for="branchEndBreakHour">
-		<g:message code="branch.branchEndBreakHour.label" default="End Break Hour" />
+		<g:message code="branch.branchEndBreak.label" default="End Break Hour" />
 		
 	</label>
 	<g:field name="branchEndBreakHour" type="number" value="${branchInstance?.branchEndBreakHour}" required=""/>

@@ -92,42 +92,50 @@ p {
 <body>
 	<div class="configMenu">
 		<div class="menuSection">
-			<h1>สาขา และ ผู้ใช้งาน</h1>
+			<h1><g:message code="default.submenu.branchuser" default="สาขา และ ผู้ใช้งาน"/></h1>
 			<ul>
-				<li><g:link controller="branch">สาขา</g:link></li>
-				<li><g:link controller="user">ผู้ใช้</g:link></li>
-				<li><g:link controller="role">สิทธิการใช้งาน</g:link></li>
-				<li><g:link controller="userRole">ผูกสิทธิการใช้งาน</g:link></li>
-				<li>แก้ไขข้อมูลส่วนตัว</li>
+				<li><g:link controller="branch"><g:message code="default.submenu.branchuser.branch" default="สาขา"/></g:link></li>
+				<li><g:link controller="user"><g:message code="default.submenu.branchuser.user" default="ผู้ใช้"/></g:link></li>
+				<li><g:link controller="role"><g:message code="default.submenu.branchuser.role" default="สิทธิการใช้งาน"/></g:link></li>
+				<li><g:link controller="userRole"><g:message code="default.submenu.branchuser.userrole" default="ผูกสิทธิการใช้งาน"/></g:link></li>
+				<li><g:message code="default.submenu.branchuser.edituser" default="แก้ไขข้อมูลส่วนตัว"/></li>
 			</ul>
 		</div>
 		<hr />
 		<div class="menuSection">
-			<h1>ล้อแม็กซ์ และ อะไหล่</h1>
+			<h1><g:message code="default.submenu.vendor" default="ผู้ผลิต และ จัดจำหน่าย ล้อแม็กซ์และอะไหล่"/></h1>
 			<ul>
-				<li><g:link controller="wheelBand">ยี่ห้อล้อแม็กซ์</g:link></li>
-				<li><g:link controller="maxWheel">รุ่นล้อแม็กซ์</g:link></li>
-				<li><g:link controller="maxWheel" action="inputWheel">นำเข้าล้อแม็กซ์ </g:link></li>
-				<li><g:link controller="usageScore">ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน</g:link></li>
-				<li><g:link controller="nut">อะไหล่</g:link></li>
-				<li><g:link controller="product">รายการล้อแม็กซ์ และ อะไหล่ ทั้งหมด</g:link></li>
+				<li><g:link controller="vendor"><g:message code="default.submenu.vendor.vendor" default="รายชื่อผู้ผลิต และ จัดจำหน่าย"/></g:link></li>
+				<li><g:link controller="vendor"><g:message code="default.submenu.vendor.vendorbranch" default="ตั้งค่าการขนส่ง"/></g:link></li>
+			</ul>
+		</div>
+		<hr />
+		<div class="menuSection">
+			<h1><g:message code="default.submenu.product" default="ล้อแม็กซ์ และ อะไหล่"/></h1>
+			<ul>
+				<li><g:link controller="wheelBand"><g:message code="default.submenu.product.maxwheelbrand" default="ยี่ห้อล้อแม็กซ์"/></g:link></li>
+				<li><g:link controller="maxWheel"><g:message code="default.submenu.product.maxwheel" default="รุ่นล้อแม็กซ์"/></g:link></li>
+				<li><g:link controller="maxWheel" action="inputWheel"><g:message code="default.submenu.product.inputwheel" default="นำเข้าล้อแม็กซ์"/></g:link></li>
+				<li><g:link controller="usageScore"><g:message code="default.submenu.product.usageScore" default="ตั้งค่าชนิดล้อแม็กซ์และการใช้งาน"/></g:link></li>
+				<li><g:link controller="nut"><g:message code="default.submenu.product.nut" default="อะไหล่"/></g:link></li>
+				<!-- <li><g:link controller="product"><g:message code="" default="รายการล้อแม็กซ์ และ อะไหล่ ทั้งหมด"/></g:link></li> -->
 			</ul>
 		</div>
 		<hr/>
 		<div class="menuSection">
-			<h1>รถ</h1>
+			<h1><g:message code="default.submenu.car" default="รถ"/></h1>
 			<ul>
-				<li><g:link controller="carBand">ยี่ห้อรถ</g:link></li>
-				<li><g:link controller="carModel">รุ่นรถยนต์ </g:link></li>
-				<li><g:link controller="carColor" action="carInput">นำเข้าภาพรถยนต์ </g:link></li>
-				<g:link controller="carWheelList">รายการจับคู่ล้อและรถยนต์</g:link>
+				<li><g:link controller="carBand"><g:message code="default.submenu.car.carbrand" default="ยี่ห้อรถ"/></g:link></li>
+				<li><g:link controller="carModel"><g:message code="default.submenu.car.carmodel" default="รุ่นรถยนต์"/></g:link></li>
+				<li><g:link controller="carColor" action="carInput"><g:message code="default.submenu.car.carcolor" default="นำเข้าภาพรถยนต์"/></g:link></li>
+				<li><g:link controller="carWheelList"><g:message code="default.submenu.car.carwheel" default="รายการจับคู่ล้อและรถยนต์"/></g:link></li>
 			</ul>
 		</div>
 		<hr/>
 		<div class="menuSection">
-			<h1>ตั้งค่าอื่นๆ</h1>
+			<h1><g:message code="default.submenu.other" default="ตั้งค่าอื่นๆ"/></h1>
 			<ul>
-				<li></li>
+				<li><g:link controller="holiday"><g:message code="default.submenu.other.holiday"/></g:link></li>
 			</ul>
 		</div>
 	</div>		

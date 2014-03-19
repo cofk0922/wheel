@@ -32,6 +32,7 @@ class BranchController {
     }
 
     def show(Branch branchInstance) {
+		params.installPrice = branchInstance.getInstallPrice()
         respond branchInstance
     }
 
@@ -70,7 +71,7 @@ class BranchController {
 		
         request.withFormat {
             form {
-				flash.message = message(code: 'default.created.message.withother', args: [message(code: 'branchInstance.label', default: 'Branch'), branchInstance.branchName, adminUser.username, message(code: 'role.admin.label', default: 'Admin')])
+				flash.message = message(code: 'default.created.message.withother', args: [message(code: 'Branch.label', default: 'Branch'), branchInstance.branchName, adminUser.username, message(code: 'role.admin.label', default: 'Admin')])
                 //flash.message = message(code: 'default.created.message', args: [message(code: 'branchInstance.label', default: 'Branch'), branchInstance.branchName])
                 redirect branchInstance
             }
@@ -79,9 +80,7 @@ class BranchController {
     }
 
     def edit(Branch branchInstance) {
-		def installation = Product.findByProductType(ProductType.INSTALLATION)
-		def installStock = branchInstance.getProductStock(installation)
-		params.installPrice = installStock.unitPrice
+		params.installPrice = branchInstance.getInstallPrice()
         respond branchInstance
     }
 

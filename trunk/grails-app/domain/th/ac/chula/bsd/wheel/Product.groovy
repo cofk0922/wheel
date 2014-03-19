@@ -20,6 +20,11 @@ class Product {
 		prodDesc nullable: true
 		productPart nullable: true
 		productPartAmount nullable: true
+		productType inList:[ProductType.WHEEL, ProductType.NUT]
+	}
+	
+	String toString() {
+		return this.prodName
 	}
 	
 	public void initialProductWithBranch(String prodName, String prodDesc, Branch b){
@@ -52,10 +57,27 @@ class Product {
 		def prodStock = prod.productStocks.find{it.branch.id == b.id}
 		return prodStock.unitPrice
 	}
+	
+	public static ProductType convertStringToProductType(String typeString){
+		if(typeString == 'INSTALLATION'){
+			return ProductType.INSTALLATION
+		}else if(typeString == 'WHEEL'){
+			return ProductType.WHEEL
+		}else if(typeString == 'NUT'){
+			return ProductType.NUT
+		}else {
+			return ProductType.WHEEL
+		}
+	}
 }
 
 enum ProductType {
 	INSTALLATION,
+	WHEEL,
+	NUT
+}
+
+enum ProductTypeCreate{ // for product/view Only
 	WHEEL,
 	NUT
 }

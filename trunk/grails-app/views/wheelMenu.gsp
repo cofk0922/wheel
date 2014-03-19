@@ -84,32 +84,32 @@
 			<sec:ifLoggedIn>
     			<sec:ifAllGranted roles="ROLE_USER">
         			 <tr>
-						<td>- <g:link controller="appointment">เลือกล้อแม็กซ์และนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+						<td>- <g:link controller="appointment"><g:message code="default.menu.appointment.label"/>เลือกล้อแม็กซ์และนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 					</tr>
      			</sec:ifAllGranted>
 			</sec:ifLoggedIn>
  			<tr>
-				<td>- <g:link controller="appointment">เลือกล้อแม็กซ์และนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+				<td>- <g:link controller="appointment"><g:message code="default.menu.chooseWheel.label"/></g:link></td>
 			</tr>
 			<tr>
-				<td>- <g:link controller="appointment">จัดการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
-			</tr>
-			
-			<tr>
-				<td>- <g:link controller="appointment" action="appointmentCalendar">เพิ่มการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
-			</tr>
-			<tr>
-				<td>- <g:link controller="appointment" action="manageCalendar">จัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+				<td>- <g:link controller="appointment"><g:message code="default.menu.appointment.label"/></g:link></td>
 			</tr>
 			
 			<tr>
-				<td>- <g:link controller="installation">ติดตั้งล้อแม็กซ์</g:link></td>
+				<td>- <g:link controller="appointment" action="appointmentCalendar"><g:message code=""/>เพิ่มการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
 			</tr>
 			<tr>
-				<td>- <g:link controller="inventory">จัดการคลังสินค้า</g:link></td>
+				<td>- <g:link controller="appointment" action="manageCalendar"><g:message code=""/>จัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+			</tr>
+			
+			<tr>
+				<td>- <g:link controller="installation"><g:message code="default.menu.install.label"/></g:link></td>
 			</tr>
 			<tr>
-				<td>- <g:link controller="configMenu">ตั้งค่าระบบ</g:link></td>
+				<td>- <g:link controller="inventory"><g:message code="default.menu.inventory.label"/></g:link></td>
+			</tr>
+			<tr>
+				<td>- <a class="setting" href="${createLink(uri: '/configMenu?lang=th')}"><g:message code="default.menu.setting.label" /></a></td>
 			</tr>
 	 <!-- 
 			<tr>
