@@ -4,13 +4,13 @@
 
 <div class="fieldcontain ${hasErrors(bean: carBandInstance, field: 'bandName', 'error')} ">
 	<label for="bandName">
-		<g:message code="carBand.bandName.label" default="Band Name" />
+		<g:message code="carBand.bandName.label" default="ยี่ห้อรถ" />
 		
 	</label>
 	<g:textField name="bandName" value="${carBandInstance?.bandName}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: carBandInstance, field: 'dWheel', 'error')} ">
+<%-- <div class="fieldcontain ${hasErrors(bean: carBandInstance, field: 'dWheel', 'error')} ">
 	<label for="dWheel">
 		<g:message code="carBand.dWheel.label" default="DW heel" />
 		
@@ -25,9 +25,9 @@
 </li>
 </ul>
 
-</div>
+</div>--%>
 
-<div class="fieldcontain ${hasErrors(bean: carBandInstance, field: 'models', 'error')} ">
+<%-- <div class="fieldcontain ${hasErrors(bean: carBandInstance, field: 'models', 'error')} ">
 	<label for="models">
 		<g:message code="carBand.models.label" default="Models" />
 		
@@ -42,5 +42,5 @@
 </li>
 </ul>
 
-</div>
+</div>--%>
 

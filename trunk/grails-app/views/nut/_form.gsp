@@ -4,7 +4,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
-		<g:message code="nut.prodName.label" default="Prod Name" />
+		<g:message code="nut.prodName.label" default="ชื่อเกลียวน๊อต" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="prodName" required="" value="${nutInstance?.prodName}"/>
@@ -12,13 +12,13 @@
 
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'prodDesc', 'error')} ">
 	<label for="prodDesc">
-		<g:message code="nut.prodDesc.label" default="Prod Desc" />
+		<g:message code="nut.prodDesc.label" default="รายละเอียด" />
 		
 	</label>
 	<g:textField name="prodDesc" value="${nutInstance?.prodDesc}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productPart', 'error')} ">
+<%--<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productPart', 'error')} ">
 	<label for="productPart">
 		<g:message code="nut.productPart.label" default="Product Part" />
 		
@@ -33,16 +33,16 @@
 	</label>
 	<g:field name="productPartAmount" type="number" value="${nutInstance.productPartAmount}" required=""/>
 </div>
-
+ --%>
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'nutSize', 'error')} required">
 	<label for="nutSize">
-		<g:message code="nut.nutSize.label" default="Nut Size" />
+		<g:message code="nut.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="nutSize" value="${fieldValue(bean: nutInstance, field: 'nutSize')}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productStocks', 'error')} ">
+<%--<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="nut.productStocks.label" default="Product Stocks" />
 		
@@ -57,7 +57,7 @@
 </li>
 </ul>
 
-</div>
+</div> 
 
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productType', 'error')} required">
 	<label for="productType">
@@ -82,5 +82,5 @@
 </li>
 </ul>
 
-</div>
+</div>--%>
 

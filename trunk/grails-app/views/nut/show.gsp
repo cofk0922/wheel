@@ -21,7 +21,7 @@
 			
 				<g:if test="${nutInstance?.prodName}">
 				<li class="fieldcontain">
-					<span id="prodName-label" class="property-label"><g:message code="nut.prodName.label" default="Prod Name" /></span>
+					<span id="prodName-label" class="property-label"><g:message code="nut.prodName.label" default="=ชื่อเกลียวน๊อต" /></span>
 					
 						<span class="property-value" aria-labelledby="prodName-label"><g:fieldValue bean="${nutInstance}" field="prodName"/></span>
 					
@@ -30,14 +30,14 @@
 			
 				<g:if test="${nutInstance?.prodDesc}">
 				<li class="fieldcontain">
-					<span id="prodDesc-label" class="property-label"><g:message code="nut.prodDesc.label" default="Prod Desc" /></span>
+					<span id="prodDesc-label" class="property-label"><g:message code="nut.prodDesc.label" default="รายละเอียด" /></span>
 					
 						<span class="property-value" aria-labelledby="prodDesc-label"><g:fieldValue bean="${nutInstance}" field="prodDesc"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${nutInstance?.productPart}">
+				<%--<g:if test="${nutInstance?.productPart}">
 				<li class="fieldcontain">
 					<span id="productPart-label" class="property-label"><g:message code="nut.productPart.label" default="Product Part" /></span>
 					
@@ -53,18 +53,18 @@
 						<span class="property-value" aria-labelledby="productPartAmount-label"><g:fieldValue bean="${nutInstance}" field="productPartAmount"/></span>
 					
 				</li>
-				</g:if>
+				</g:if>--%>
 			
 				<g:if test="${nutInstance?.nutSize}">
 				<li class="fieldcontain">
-					<span id="nutSize-label" class="property-label"><g:message code="nut.nutSize.label" default="Nut Size" /></span>
+					<span id="nutSize-label" class="property-label"><g:message code="nut.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" /></span>
 					
 						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${nutInstance}" field="nutSize"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${nutInstance?.productStocks}">
+				<%--<g:if test="${nutInstance?.productStocks}">
 				<li class="fieldcontain">
 					<span id="productStocks-label" class="property-label"><g:message code="nut.productStocks.label" default="Product Stocks" /></span>
 					
@@ -93,7 +93,7 @@
 						</g:each>
 					
 				</li>
-				</g:if>
+				</g:if> --%>
 			
 			</ol>
 			<g:form url="[resource:nutInstance, action:'delete']" method="DELETE">

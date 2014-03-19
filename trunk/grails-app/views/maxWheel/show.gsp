@@ -20,7 +20,7 @@
 			
 				<g:if test="${maxWheelInstance?.band}">
 				<li class="fieldcontain">
-					<span id="band-label" class="property-label"><g:message code="maxWheel.band.label" default="Band" /></span>
+					<span id="band-label" class="property-label"><g:message code="maxWheel.band.label" default="ยี่ห้อ" /></span>
 					
 						<span class="property-value" aria-labelledby="band-label"><g:link controller="wheelBand" action="show" id="${maxWheelInstance?.band?.id}">${maxWheelInstance?.band?.name}</g:link></span>
 					
@@ -29,7 +29,7 @@
 			
 				<g:if test="${maxWheelInstance?.prodName}">
 				<li class="fieldcontain">
-					<span id="prodName-label" class="property-label"><g:message code="maxWheel.prodName.label" default="Prod Name" /></span>
+					<span id="prodName-label" class="property-label"><g:message code="maxWheel.prodName.label" default="รุ่นล้อแม็กซ์" /></span>
 					
 						<span class="property-value" aria-labelledby="prodName-label"><g:fieldValue bean="${maxWheelInstance}" field="prodName"/></span>
 					
@@ -38,7 +38,7 @@
 						
 				<g:if test="${maxWheelInstance?.series}">
 				<li class="fieldcontain">
-					<span id="model-label" class="property-label"><g:message code="maxWheel.series.label" default="Series" /></span>
+					<span id="model-label" class="property-label"><g:message code="maxWheel.series.label" default="ซีรี่ย์" /></span>
 					
 						<span class="property-value" aria-labelledby="series-label"><g:fieldValue bean="${maxWheelInstance}" field="series"/></span>
 					
@@ -47,7 +47,7 @@
 			
 				<g:if test="${maxWheelInstance?.size}">
 				<li class="fieldcontain">
-					<span id="size-label" class="property-label"><g:message code="maxWheel.size.label" default="Size" /></span>
+					<span id="size-label" class="property-label"><g:message code="maxWheel.size.label" default="ขนาด" /></span>
 					
 						<span class="property-value" aria-labelledby="size-label"><g:fieldValue bean="${maxWheelInstance}" field="size"/></span>
 					
@@ -56,7 +56,7 @@
 			
 				<g:if test="${maxWheelInstance?.prodDesc}">
 				<li class="fieldcontain">
-					<span id="prodDesc-label" class="property-label"><g:message code="maxWheel.prodDesc.label" default="Prod Desc" /></span>
+					<span id="prodDesc-label" class="property-label"><g:message code="maxWheel.prodDesc.label" default="รายละเอียด" /></span>
 					
 						<span class="property-value" aria-labelledby="prodDesc-label"><g:fieldValue bean="${maxWheelInstance}" field="prodDesc"/></span>
 					
@@ -83,7 +83,7 @@
 
 				<g:if test="${maxWheelInstance?.width}">
 				<li class="fieldcontain">
-					<span id="width-label" class="property-label"><g:message code="maxWheel.width.label" default="Width" /></span>
+					<span id="width-label" class="property-label"><g:message code="maxWheel.width.label" default="หน้ากว้าง" /></span>
 					
 						<span class="property-value" aria-labelledby="width-label"><g:fieldValue bean="${maxWheelInstance}" field="width"/></span>
 					
@@ -92,7 +92,7 @@
 			
 				<g:if test="${maxWheelInstance?.weight}">
 				<li class="fieldcontain">
-					<span id="weight-label" class="property-label"><g:message code="maxWheel.weight.label" default="Weight" /></span>
+					<span id="weight-label" class="property-label"><g:message code="maxWheel.weight.label" default="น้ำหนัก" /></span>
 					
 						<span class="property-value" aria-labelledby="weight-label"><g:fieldValue bean="${maxWheelInstance}" field="weight"/></span>
 					
@@ -101,7 +101,7 @@
 			
 				<g:if test="${maxWheelInstance?.pcdCode}">
 				<li class="fieldcontain">
-					<span id="pcdCode-label" class="property-label"><g:message code="maxWheel.pcdCode.label" default="Pcd Code" /></span>
+					<span id="pcdCode-label" class="property-label"><g:message code="maxWheel.pcdCode.label" default="รหัสการจัดเรียงรูน๊อต PCD" /></span>
 					
 						<span class="property-value" aria-labelledby="pcdCode-label"><g:fieldValue bean="${maxWheelInstance}" field="pcdCode"/></span>
 					
@@ -110,7 +110,7 @@
 			
 				<g:if test="${maxWheelInstance?.offSet}">
 				<li class="fieldcontain">
-					<span id="offSet-label" class="property-label"><g:message code="maxWheel.offSet.label" default="Off Set" /></span>
+					<span id="offSet-label" class="property-label"><g:message code="maxWheel.offSet.label" default="ระยะห่างแกนเพลาถึงขอบรถ" /></span>
 					
 						<span class="property-value" aria-labelledby="offSet-label"><g:fieldValue bean="${maxWheelInstance}" field="offSet"/></span>
 					
@@ -119,14 +119,14 @@
 			
 				<g:if test="${maxWheelInstance?.pStatus}">
 				<li class="fieldcontain">
-					<span id="pStatus-label" class="property-label"><g:message code="maxWheel.pStatus.label" default="PS tatus" /></span>
+					<span id="pStatus-label" class="property-label"><g:message code="maxWheel.pStatus.label" default="สถานะการผลิต" /></span>
 					
 						<span class="property-value" aria-labelledby="pStatus-label"><g:fieldValue bean="${maxWheelInstance}" field="pStatus"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${maxWheelInstance?.productStocks}">
+			<%--<g:if test="${maxWheelInstance?.productStocks}">
 				<li class="fieldcontain">
 					<span id="productStocks-label" class="property-label"><g:message code="maxWheel.productStocks.label" default="Product Stocks" /></span>
 					
@@ -144,7 +144,7 @@
 						<span class="property-value" aria-labelledby="productType-label"><g:fieldValue bean="${maxWheelInstance}" field="productType"/></span>
 					
 				</li>
-				</g:if>
+				</g:if> 	
 			
 				<g:if test="${maxWheelInstance?.productVendorTransfers}">
 				<li class="fieldcontain">
@@ -155,18 +155,18 @@
 						</g:each>
 					
 				</li>
-				</g:if>
+				</g:if>--%>
 			
 				<g:if test="${maxWheelInstance?.spoke}">
 				<li class="fieldcontain">
-					<span id="spoke-label" class="property-label"><g:message code="maxWheel.spoke.label" default="Spoke" /></span>
+					<span id="spoke-label" class="property-label"><g:message code="maxWheel.spoke.label" default="ชนิดของก้านล้อแม็กซ์" /></span>
 					
 						<span class="property-value" aria-labelledby="spoke-label"><g:fieldValue bean="${maxWheelInstance}" field="spoke"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${maxWheelInstance?.wheelLists}">
+				<%--<g:if test="${maxWheelInstance?.wheelLists}">
 				<li class="fieldcontain">
 					<span id="wheelLists-label" class="property-label"><g:message code="maxWheel.wheelLists.label" default="Wheel Lists" /></span>
 					
@@ -175,7 +175,7 @@
 						</g:each>
 					
 				</li>
-				</g:if>
+				</g:if> --%>
 			
 			</ol>
 			<g:form url="[resource:maxWheelInstance, action:'delete']" method="DELETE">
