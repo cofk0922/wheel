@@ -21,7 +21,7 @@
 			
 				<g:if test="${carModelInstance?.band}">
 				<li class="fieldcontain">
-					<span id="band-label" class="property-label"><g:message code="carModel.band.label" default="Band" /></span>
+					<span id="band-label" class="property-label"><g:message code="carModel.band.label" default="ยี่ห้อ" /></span>
 					
 						<span class="property-value" aria-labelledby="band-label"><g:link controller="carBand" action="show" id="${carModelInstance?.band?.id}">${carModelInstance?.band?.bandName}</g:link></span>
 					
@@ -30,7 +30,7 @@
 			
 				<g:if test="${carModelInstance?.modelName}">
 				<li class="fieldcontain">
-					<span id="modelName-label" class="property-label"><g:message code="carModel.modelName.label" default="Model Name" /></span>
+					<span id="modelName-label" class="property-label"><g:message code="carModel.modelName.label" default="รุ่น" /></span>
 					
 						<span class="property-value" aria-labelledby="modelName-label"><g:fieldValue bean="${carModelInstance}" field="modelName"/></span>
 					
@@ -39,7 +39,7 @@
 			
 				<g:if test="${carModelInstance?.year}">
 				<li class="fieldcontain">
-					<span id="year-label" class="property-label"><g:message code="carModel.year.label" default="Year" /></span>
+					<span id="year-label" class="property-label"><g:message code="carModel.year.label" default="ปี" /></span>
 					
 						<span class="property-value" aria-labelledby="year-label"><g:fieldValue bean="${carModelInstance}" field="year"/></span>
 					
@@ -48,7 +48,7 @@
 			
 				<g:if test="${carModelInstance?.defaultTireSize}">
 				<li class="fieldcontain">
-					<span id="defaultTireSize-label" class="property-label"><g:message code="carModel.defaultTireSize.label" default="Default Tire Size" /></span>
+					<span id="defaultTireSize-label" class="property-label"><g:message code="carModel.defaultTireSize.label" default="ขนาดล้อพร้อมยางมาตรฐาน" /></span>
 					
 						<span class="property-value" aria-labelledby="defaultTireSize-label"><g:fieldValue bean="${carModelInstance}" field="defaultTireSize"/></span>
 					
@@ -57,7 +57,7 @@
 			
 				<g:if test="${carModelInstance?.gearRatio}">
 				<li class="fieldcontain">
-					<span id="gearRatio-label" class="property-label"><g:message code="carModel.gearRatio.label" default="Gear Ratio" /></span>
+					<span id="gearRatio-label" class="property-label"><g:message code="carModel.gearRatio.label" default="อัตราการทดแรงเกียร์พื้นฐาน(เท่า)" /></span>
 					
 						<span class="property-value" aria-labelledby="gearRatio-label"><g:fieldValue bean="${carModelInstance}" field="gearRatio"/></span>
 					
@@ -66,7 +66,7 @@
 			
 				<g:if test="${carModelInstance?.offSet}">
 				<li class="fieldcontain">
-					<span id="offSet-label" class="property-label"><g:message code="carModel.offSet.label" default="Off Set" /></span>
+					<span id="offSet-label" class="property-label"><g:message code="carModel.offSet.label" default="ระยะห่างแกนเพลาถึงขอบรถ" /></span>
 					
 						<span class="property-value" aria-labelledby="offSet-label"><g:fieldValue bean="${carModelInstance}" field="offSet"/></span>
 					
@@ -75,7 +75,7 @@
 			
 				<g:if test="${carModelInstance?.pcdCode}">
 				<li class="fieldcontain">
-					<span id="pcdCode-label" class="property-label"><g:message code="carModel.pcdCode.label" default="Pcd Code" /></span>
+					<span id="pcdCode-label" class="property-label"><g:message code="carModel.pcdCode.label" default="รหัสการจัดเรียงรูน๊อต PCD" /></span>
 					
 						<span class="property-value" aria-labelledby="pcdCode-label"><g:fieldValue bean="${carModelInstance}" field="pcdCode"/></span>
 					
@@ -84,7 +84,7 @@
 			
 				<g:if test="${carModelInstance?.weight}">
 				<li class="fieldcontain">
-					<span id="weight-label" class="property-label"><g:message code="carModel.weight.label" default="Weight" /></span>
+					<span id="weight-label" class="property-label"><g:message code="carModel.weight.label" default="น้ำหนักรถ(กิโลกรัม)" /></span>
 					
 						<span class="property-value" aria-labelledby="weight-label"><g:fieldValue bean="${carModelInstance}" field="weight"/></span>
 					
@@ -93,14 +93,14 @@
 			
 				<g:if test="${carModelInstance?.nutSize}">
 				<li class="fieldcontain">
-					<span id="nutSize-label" class="property-label"><g:message code="carModel.nutSize.label" default="Nut Size" /></span>
+					<span id="nutSize-label" class="property-label"><g:message code="carModel.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" /></span>
 					
 						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${carModelInstance}" field="nutSize"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${carModelInstance?.wheelLists}">
+				<%-- <g:if test="${carModelInstance?.wheelLists}">
 				<li class="fieldcontain">
 					<span id="wheelLists-label" class="property-label"><g:message code="carModel.wheelLists.label" default="Wheel Lists" /></span>
 					
@@ -109,7 +109,7 @@
 						</g:each>
 					
 				</li>
-				</g:if>
+				</g:if> --%>
 			
 			</ol>
 			<g:form url="[resource:carModelInstance, action:'delete']" method="DELETE">

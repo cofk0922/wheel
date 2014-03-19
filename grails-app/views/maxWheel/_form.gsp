@@ -12,7 +12,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
-		<g:message code="maxWheel.prodName.label" default="Prod Name" />
+		<g:message code="maxWheel.prodName.label" default="รุ่นล้อแม็กซ์" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="prodName" required="" value="${maxWheelInstance?.prodName}"/>
@@ -20,7 +20,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'series', 'error')} required">
 	<label for="series">
-		<g:message code="maxWheel.series.label" default="series" />
+		<g:message code="maxWheel.series.label" default="ซีรี่ย์" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:textField name="series" required="" value="${maxWheelInstance?.series}"/>
@@ -28,7 +28,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'size', 'error')} required">
 	<label for="size">
-		<g:message code="maxWheel.size.label" default="Size" />
+		<g:message code="maxWheel.size.label" default="ขนาด" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="size" value="${fieldValue(bean: maxWheelInstance, field: 'size')}" required=""/>
@@ -36,7 +36,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'prodDesc', 'error')} ">
 	<label for="prodDesc">
-		<g:message code="maxWheel.prodDesc.label" default="Prod Desc" />
+		<g:message code="maxWheel.prodDesc.label" default="รายละเอียด" />
 		
 	</label>
 	<g:textField name="prodDesc" value="${maxWheelInstance?.prodDesc}"/>
@@ -52,7 +52,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'width', 'error')} required">
 	<label for="width">
-		<g:message code="maxWheel.width.label" default="Width" />
+		<g:message code="maxWheel.width.label" default="หน้ากว้าง" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="width" value="${fieldValue(bean: maxWheelInstance, field: 'width')}" required=""/>
@@ -60,7 +60,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'weight', 'error')} ">
 	<label for="weight">
-		<g:message code="maxWheel.weight.label" default="Weight" />
+		<g:message code="maxWheel.weight.label" default="น้ำหนัก" />
 		
 	</label>
 	<g:field name="weight" value="${fieldValue(bean: maxWheelInstance, field: 'weight')}"/>
@@ -68,7 +68,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'pcdCode', 'error')} ">
 	<label for="pcdCode">
-		<g:message code="maxWheel.pcdCode.label" default="Pcd Code" />
+		<g:message code="maxWheel.pcdCode.label" default="รหัสการจัดเรียงรูน๊อต PCD" />
 		
 	</label>
 	<g:textField name="pcdCode" value="${maxWheelInstance?.pcdCode}"/>
@@ -76,7 +76,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'offSet', 'error')} required">
 	<label for="offSet">
-		<g:message code="maxWheel.offSet.label" default="Off Set" />
+		<g:message code="maxWheel.offSet.label" default="ระยะห่างแกนเพลาถึงขอบรถ" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="offSet" type="number" value="${maxWheelInstance.offSet}" required=""/>
@@ -84,13 +84,13 @@
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'pStatus', 'error')} required">
 	<label for="pStatus">
-		<g:message code="maxWheel.pStatus.label" default="PS tatus" />
+		<g:message code="maxWheel.pStatus.label" default="สถานะการผลิต" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select name="pStatus" from="${th.ac.chula.bsd.wheel.ProdStatus?.values()}" keys="${th.ac.chula.bsd.wheel.ProdStatus.values()*.name()}" required="" value="${maxWheelInstance?.pStatus?.name()}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productStocks', 'error')} ">
+<%--<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="maxWheel.productStocks.label" default="Product Stocks" />
 		
@@ -125,17 +125,17 @@
 </li>
 </ul>
 
-</div>
+</div> --%>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'spoke', 'error')} required">
 	<label for="spoke">
-		<g:message code="maxWheel.spoke.label" default="Spoke" />
+		<g:message code="maxWheel.spoke.label" default="ชนิดของก้านล้อแม็กซ์" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:select name="spoke" from="${th.ac.chula.bsd.wheel.SpokeType?.values()}" keys="${th.ac.chula.bsd.wheel.SpokeType.values()*.name()}" required="" value="${maxWheelInstance?.spoke?.name()}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'wheelLists', 'error')} ">
+<%--<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'wheelLists', 'error')} ">
 	<label for="wheelLists">
 		<g:message code="maxWheel.wheelLists.label" default="Wheel Lists" />
 		
@@ -150,5 +150,5 @@
 </li>
 </ul>
 
-</div>
+</div> --%>
 

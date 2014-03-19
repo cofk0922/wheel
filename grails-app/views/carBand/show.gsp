@@ -21,14 +21,14 @@
 			
 				<g:if test="${carBandInstance?.bandName}">
 				<li class="fieldcontain">
-					<span id="bandName-label" class="property-label"><g:message code="carBand.bandName.label" default="Band Name" /></span>
+					<span id="bandName-label" class="property-label"><g:message code="carBand.bandName.label" default="ยี่ห้อรถ" /></span>
 					
 						<span class="property-value" aria-labelledby="bandName-label"><g:fieldValue bean="${carBandInstance}" field="bandName"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${carBandInstance?.dWheel}">
+			<%-- <g:if test="${carBandInstance?.dWheel}">
 				<li class="fieldcontain">
 					<span id="dWheel-label" class="property-label"><g:message code="carBand.dWheel.label" default="DW heel" /></span>
 					
@@ -48,7 +48,7 @@
 						</g:each>
 					
 				</li>
-				</g:if>
+				</g:if>--%>	
 			
 			</ol>
 			<g:form url="[resource:carBandInstance, action:'delete']" method="DELETE">
