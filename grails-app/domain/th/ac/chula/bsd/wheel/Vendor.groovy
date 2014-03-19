@@ -12,5 +12,9 @@ class Vendor {
 		vendorName blank: false
 		vendorAddress blank: false
 	}
+	
+	String toString() {
+		return this.vendorName
+	}
 
 }

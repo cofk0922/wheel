@@ -4,11 +4,13 @@ package th.ac.chula.bsd.security
 
 import static org.springframework.http.HttpStatus.*
 import th.ac.chula.bsd.wheel.Branch;
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class UserController {
-
+	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -31,8 +33,8 @@ class UserController {
 			//firstResult(new Integer(params.offset))
 		}
 		println('user size = ' + userLists.size())
-		respond userLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: userLists.size()]
-		//respond Appointment.list(params), model:[userInstanceCount: Appointment.count()]
+		//respond userLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: userLists.size()]
+		respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
     def show(User userInstance) {

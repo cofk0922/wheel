@@ -136,6 +136,18 @@
 				</li>
 				</g:if>
 				
+				<g:if test="${branchInstance?.branchMaxLate}">
+				<li class="fieldcontain">
+					<span id="installPrice-label" class="property-label"><g:message code="branch.installPrice.label" default="Install Price" /></span>
+					
+						<span class="property-value" aria-labelledby="installPrice-label">
+						${params.installPrice}
+						<g:message code="default.THB" default="Bath" />
+						</span>
+					
+				</li>
+				</g:if>
+				
 			</ol>
 			<g:form url="[resource:branchInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

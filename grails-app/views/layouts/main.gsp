@@ -38,20 +38,20 @@
 		<div class="nav">
 			<ul>
 				<!--  <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>-->
-				<li><a class="home" href="${createLink(uri: '/')}">หน้าหลัก</a></li>
-				<li><a class="choose_wheel" href="${createLink(uri: '/')}">เลือกล้อแม็กซ์</a></li>
-				<li><a class="appointment" href="${createLink(uri: '/appointment')}">จัดการนัดหมาย</a></li>
-				<li><a class="install" href="${createLink(uri: '/')}">ติดตั้งล้อแม็กซ์</a></li>
+				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.menu.home.label"/></a></li>
+				<li><a class="choose_wheel" href="${createLink(uri: '/')}"><g:message code="default.menu.chooseWheel.label"/></a></li>
+				<li><a class="appointment" href="${createLink(uri: '/appointment')}"><g:message code="default.menu.appointment.label"/></a></li>
+				<li><a class="install" href="${createLink(uri: '/')}"><g:message code="default.menu.install.label"/></a></li>
 				<li>
-					<a class="inventory" href="${createLink(uri: '/')}">จัดการคลังสินค้า</a>
+					<a class="inventory" href="${createLink(uri: '/')}"><g:message code="default.menu.inventory.label"/></a>
 					<ul>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="ขอโอนสินค้า"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="โอนสินค้า"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="สั่งซื้อสินค้า"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="รับเข้าสินค้า"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventort.transferfrom"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventort.transferto"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventory.purchase"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.invenotry.receivepo"/></a></li>
 					</ul>
 				</li>
-				<li><a class="setting" href="${createLink(uri: '/configMenu')}">ตั้งค่าระบบ</a></li>
+				<li><a class="setting" href="${createLink(uri: '/configMenu?lang=th')}"><g:message code="default.menu.setting.label" /></a></li>
 			</ul>
 		</div>
 		<g:layoutBody/>

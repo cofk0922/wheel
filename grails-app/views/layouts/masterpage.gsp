@@ -22,11 +22,11 @@
 			<a href="${createLink(uri: '/') }"><img src="${resource(dir: 'images', file: 'bannerWheel.png')}" alt="Grails"/></a>
 			<div class='userInfo' style='float: right; padding-right: 0.5em;'>
 			<sec:ifNotLoggedIn>
-				<a href="${createLink(uri: '/login/auth')}">Login</a>				
+				<a href="${createLink(uri: '/login/auth')}"><g:message code="default.menu.login"/></a>				
 			</sec:ifNotLoggedIn>
 			<sec:ifLoggedIn>
 				<sec:username /> :
-				<a href="${createLink(uri: '/logout')}">Logout</a>
+				<a href="${createLink(uri: '/logout')}"><g:message code="default.menu.logout" /></a>
 			</sec:ifLoggedIn>
 		</div>
 		</div>

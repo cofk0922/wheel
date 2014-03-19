@@ -3,11 +3,13 @@ package th.ac.chula.bsd.wheel
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class ProductController {
-
+	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -20,6 +22,7 @@ class ProductController {
     }
 
     def create() {
+		params.initialStock = 0
         respond new Product(params)
     }
 
@@ -35,8 +38,17 @@ class ProductController {
             return
         }
 
+		productInstance.productType = Product.convertStringToProductType(params.prodType)
         productInstance.save flush:true
 
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		ProductStock stock = new ProductStock()
+		stock.initialProductStock(b, productInstance)
+		stock.stock = params.initialStock.toInteger()
+		stock.save()
+		
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'productInstance.label', default: 'Product'), productInstance.id])
@@ -47,6 +59,10 @@ class ProductController {
     }
 
     def edit(Product productInstance) {
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		params.initialStock = productInstance.getProductStock(b)
         respond productInstance
     }
 

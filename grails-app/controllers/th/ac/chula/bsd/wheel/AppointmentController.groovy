@@ -26,6 +26,10 @@ class AppointmentController {
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	def timeFormat = new SimpleDateFormat('HH:mm')
+	def shortDateFormat = new SimpleDateFormat('yyyy-MM-dd')
+	def dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm')
+	
     def index(Integer max) {
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
@@ -405,7 +409,36 @@ class AppointmentController {
 		
 		def events = []
 		
+		// May
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		// get appointment
+		def appointDBs = Appointment.withCriteria {
+			and{
+				eq('branch.id', b.id)
+				not {'in'("status",[AppointmentStatus.CANCEL, AppointmentStatus.CAR_RETURNED])}
+			}
+		}
+		for(ap in appointDBs){
+			Appointment appoint = ap
+			def item = [
+				'appointmentID': appoint.id,
+				'appointmentNo': appoint.appointmentNo,
+				'CustomerName':appoint.customer.customerName,
+				'CarCode': appoint.customer.carCode,
+				'StartDate': dateTimeFormat.format(appoint.startDate),
+				'EndAppointDate': dateTimeFormat.format(appoint.endAppointmentDate),
+				'EndDate': dateTimeFormat.format(appoint.endDate),
+				'Status': 'New'
+				]
+			events.add(item)
+		}
+		
+		
 		//appointmentID is hidden fields
+		/*
 		def responseData = [
 			'appointmentID': '001',
 			'appointmentNo': '1',
@@ -446,7 +479,7 @@ class AppointmentController {
 			events.add(responseData)
 			events.add(responseData2)
 		}
-		
+		*/
 		render events as JSON
 		
 	}
@@ -470,9 +503,26 @@ class AppointmentController {
 		Branch b = u.branch
 		b.refresh()
 		
+		// Test Appointment
+		Appointment ap = new Appointment()
+		ap.initialAppointment(u, b)
+		ap.addProduct(u, 1, 1)
+		println '1 Total :' + ap.installTotal
+		println '1 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
+		ap.addProduct(u, 3, 4)
+		println '2 Total :' + ap.installTotal
+		println '2 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
+		ap.setNewCustomer("A", "08xxxxxxx", "Bangkok", "ABC1234")
+		ap.confirmAppointment(false)
+		def newevent = [
+			'title':ap.customer.carCode,
+			'start': dateTimeFormat.format(ap.startDate),
+			'end': dateTimeFormat.format(ap.endAppointmentDate),
+			'allDay': false
+		]
+		// End Test
+		
 		Date today = new Date()
-		DateFormat shortDateFormat = new SimpleDateFormat('yyyy-MM-dd')
-		DateFormat dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm')
 		
 		// Get workoff
 		def workOffDBs = b.workdays.findAll{it -> it.workActive == false}
@@ -481,6 +531,40 @@ class AppointmentController {
 			WorkDay wdayoff = doff
 			def jsonItem = [day: wdayoff.convertDayCodeToStiong()]
 			daysoff.add(jsonItem)
+		}
+		
+		// Get Min workHour
+		def minLists = WorkDay.withCriteria {
+			and{
+				order('startHour', 'asc')
+				order('startMinute', 'asc')
+			}
+		}
+		def minWork = minLists.find{it}
+		def mintime = ''
+		if(minWork.startMinute == 0){
+			mintime = minWork.startHour+":00"
+		} else if (minWork.startMinute < 10) {
+			mintime = minWork.startHour+":0"+minWork.startMinute
+		} else {
+			mintime = minWork.startHour+":"+minWork.startMinute
+		}
+		
+		// Get Max WorkHour
+		def maxLists = WorkDay.withCriteria {
+			and{
+				order('endHour', 'desc')
+				order('endMinute', 'desc')
+			}
+		}
+		def maxWork = minLists.find{it}
+		def maxtime = ''
+		if(maxWork.startMinute == 0){
+			maxtime = maxWork.endHour+":00"
+		} else if (maxWork.endMinute < 10) {
+			maxtime = maxWork.endHour+":0"+maxWork.endMinute
+		} else {
+			maxtime = maxWork.endHour+":"+maxWork.endMinute
 		}
 		
 		// Get Holiday
@@ -531,6 +615,7 @@ class AppointmentController {
 			'allDay': false
 		]
 		*/
+		/*
 		def newevent = [
 			'id': '1',
 			'title':'Barny',
@@ -538,6 +623,7 @@ class AppointmentController {
 			'end': '2014-03-20 12:30',
 			'allDay': false
 		]
+		*/
 		/*
 		//{
 		//			id: 999,
@@ -578,7 +664,7 @@ class AppointmentController {
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
-		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent];
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent];
 		render js as JSON
 	}
 		
