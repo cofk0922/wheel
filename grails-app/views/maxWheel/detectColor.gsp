@@ -2,6 +2,7 @@
     <head>
         <meta charset="utf-8"/>
         <title>Image color picker</title>
+        <meta name='layout' content='main'/>
         <link href="../css/detectImage/main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="../js/detectColor/jquery-1.5.2.min.js"></script>
         <script type="text/javascript" src="../js/detectColor/script.js"></script>
@@ -130,84 +131,60 @@ function rgb2hsv (r,g,b) {
 		<div class="row">
 			<div class="span12">
 				<div class="jc-demo-box">
-
 					<div class="page-header"  style="height: 60px;">
-						<ul class="breadcrumb first">
-							<li><a href="../">เมนู</a> <span class="divider">/</span>
-							<a href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> <span class="divider">/</span>
-							<a href="../maxWheel/detectImage?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหน้า</a> <span class="divider">/</span>
-							<a href="../maxWheel/detectImageBack?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหลัง</a> <span class="divider">/</span>
-							
-							</li>
-						</ul>
-						<h1>กำหนดสีของรถ</font></h1>
+						<h1>กำหนดสีของรถ</h1>
 					</div>
      <form name="input" action="detectImage" method="post">
 						<g:hiddenField name="modelId" value="${modelInstance.id}" />
 						<g:hiddenField name="carImage" value="${carImage}" />
-        <div class="container">
-
-            <div class="column1">
-                <canvas id="panel" width="500" height="300"></canvas>
-            </div>
-            <div class="column2">
-              
-                <div>Preview:</div>
-                <div id="preview"></div>               
-                <div>Color:</div>
-                <div style="display: none;">R: <input type="text" id="rVal" ></div>
-                <div style="display: none;">G: <input type="text" id="gVal" ></div>
-                <div style="display: none;">B: <input type="text" id="bVal" ></div>
-                <div>H: <input type="text" id="hVal" name="hVal"></div>
-                <div>S: <input type="text" id="sVal" name="sVal"></div>
-                <div>V: <input type="text" id="vVal" name="vVal"></div>
-                <div style="display: none;">RGB:<input type="text" id="rgbVal" ></div>
-  				<div style="display: none;">RGBA: <input type="text" id="rgbaVal" ></div>
-                <div>HEX: <input type="text" id="hexVal" name="hexVal" ></div>   
-                <div>Color Name: <input type="text" id="colorName" name="colorName" ></div>           
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-        
-        
-        
-  <table border="0" >			
-									
-					<tr>
-					<td> &nbsp; <b>ยี่ห้อรถ:</b>
+			<table>
+			<tr><td >
+			<canvas id="panel" width="500" height="300"></canvas>
+            </td>
+            <td>
+            <table><tr><td>
+            <div>Preview:</div>
+                <div id="preview"></div> 
+            </td>
+            </tr>
+            <tr><td> 
+            <tr><td>&nbsp; <b>ยี่ห้อรถ:</b>
     						${modelInstance.band.bandName}
 				 &nbsp; <b>รุ่นรถ :</b>
     						${modelInstance.modelName}
-    						</td>
-					</tr>					
-					<tr>
-					<td> &nbsp; <b>น้ำหนัก:</b>
+    		</td></tr>					
+			<tr><td> &nbsp; <b>น้ำหนัก:</b>
     						&nbsp;${modelInstance.gearRatio} &nbsp;กิโลกรัม
 					 &nbsp; <b>อัตราทดเกียร์:</b>			
     						&nbsp;${modelInstance.weight}
-					</td>
-					</tr>
-					<tr>
-					<td> &nbsp; <b>ค่า offSet:</b>	
+			</td></tr>
+			<tr><td> &nbsp; <b>ค่า offSet:</b>	
     						&nbsp;${modelInstance.offSet}
 					 &nbsp; <b>รหัส PCD:</b>
     						&nbsp;${modelInstance.pcdCode}
-					</td>
-					</tr>
-					</table>
-					<div class="page-header" align="left">
-						<g:submitButton name="กำหนดตำแหน่งล้อ"/>
-					</div>
-				</div>
-				<div style="clear: both;"></div>
+			</td></tr>
+			<tr><td>
+			<div class="page-header" align="left"><g:submitButton name="กำหนดตำแหน่งล้อ"/>
 			</div>
-
-
+			</td></tr>
+            </table></td>
+            </table>
+            <div style="clear:both;"></div>
 			</form>
-
-
-		</div>
-	</div>
-
+</div></div></div></div>
+        
+ 		<table><tr><td>
+                <div style="display: none;">R: <input type="text" id="rVal" ></div>
+                <div style="display: none;">G: <input type="text" id="gVal" ></div>
+                <div style="display: none;">B: <input type="text" id="bVal" ></div>
+                <div style="display: none;">H: <input type="text" id="hVal" name="hVal"></div>
+                <div style="display: none;">S: <input type="text" id="sVal" name="sVal"></div>
+                <div style="display: none;">V: <input type="text" id="vVal" name="vVal"></div>
+                <div style="display: none;">RGB:<input type="text" id="rgbVal" ></div>
+  				<div style="display: none;">RGBA: <input type="text" id="rgbaVal" ></div>
+                <div style="display: none;">HEX: <input type="text" id="hexVal" name="hexVal" ></div>   
+                <div style="display: none;">Color Name: <input type="text" id="colorName" name="colorName" value="Color"></div>   
+                </td></tr>			
+  		</table>
     </body>
 </html>
