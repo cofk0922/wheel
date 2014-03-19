@@ -5,12 +5,71 @@
 <link href='../css/calendar/fullcalendar.css' rel='stylesheet' />
 <link href='../css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <link href='../css/calendar/calendar.css' rel='stylesheet' />
-<script src='../js/calendar/lib/jquery.min.js'></script>
-<script src='../js/calendar/lib/jquery-ui.custom.min.js'></script>
+<link href="../css/grid/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+<script src='../js/jquery.min.js'></script>
+<script src='../js/jquery-ui-1.10.4.custom.min.js'></script>
 <script src='../js/calendar/fullcalendar.min.js'></script>
+<script src="../js/jquery-ui-1.10.4.custom.js"></script>
+<title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
+</head>
+<body>
+
+<p>&nbsp;</p>
+<div class = 'calendar' id='calendar'></div>
+
+<div id="confirm-add" title="บันทึกการนัดหมาย" style="display: none">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;" valign="center"></span>ต้องการ "บันทึก" การนัดหมายของ "====="  ใช่หรือไม่ ?</p>
+</div>
+
+<div id="confirm-move" title="เปลี่ยนแปลงการนัดหมาย" style="display: none">
+  <p valign="center"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>ต้องการ "ย้าย" การนัดหมายของ "====="  ใช่หรือไม่ ?</p>
+</div>
+
+<div id="alert-move" title="เปลี่ยนแปลงการนัดหมาย" style="display: none">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+			ไม่สามารถ "ย้าย" การนัดหมาย มายังวันที่นี้
+	</p>
+</div>
+
+<div id="alert-add" title="บันทึกการนัดหมาย" style="display: none">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0; "></span>
+			ไม่สามารถ "บันทึก" การนัดหมาย มายังวันที่นี้
+	</p>
+</div>
+
+<div id="edit-event" title="แก้ไขการนัดหมาย" style="display: none">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+			ยังไม่รู้ว่าจะโชว์อะไรใน dialog นี้
+	</p>
+</div>
+
 <script>
 
-var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
+$( "#alert-move" ).dialog({
+	width: 'auto',
+	height: 'auto',
+	modal: true,
+	autoOpen: false,
+	buttons: {
+		Ok: function() {
+			$( this ).dialog( "close" );
+		}
+	}
+});
+
+$( "#alert-add" ).dialog({
+	width: 'auto',
+	height: 'auto',
+	modal: true,
+	autoOpen: false,
+	buttons: {
+		Ok: function() {
+			$( this ).dialog( "close" );
+		}
+	}
+});
+
+var fncRender = function(data,max,min,daysoff,holidays,newevent) {
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev,next today',
@@ -54,11 +113,51 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 			$('.fc-'+item.day+':not(.fc-day-header)').addClass("dayoff");
 			});				
 		},
+		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
+			$.post('../appointment/validateTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update' }, function(result){
+				if (result.isValid){
+					$( "#confirm-move" ).dialog({
+						width: 'auto',
+						height: 'auto',
+						autoOpen: false,
+						modal: true,
+						buttons: {
+							"OK": function() {
+								$.post( "../appointment/editEvent", { 'id':  event.id, 'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update'});
+								$( this ).dialog( "close" );
+							},
+							Cancel: function() {
+								$( this ).dialog( "close" );
+								revertFunc();
+							}
+						}
+					});
+					$( "#confirm-move" ).dialog( 'open' );
+				}else{
+					$( "#alert-move" ).dialog( 'open' );
+					revertFunc();
+				}
+			});				
+		},
 		eventClick: function(event, element) {
-			if (confirm("Are you sure to remove this event?")) {
-				$.post( "../appointment/editEvent", { 'id':  event.id,'act': 'remove'});
-				$('#calendar').fullCalendar( 'removeEvents' , event.id);
+			if (event.id === newevent.id){
+				$( "#edit-event" ).dialog({
+					width: 'auto',
+					height: 'auto',
+					modal: true,
+					autoOpen: false,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+				$( "#edit-event" ).dialog( 'open' );
 			}
+			//if (confirm("Are you sure to remove this event?")) {
+			//	$.post( "../appointment/editEvent", { 'id':  event.id,'act': 'remove'});
+			//	$('#calendar').fullCalendar( 'removeEvents' , event.id);
+			//}
 		},
 		selectable: true,
 		select: function(start,end) {
@@ -69,32 +168,49 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 						$('#calendar').fullCalendar('changeView', 'agendaDay' );
 						$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
 					} else {
-						var title = prompt('Appointment');
-						if (title) {
-							$.post( "../appointment/editEvent", { 'title':  title, 'startdate': start, 'act': 'add'}, function(result){
-								$('#calendar').fullCalendar('renderEvent',
-									{
-										id: result.id,
-										title: result.title,
-										start: result.start,
-										end: end,
-										allDay: false,
-									},
-								$('#status').text(title + " was added "),
-								true // make the event "stick"
-								
-								);
-								$('#calendar').fullCalendar('unselect')
-							});
-						}
+						$( "#confirm-add" ).dialog({
+							resizable: false,
+							width: 'auto',
+							height: 'auto',
+							autoOpen: false,
+							modal: true,
+							buttons: {
+								"OK": function() {
+									$('#calendar').fullCalendar( 'removeEvents' , newevent.id);
+									$.post( "../appointment/editEvent", { 'title':  newevent.title, 'startdate': start, 'act': 'add'}, function(result){
+										$('#calendar').fullCalendar('renderEvent',
+											{
+												id: newevent.id,
+												title: newevent.title,
+												start: start,
+												end: end,
+												allDay: false,
+												textColor: '#000000',
+												color: '#00ff00',
+												editable: true,
+												durationEditable: false,
+												borderColor:'#000000'
+											},
+										true
+										);
+										$('#calendar').fullCalendar('unselect')
+									});
+									$( this ).dialog( "close" );
+								},
+								Cancel: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+						$( "#confirm-add" ).dialog( 'open' );
 					}
 				}else{
-					alert("You can't Add this day!!!");
+					$( "#alert-add" ).dialog( 'open' );
 				}
 			})
 		}
 	}),
-	$('#calendar').fullCalendar('gotoDate', gotoStart.getFullYear(), gotoStart.getMonth(), gotoStart.getDate());
+	$('#calendar').fullCalendar('gotoDate', newevent.start.getFullYear(), newevent.start.getMonth(), newevent.start.getDate());
 };
 
 var fncGetData = function() {
@@ -119,14 +235,13 @@ var fncGetData = function() {
 		newevent.borderColor = '#000000';
 		data.push(newevent);
 		
-		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent.start);
+		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent);
 	} );
 };
 
 $(document).ready(function() {
 	fncGetData();
 });
-
 
 </script>
 <style>
@@ -145,10 +260,7 @@ $(document).ready(function() {
 
 </style>
 
-<title>ตารางนัดหมายติดตั้งล้อแม็กซ์</title>
-</head>
-<body>
-<p>&nbsp;</p>
-<div class = 'calendar' id='calendar'></div>
+
+
 </body>
 </html>

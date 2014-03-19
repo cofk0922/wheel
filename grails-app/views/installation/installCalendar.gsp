@@ -5,9 +5,24 @@
 <link href='../css/calendar/fullcalendar.css' rel='stylesheet' />
 <link href='../css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <link href='../css/calendar/calendar.css' rel='stylesheet' />
-<script src='../js/calendar/lib/jquery.min.js'></script>
-<script src='../js/calendar/lib/jquery-ui.custom.min.js'></script>
+<link href="../css/grid/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+<script src='../js/jquery.min.js'></script>
+<script src='../js/jquery-ui-1.10.4.custom.min.js'></script>
 <script src='../js/calendar/fullcalendar.min.js'></script>
+<script src="../js/jquery-ui-1.10.4.custom.js"></script>
+
+<title>ตารางติดตั้งล้อแม็กซ์</title>
+</head>
+<body>
+<p>&nbsp;</p>
+<div class = 'calendar' id='calendar'></div>
+
+<div id="edit-event" title="แก้ไขการนัดหมาย" style="display: none">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+			ยังไม่รู้ว่าจะโชว์อะไรใน dialog นี้
+	</p>
+</div>
+
 <script>
 
 var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
@@ -54,64 +69,27 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 			$('.fc-'+item.day+':not(.fc-day-header)').addClass("dayoff");
 			});				
 		},
-		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-			$.post('../appointment/validateTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update' }, function(result){
-				if (result.isValid){
-					if (!confirm("Are you sure about this change?")) {
-						revertFunc();
-					}else{
-						$.post( "../appointment/editEvent", { 'id':  event.id, 'dayDelta':dayDelta,'minuteDelta':minuteDelta,'act': 'update'});
-						$('#status').text(
-						event.title + " was moved " +
-						dayDelta + " days and " +
-						minuteDelta + " minutes."
-						);
-					}
-				}else{
-					alert("Event can't change for this time");
-					revertFunc();
-				}
-			});				
-		},
 		eventClick: function(event, element) {
-			if (confirm("Are you sure to remove this event?")) {
-				$.post( "../appointment/editEvent", { 'id':  event.id,'act': 'remove'});
-				$('#calendar').fullCalendar( 'removeEvents' , event.id);
-			}
+			$( "#edit-event" ).dialog({
+				width: 'auto',
+				height: 'auto',
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+			$( "#edit-event" ).dialog( 'open' );
 		},
 		selectable: true,
 		select: function(start,end) {
-			$.post('../appointment/validateTime', { 'startdate': start,'act': 'add' }, function(result) {
-				if (result.isValid){
-					var currentView = $('#calendar').fullCalendar('getView');
-					if (currentView.name === "month") {
-						$('#calendar').fullCalendar('changeView', 'agendaDay' );
-						$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
-					} else {
-						var title = prompt('Appointment');
-						if (title) {
-							$.post( "../appointment/editEvent", { 'title':  title, 'startdate': start, 'act': 'add'}, function(result){
-								console.log(result);
-								$('#calendar').fullCalendar('renderEvent',
-									{
-										id: result.id,
-										title: result.title,
-										start: result.start,
-										end:	end,
-										allDay: result.allDay
-									},
-								$('#status').text(title + " was added "),
-								true // make the event "stick"
-								
-								);
-								$('#calendar').fullCalendar('unselect')
-							});
-						}
-					}
-				}else{
-					alert("can't Add this day!!!");
-				}
-			})
+			var currentView = $('#calendar').fullCalendar('getView');
+			if (currentView.name === "month") {
+				$('#calendar').fullCalendar('changeView', 'agendaDay' );
+				$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
+			}
 		}
 	})
 };
@@ -155,11 +133,6 @@ $(document).ready(function() {
 
 </style>
 
-<title>ตารางติดตั้งล้อแม็กซ์</title>
-</head>
-<body>
-<p>&nbsp;</p>
-<div class = 'calendar' id='calendar'></div>
-<div id='status'></div>
+
 </body>
 </html>

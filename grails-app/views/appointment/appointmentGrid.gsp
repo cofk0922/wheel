@@ -6,6 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <link href='../css/grid/jquery-ui-1.10.4.custom.css' rel='stylesheet' />
  <link href='../css/grid/ui.jqgrid.css' rel='stylesheet' />
+ <script src='../js/jquery.min.js'></script>
+ <script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/i18n/grid.locale-en.js"></script>
+<script src="../js/jquery.jqGrid.min.js"></script>
+<script src='../js/jquery-ui-1.10.4.custom.min.js'></script>
+<script src="../js/jquery-ui-1.10.4.custom.js"></script>
+
  <style>
  
 	#txtKeyword {
@@ -21,10 +28,12 @@
     <table id="list"><tr><td></td></tr></table>
     <div id="pager"></div> 
 	
+<div id="edit-event" title="แก้ไขการนัดหมาย" style="display: none">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+			ยังไม่รู้ว่าจะโชว์อะไรใน dialog นี้
+	</p>
+</div>
 
-<script src="../js/jquery-1.11.0.min.js"></script>
-<script src="../js/i18n/grid.locale-en.js"></script>
-<script src="../js/jquery.jqGrid.min.js"></script>
 <script>
 
 var keywordStr = $('#txtKeyword').val();
@@ -60,7 +69,18 @@ var grid = $("#list").jqGrid({
     	    
     	    var aQryStr = "appointmentID = " + appointmentID + " & Status = " + Status;
 
-    	    alert(aQryStr);
+    	    $( "#edit-event" ).dialog({
+				width: 'auto',
+				height: 'auto',
+				modal: true,
+				autoOpen: false,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+			$( "#edit-event" ).dialog( 'open' );
        }
     	        
    });
