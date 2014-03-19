@@ -3,12 +3,11 @@
 <html lang="en">
 <head>
 <title>Live Cropping Demo</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-
-  <link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
-  <link rel="stylesheet" href="../css/demos.css" type="text/css" />
-  <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
-  
+		<meta name='layout' content='main'>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<link rel="stylesheet" href="../css/mainJcrop.css" type="text/css" />
+ 		<link rel="stylesheet" href="../css/demos.css" type="text/css" />
+  		<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
  <script type="text/javascript">
     function preview(img, selection) {
         if (!selection.width || !selection.height)
@@ -52,20 +51,11 @@
 
 </head>
 <body>
-
 	<div class="container">
 		<div class="row">
 			<div class="span12">
 				<div class="jc-demo-box">
-
 					<div class="page-header">
-						<ul class="breadcrumb first">
-							<li><a href="../">เมนู</a> <span class="divider">/</span>
-							
-							
-							
-							</li>
-						</ul>
 						<h1>ระบบนำเข้าล้อแม็กซ์และอะไหล่</h1>
 					</div>
 					
@@ -73,11 +63,9 @@
 					
 					<g:uploadForm action="detectColor">
 					<table>
-					
 					<tr>
 					<td>ยี่ห้อรถ  :</td>
 					<td>
-					
     						<g:if test="${carInstance}">
     						${carInstance.bandName}
     						</g:if>
@@ -103,11 +91,20 @@
 							from="${listCarModel.sort{it.id}}" optionKey="id" optionValue="modelName"
 							noSelection="['':'กรุณาเลือกรุ่นรถ']"/>
 							</g:else>	
-							
-							
 							<a href="../carModel/index.gsp">เพิ่มรุ่นรถ(ในกรณีที่ไม่มีข้อมูลรุ่นรถอยู่)</a>									
 					</td>
 					</tr>
+					<tr>
+					<td><span lang="th">ลักษณะการใช้งาน :</span></td>
+					<td>
+					<select name="usedType">
+					<option value="0">กรุณาเลือกลักษณะการใช้งาน</option>
+  <option value="CITY">วิ่งเส้นทางถนนที่ราบเรียบ</option>
+  <option value="LONGWAY">วิ่งระยะทางไกล</option>
+  <option value="OFFROAD">วิ่งเส้นทางถนนที่ขุขระ</option>
+  <option value="HEAVY">วิ่งบรรทุกของหนัก</option>
+</select>
+					</td></tr>
 			
 					<td>รูปภาพรถ  :</td>
 
@@ -120,8 +117,9 @@
 			
 					</table>
 					<br>
-
-						<g:submitButton name="กำหนดข้อมูลรถ"/>
+						<div class="page-header" align="right">
+						<g:submitButton name="กำหนดข้อมูลรถ" />
+						</div>
        				 
     				</g:uploadForm>
 	

@@ -61,8 +61,10 @@
 					<div class="page-header"  style="height: 60px;">
 						<ul class="breadcrumb first" >
 							<li><a href="../">เมนู</a> <span class="divider">/</span> <a
-								href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> <span
-								class="divider">/</span></li>
+								href="../maxWheel/inputWheel">ระบบนำเข้าล้อแม็กซ์และอะไหล่</a> 
+								 <span class="divider">/</span>
+							<a href="../maxWheel/detectImage?carImage=${carImage}&modelId=${modelInstance.id}">กำหนดจุดล้อหน้า</a> 
+								</li>
 								
 						</ul>
 						<h1>
@@ -185,16 +187,17 @@
 								<tr>
 									<td><b>Y<sub>2</sub>:
 									</b></td>
-									<td><input type="text" id="y2" value="0" name="backY2"
-										 /></td>
+									<td><input type="text" id="y2" value="0" name="backY2"/></td>
 									<td></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
-
 						<div class="page-header" align="right">
 							<g:submitButton name="บันทึกข้อมูลรถ" />
+							<g:link  action="selectedMaxWheel">
+							<input type="button" value="บันทึกข้อมูลรถและเลือกล้อแม็กซ์" class="button"/> 
+						</g:link>
 						</div>
 				</div>
 				<div style="clear: both;"></div>
