@@ -39,7 +39,7 @@ class WheelBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'wheelBandInstance.label', default: 'WheelBand'), wheelBandInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'wheelBandInstance.label', default: 'WheelBand'), wheelBandInstance.name])
                 redirect wheelBandInstance
             }
             '*' { respond wheelBandInstance, [status: CREATED] }
@@ -66,7 +66,7 @@ class WheelBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'WheelBand.label', default: 'WheelBand'), wheelBandInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'WheelBand.label', default: 'WheelBand'), wheelBandInstance.name])
                 redirect wheelBandInstance
             }
             '*'{ respond wheelBandInstance, [status: OK] }
@@ -85,7 +85,7 @@ class WheelBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'WheelBand.label', default: 'WheelBand'), wheelBandInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'WheelBand.label', default: 'WheelBand'), wheelBandInstance.name])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

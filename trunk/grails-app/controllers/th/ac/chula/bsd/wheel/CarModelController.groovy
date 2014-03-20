@@ -101,7 +101,7 @@ class CarModelController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'carModelInstance.label', default: 'CarModel'), carModelInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'carModelInstance.label', default: 'CarModel'), carModelInstance.modelName])
                 redirect carModelInstance
             }
             '*' { respond carModelInstance, [status: CREATED] }
@@ -128,7 +128,7 @@ class CarModelController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.modelName])
                 redirect carModelInstance
             }
             '*'{ respond carModelInstance, [status: OK] }
@@ -147,7 +147,7 @@ class CarModelController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CarModel.label', default: 'CarModel'), carModelInstance.modelName])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

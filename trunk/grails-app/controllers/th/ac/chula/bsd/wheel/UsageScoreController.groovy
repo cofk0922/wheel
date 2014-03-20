@@ -39,7 +39,7 @@ class UsageScoreController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'usageScoreInstance.label', default: 'UsageScore'), usageScoreInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'usageScoreInstance.label', default: 'UsageScore'), ''])
                 redirect usageScoreInstance
             }
             '*' { respond usageScoreInstance, [status: CREATED] }
@@ -66,7 +66,7 @@ class UsageScoreController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'UsageScore.label', default: 'UsageScore'), usageScoreInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'UsageScore.label', default: 'UsageScore'), ''])
                 redirect usageScoreInstance
             }
             '*'{ respond usageScoreInstance, [status: OK] }
@@ -85,7 +85,7 @@ class UsageScoreController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'UsageScore.label', default: 'UsageScore'), usageScoreInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'UsageScore.label', default: 'UsageScore'), ''])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

@@ -23,6 +23,10 @@ class CarModel {
 		
 	}
 	
+	String toString() {
+		return this.modelName
+	}
+	
 	public CarModel()
 	{
 		//Call service initialWheelListForNewCar()

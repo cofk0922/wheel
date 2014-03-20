@@ -39,7 +39,7 @@ class CarBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'carBandInstance.label', default: 'CarBand'), carBandInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'carBandInstance.label', default: 'CarBand'), carBandInstance.bandName])
                 redirect carBandInstance
             }
             '*' { respond carBandInstance, [status: CREATED] }
@@ -66,7 +66,7 @@ class CarBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'CarBand.label', default: 'CarBand'), carBandInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'CarBand.label', default: 'CarBand'), carBandInstance.bandName])
                 redirect carBandInstance
             }
             '*'{ respond carBandInstance, [status: OK] }
@@ -85,7 +85,7 @@ class CarBandController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CarBand.label', default: 'CarBand'), carBandInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'CarBand.label', default: 'CarBand'), carBandInstance.bandName])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
