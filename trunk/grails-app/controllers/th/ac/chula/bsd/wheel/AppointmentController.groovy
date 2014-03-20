@@ -494,7 +494,7 @@ class AppointmentController {
 	
 	
 	static String appointmentColorCode = '00ff00'
-	def getEvents(){
+	def getEventsForCreate(){
 		
 		println "getEvents Calendar"
 		
@@ -515,6 +515,171 @@ class AppointmentController {
 		ap.setNewCustomer("A", "08xxxxxxx", "Bangkok", "ABC1234")
 		ap.confirmAppointment(false)
 		def newevent = [
+			'title':ap.customer.carCode,
+			'start': dateTimeFormat.format(ap.startDate),
+			'end': dateTimeFormat.format(ap.endAppointmentDate),
+			'allDay': false
+		]
+		session['currentAppointment'] = ap
+		// End Test
+		
+		Date today = new Date()
+		
+		// Get workoff
+		def workOffDBs = b.workdays.findAll{it -> it.workActive == false}
+		def daysoff = []
+		for(doff in workOffDBs){
+			WorkDay wdayoff = doff
+			def jsonItem = [day: wdayoff.convertDayCodeToStiong()]
+			daysoff.add(jsonItem)
+		}
+		
+		// Get Min workHour
+		def minLists = WorkDay.withCriteria {
+			and{
+				order('startHour', 'asc')
+				order('startMinute', 'asc')
+			}
+		}
+		def minWork = minLists.find{it}
+		def mintime = ''
+		if(minWork.startMinute == 0){
+			mintime = minWork.startHour+":00"
+		} else if (minWork.startMinute < 10) {
+			mintime = minWork.startHour+":0"+minWork.startMinute
+		} else {
+			mintime = minWork.startHour+":"+minWork.startMinute
+		}
+		
+		// Get Max WorkHour
+		def maxLists = WorkDay.withCriteria {
+			and{
+				order('endHour', 'desc')
+				order('endMinute', 'desc')
+			}
+		}
+		def maxWork = minLists.find{it}
+		def maxtime = ''
+		if(maxWork.startMinute == 0){
+			maxtime = maxWork.endHour+":00"
+		} else if (maxWork.endMinute < 10) {
+			maxtime = maxWork.endHour+":0"+maxWork.endMinute
+		} else {
+			maxtime = maxWork.endHour+":"+maxWork.endMinute
+		}
+		
+		// Get Holiday
+		def holidayDBs = b.getAllHoliday(today)
+		def holidays = []
+		for(hitem in holidayDBs){
+			Holiday holiday = hitem
+			def jsonItem = [ day: shortDateFormat.format(holiday.holidayDate) ]
+			holidays.add(jsonItem)
+		}
+		
+		// Get Appointment
+		def appointDBs = b.getAllAppointmentInMonth(today)
+		def events = []
+		for(app in appointDBs){
+			Appointment appoint = app
+			def jsonItem = [
+				'id': appoint.id,
+				'title': appoint.customer.carCode,
+				'start': dateTimeFormat.format(appoint.startDate),
+				'end': dateTimeFormat.format(appoint.endDate),
+				'color': appointmentColorCode,
+				'editable': false,
+				'allDay': false
+				]
+			events.add(jsonItem)
+		}
+		
+		// end May
+		
+		
+		
+		/*
+		def events = []
+		def responseData = [
+			'id': '999',
+			'title':'Panda',
+			'start': '2014-03-17 9:30',
+			'end': '2014-03-17 10:30',
+			'allDay': false
+		]
+
+		def responseData2 = [
+			'id': '20',
+			'title':'Scott',
+			'start': '2014-03-14 12:00',
+			'end': '2014-03-14 12:30',
+			'allDay': false
+		]
+		*/
+		/*
+		def newevent = [
+			'id': '1',
+			'title':'Barny',
+			'start': '2014-03-20 12:00',
+			'end': '2014-03-20 12:30',
+			'allDay': false
+		]
+		*/
+		/*
+		//{
+		//			id: 999,
+		//			title: '[ CR7 2222 ]',
+//					start: new Date(y, m, d-3, 16, 0),
+//					end: new Date(y, m, d-3, 18, 0),
+//					color: '#acacac',
+//					editable: false,
+//					url: 'http://google.com/',
+//					allDay: false
+//				},
+
+		events.add(responseData)
+		events.add(responseData2)
+		*/
+		//example
+		
+//		def jsonResult = results.collect{
+//			[
+//						customerId:it.customer.id,
+//						customerName:it.customer.customerName,
+//						customerSiteName:it.customerSiteName,
+//						address:(it.addressBillToLine1?it.addressBillToLine1:"")+" "+(it.addressBillToLine2?it.addressBillToLine2:""),
+//						subDistrict:it.addressBillToLine3?it.addressBillToLine3:"",
+//						district:it.addressBillToLine4?it.addressBillToLine4:"",
+//						province:it.provinceBillTo,
+//						zipCode:it.zipBillTo,
+//						creditTerm:it.termName,
+//						customerTax:it.customer.customerTax?it.customer.customerTax:"-",
+//						cdgCode:it.cdgCode,
+//						customerSiteId:it.id,
+//					]
+//		}
+//		def js = [total:results.getTotalCount(),rows:jsonResult]
+		
+		//def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
+		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
+			
+		//def js = ['daysoff':daysoff,'holidays':holidays]
+		
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent,'details':['a':'a']];
+		render js as JSON
+	}
+	
+	def getEventsForEdit(){
+		println "getEvents Calendar"
+		def apID = params.apID
+		// May
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		// Test Appointment
+		Appointment ap = Appointment.get(apID)
+		def currentEvent = [
 			'title':ap.customer.carCode,
 			'start': dateTimeFormat.format(ap.startDate),
 			'end': dateTimeFormat.format(ap.endAppointmentDate),
@@ -665,19 +830,19 @@ class AppointmentController {
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
-		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent];
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'currentEvent':currentEvent];
 		render js as JSON
 	}
-		
+	
 	def validateTime(){
 		println "validateTime"
 		
 		//May
 		Appointment ap = session['currentAppointment']
 		println('AP NO: '+ ap.appointmentNo)
-		println('AP StartDate: '+ ap.startDate)
+		println('AP StartDate: '+ ap.startdate)
 		println('param startDate: ' + params.startdate)
-		
+		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
 		def calendar = new GregorianCalendar()
 		calendar.setTime(ap.startDate)
 		calendar.add(calendar.DATE, params.dayDelta.toInteger())
