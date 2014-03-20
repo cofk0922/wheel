@@ -30,7 +30,7 @@ class ProductBranchTransferController {
 			}
 			
 		}
-		
+		params.branch = b
         params.max = Math.min(max ?: 10, 100)
         //respond ProductBranchTransfer.list(params), model:[productBranchTransferInstanceCount: ProductBranchTransfer.count()]
 		respond branchTFrom, model:[productBranchTransferInstanceCount: branchTFrom.size()]
