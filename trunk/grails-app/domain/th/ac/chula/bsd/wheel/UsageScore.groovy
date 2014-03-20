@@ -1,4 +1,5 @@
 package th.ac.chula.bsd.wheel
+import grails.validation.Validateable
 
 class UsageScore {
 
@@ -13,6 +14,7 @@ class UsageScore {
     }
 }
 
+@Validateable
 enum SpokeType{
 	PAN,
 	WIDE,
@@ -20,6 +22,7 @@ enum SpokeType{
 	NET
 	}
 
+@Validateable
 enum UsageType {
 	CITY,
 	HEAVY,
