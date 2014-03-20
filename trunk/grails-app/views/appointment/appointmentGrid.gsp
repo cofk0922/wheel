@@ -62,12 +62,11 @@ var grid = $("#list").jqGrid({
        autoencode: true,
        hidegrid: false,
        onSelectRow : function(rowid){
-    	   var rowData = jQuery(this).getRowData(rowid); 
-    	    var appointmentID = rowData['appointmentID'];
-    	    var Status = rowData['Status'];
-    	    
-    	    var aQryStr = "appointmentID = " + appointmentID + " & Status = " + Status;
-			$('#edit-event').append(aQryStr);
+    	   var rowData = jQuery(this).getRowData(rowid);
+			var linkurl = "/wheel/appointment/manageCalendar?id="+ rowData['appointmentID'];
+    	   window.location = linkurl;
+    	    /*var aQryStr = "appointmentID = " + rowData['appointmentID'] + " & Status = " + rowData['Status'];
+			$('#edit-event').html(aQryStr);
     	    $( "#edit-event" ).dialog({
 				width: 'auto',
 				height: 'auto',
@@ -79,7 +78,8 @@ var grid = $("#list").jqGrid({
 					}
 				}
 			});
-			$( "#edit-event" ).dialog( 'open' );
+			$( "#edit-event" ).dialog( 'open' );*/
+			
        }
     	        
    });
