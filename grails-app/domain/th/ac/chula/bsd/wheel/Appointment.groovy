@@ -170,6 +170,105 @@ class Appointment {
 		return result
 	}
 	
+	public Boolean checkValidAppointment(Date newDate){
+		// cal Fastest Start End
+		Date init =  new Date(newDate.getTime())
+		Date startDate = init
+		Date endDate = init
+		Date installStartDate = init
+		Date installEndDate = init
+		
+		Boolean isStop = false
+		Boolean isvalid = false
+		while(!isStop){
+			// Check Holiday
+			def checkHoliday = new Date(startDate.getTime());
+			checkHoliday.set(second:0, minute:0, hourOfDay:0)
+			if(this.branch.checkHoliday(checkHoliday)){
+				isStop = true
+				continue
+			}
+			
+			// Check WorkDate
+			def checkWork = new GregorianCalendar()
+			checkWork.setTime(startDate)
+			def lWorkdays = this.branch.workdays.findAll{it.workDayCode.value == checkWork.get(Calendar.DAY_OF_WEEK) && it.workActive == true}
+			if(lWorkdays.size() <= 0){
+				isStop = true
+				continue
+			}
+			
+			// Check Open Lunch and Close Time
+			Boolean isInstallNow = true
+			if(startDate == init){
+				Date calDateEnd = new Date(startDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calTotalTimeSpend()))
+				if (calDateEnd > this.branch.getCloseTime(startDate)){
+					isInstallNow = false
+				}
+			} else {
+				isInstallNow = false
+			}
+			
+			if(isInstallNow){
+				installStartDate = startDate
+				installEndDate = new Date(installStartDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calTotalTimeSpend()))
+			} else {
+				installStartDate = new Date(startDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.branchMaxLate))
+				installEndDate = new Date(installStartDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calTotalTimeSpend()))
+			}
+			
+			// Check Lunch
+			Date startBreak = this.branch.getStartBreakTime(installStartDate)
+			Date endBreak = this.branch.getEndBreakTime(installStartDate)
+			if(installStartDate < startBreak && (installEndDate > startBreak && installEndDate < endBreak )){
+				installEndDate = new Date(installEndDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calBreakMinute()))
+			} else if (installEndDate > endBreak && (installStartDate > startBreak && installStartDate < endBreak)){
+				installStartDate = this.branch.getEndBreakTime(installStartDate)
+				startDate = new Date(installStartDate.getTime() - TimeUnit.MINUTES.toMillis(this.branch.branchMaxLate))
+				installEndDate = new Date(installStartDate.getTime() + TimeUnit.MINUTES.toMillis(this.branch.calTotalTimeSpend()))
+			}
+			endDate = installEndDate
+			
+			// Check Open Time
+			Date openTime = this.branch.getOpenTime(startDate)
+			Date closeTime = this.branch.getCloseTime(startDate)
+			if(startDate < openTime){
+				isStop = true
+				continue
+			}
+			
+			// Check Close Time
+			if(endDate > closeTime){
+				isStop = true
+				continue
+			}
+			
+			// Check Available Time
+			int maxQueue = this.branch.getMaxQueue()
+			def listPark = Parking.withCriteria {
+				and {
+					eq("branch.id", this.branch.id)
+					
+					gt("endDate", startDate)
+					lt("startDate", endDate)
+
+					eq("status", ParkingStatus.RESERVE)
+				}
+				and {
+					order("startDate", "asc")
+					order("endDate", "asc")
+				}
+			}
+			if (listPark.size() >= maxQueue) {
+				isStop = true
+				continue
+			}
+			isvalid = true
+			isStop = true
+		}
+		return isvalid
+	}
+	
 //====== Private Method ======
 	private void updateByUser(User u){
 		this.updatedBy = u

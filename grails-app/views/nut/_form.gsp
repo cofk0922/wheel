@@ -36,10 +36,11 @@
  --%>
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'nutSize', 'error')} required">
 	<label for="nutSize">
-		<g:message code="nut.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" />
+		<g:message code="nut.nutSize.label" default="ขนาดเกลียวน๊อต" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="nutSize" value="${fieldValue(bean: nutInstance, field: 'nutSize')}" required=""/>
+	<g:field name="nutSize" type="number" value="${fieldValue(bean: nutInstance, field: 'nutSize')}" step="any" required=""/>
+	<g:message code="default.millimeter"/>
 </div>
 
 <%--<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productStocks', 'error')} ">

@@ -20,7 +20,6 @@ class Product {
 		prodDesc nullable: true
 		productPart nullable: true
 		productPartAmount nullable: true
-		productType inList:[ProductType.WHEEL, ProductType.NUT]
 	}
 	
 	String toString() {

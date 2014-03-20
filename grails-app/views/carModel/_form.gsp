@@ -40,6 +40,7 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="gearRatio" type="number" value="${fieldValue(bean: carModelInstance, field: 'gearRatio')}" required=""/>
+	<g:message code="default.ratio"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'offSet', 'error')} required">
@@ -47,7 +48,7 @@
 		<g:message code="carModel.offSet.label" default="ระยะห่างแกนเพลาถึงขอบรถ" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="offSet" value="${fieldValue(bean: carModelInstance, field: 'offSet')}" required=""/>
+	<g:field name="offSet" type="text" value="${fieldValue(bean: carModelInstance, field: 'offSet')}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'pcdCode', 'error')} ">
@@ -63,7 +64,8 @@
 		<g:message code="carModel.weight.label" default="น้ำหนักรถ(กิโลกรัม)" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="weight" value="${fieldValue(bean: carModelInstance, field: 'weight')}" required=""/>
+	<g:field name="weight" type="number" value="${fieldValue(bean: carModelInstance, field: 'weight')}" step="any" required=""/>
+	<g:message code="default.kilogram" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'nutSize', 'error')} required">
@@ -71,7 +73,8 @@
 		<g:message code="carModel.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="nutSize" value="${fieldValue(bean: carModelInstance, field: 'nutSize')}" required=""/>
+	<g:field name="nutSize" type="number" value="${fieldValue(bean: carModelInstance, field: 'nutSize')}" step="any" required=""/>
+	<g:message code="default.millimeter"/>
 </div>
 
 <%--
