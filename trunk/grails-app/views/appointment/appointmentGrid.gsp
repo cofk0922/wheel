@@ -29,8 +29,7 @@
     <div id="pager"></div> 
 	
 <div id="edit-event" title="แก้ไขการนัดหมาย" style="display: none">
-	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-			ยังไม่รู้ว่าจะโชว์อะไรใน dialog นี้
+	<p><span style="float:left; margin:0 7px 50px 0;"></span>
 	</p>
 </div>
 
@@ -68,7 +67,7 @@ var grid = $("#list").jqGrid({
     	    var Status = rowData['Status'];
     	    
     	    var aQryStr = "appointmentID = " + appointmentID + " & Status = " + Status;
-
+			$('#edit-event').append(aQryStr);
     	    $( "#edit-event" ).dialog({
 				width: 'auto',
 				height: 'auto',
