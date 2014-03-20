@@ -402,7 +402,7 @@ class AppointmentController {
 		return
 	}
 	def getEventsGrid(){
-		
+		println 'Get Event Grid'
 		// default search all when "searchStr" = string empty
 		println "getEventsGrid"
 		println "searchStr = " + params.searchStr;
@@ -496,7 +496,7 @@ class AppointmentController {
 	static String appointmentColorCode = '00ff00'
 	def getEvents(){
 		
-		println "getEvents"
+		println "getEvents Calendar"
 		
 		// May
 		def u = springSecurityService.currentUser
@@ -520,6 +520,7 @@ class AppointmentController {
 			'end': dateTimeFormat.format(ap.endAppointmentDate),
 			'allDay': false
 		]
+		session['currentAppointment'] = ap
 		// End Test
 		
 		Date today = new Date()
@@ -671,6 +672,22 @@ class AppointmentController {
 	def validateTime(){
 		println "validateTime"
 		
+		//May
+		Appointment ap = session['currentAppointment']
+		println('AP NO: '+ ap.appointmentNo)
+		println('AP StartDate: '+ ap.startDate)
+		println('param startDate: ' + params.startdate)
+		
+		def calendar = new GregorianCalendar()
+		calendar.setTime(ap.startDate)
+		calendar.add(calendar.DATE, params.dayDelta.toInteger())
+		calendar.add(calendar.MINUTE, params.minuteDelta.toInteger())
+		
+		Date newDate = calendar.getTime()
+		
+		Boolean isvalid = ap.checkValidAppointment(newDate)
+		println 'result======= '+ isvalid
+		
 		// if id = "null" that's mean add new event else meaning is edit event
 		if (params.id == null){
 			println "act = " : params.act
@@ -684,7 +701,7 @@ class AppointmentController {
 		}
 			
 		//return
-		def js = [isValid: true]
+		def js = [isValid: isvalid]
 		render js as JSON
 	}
 	
