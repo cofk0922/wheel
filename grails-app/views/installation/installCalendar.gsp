@@ -43,7 +43,7 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 		      element.find(".fc-event-time").append(" " + event.title);
 		},
 	    timeFormat:'h(:mm)t',
-		eventAfterAllRender: function() {
+	    eventAfterAllRender: function() {
 			$.each(holidays, function(i, item) {
 				if ($('[data-date="' + item.day + '"]').length > 0) {
 					$('[data-date="' + item.day + '"]').addClass("holiday");

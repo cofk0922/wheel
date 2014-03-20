@@ -154,14 +154,11 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent) {
 				});
 				$( "#edit-event" ).dialog( 'open' );
 			}
-			//if (confirm("Are you sure to remove this event?")) {
-			//	$.post( "../appointment/editEvent", { 'id':  event.id,'act': 'remove'});
-			//	$('#calendar').fullCalendar( 'removeEvents' , event.id);
-			//}
 		},
 		selectable: true,
 		select: function(start,end) {
-			$.post('../appointment/validateTime', { 'startdate': start,'act': 'add' }, function(result) {
+			console.log(start);
+			$.post('../appointment/validateTime', { 'startdate': start.now.format("yyyy-MM-dd HH:mm"),'act': 'add' }, function(result) {
 				if (result.isValid){
 					var currentView = $('#calendar').fullCalendar('getView');
 					if (currentView.name === "month") {
@@ -214,7 +211,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent) {
 };
 
 var fncGetData = function() {
-	$.post( "../appointment/getEvents", function(result) {
+	$.post( "../appointment/getEventsForCreate", function(result) {
 		var data =[];
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
@@ -235,7 +232,7 @@ var fncGetData = function() {
 		newevent.borderColor = '#000000';
 		data.push(newevent);
 		
-		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent);
+		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,newevent,result.details);
 	} );
 };
 

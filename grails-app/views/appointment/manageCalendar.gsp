@@ -34,6 +34,16 @@
 
 <script>
 
+
+function getUrlVars() { 
+    var vars = {}; 
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { 
+        vars[key] = value; 
+    }); 
+    return vars; 
+} 
+
+
 $( "#alert-move" ).dialog({
 	width: 'auto',
 	height: 'auto',
@@ -186,7 +196,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent) {
 };
 
 var fncGetData = function() {		
-	$.post( "../appointment/getEvents", function(result) {
+	$.post( "../appointment/getEventsForEdit",{ 'apID' = getUrlVars()["id"] }; function(result) {
 		var data =[];
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
@@ -197,7 +207,7 @@ var fncGetData = function() {
 			data.push(item);
 		});
 		
-		var currentEvent = result.newevent;
+		var currentEvent = result.currentEvent;
 		currentEvent.start = new Date(currentEvent.start);
 		currentEvent.end = new Date(currentEvent.end);
 		currentEvent.textColor = '#000000';
@@ -207,7 +217,7 @@ var fncGetData = function() {
 		currentEvent.durationEditable = false;
 		currentEvent.borderColor = '#000000';
 		data.push(currentEvent);
-		
+
 		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays,currentEvent);
 	} );
 };
