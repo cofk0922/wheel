@@ -112,7 +112,8 @@ class MaxWheelController {
 	}
 	
 	@Transactional
-	def selectCarModel(CarBand selectedBand){
+	def selectCarModel(){
+		def selectedBand = CarBand.get(params.bandId)
 		def parameter = [:]
 		parameter.listCarModel = CarModel.findByBand(selectedBand)
 		render(view:'inputWheel',model:parameter)
