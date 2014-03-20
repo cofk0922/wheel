@@ -101,12 +101,20 @@ class MaxWheelController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
 	@Transactional
 	def inputWheel(){		
 		def parameter = [:]
 		parameter.listCarBand = CarBand.list()
 		parameter.listCarModel = CarModel.list()
 		parameter.listCarColor = CarColor.list()
+		render(view:'inputWheel',model:parameter)
+	}
+	
+	@Transactional
+	def selectCarModel(CarBand selectedBand){
+		def parameter = [:]
+		parameter.listCarModel = CarModel.findByBand(selectedBand)
 		render(view:'inputWheel',model:parameter)
 	}
 	
@@ -323,8 +331,26 @@ class MaxWheelController {
 		render(view: "inputWheel", model: parameter)
 
 	}
+	
 	@Transactional
-	def selectedMaxWheel(){}
+	def selectedMaxWheel(CarModel carModelInstance, UsageType usageType, Branch branch){
+		//Send max wheel list for specific car
+		def parameter = [:]
+		def carWheelList = CarWheelList.withCriteria{
+			eq('car', carModelInstance)
+			and{
+				eq('usageType', usageType)
+			}
+		}
+		def selectedCarWheelList = []
+		for(item in carWheelList){
+			if(item.wheel.getProductStock(branch)>0)
+			selectedCarWheelList.add(item)
+		}
+		parameter.selectedWheelList =
+		render(view:'inputWheel',model:parameter)
+	}
+	
 	@Transactional
 	def imageInput(){
 		return
