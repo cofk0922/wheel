@@ -51,7 +51,7 @@
 						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.invenotry.receivepo"/></a></li>
 					</ul>
 				</li>
-				<li><a class="setting" href="${createLink(uri: '/configMenu?lang=th')}"><g:message code="default.menu.setting.label" /></a></li>
+				<li><a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.menu.setting.label" /></a></li>
 			</ul>
 		</div>
 		<g:layoutBody/>

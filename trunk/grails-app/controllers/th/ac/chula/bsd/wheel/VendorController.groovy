@@ -39,7 +39,7 @@ class VendorController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'vendorInstance.label', default: 'Vendor'), vendorInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'vendorInstance.label', default: 'Vendor'), vendorInstance.vendorName])
                 redirect vendorInstance
             }
             '*' { respond vendorInstance, [status: CREATED] }
@@ -66,7 +66,7 @@ class VendorController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Vendor.label', default: 'Vendor'), vendorInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Vendor.label', default: 'Vendor'), vendorInstance.vendorName])
                 redirect vendorInstance
             }
             '*'{ respond vendorInstance, [status: OK] }

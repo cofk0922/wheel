@@ -23,13 +23,15 @@
 					
 						<th><g:message code="productBranchTransfer.branchFrom.label" default="Branch From" /></th>
 					
-						<th><g:message code="productBranchTransfer.branchTo.label" default="Branch To" /></th>
+						<%--<th><g:message code="productBranchTransfer.branchTo.label" default="Branch To" /></th> --%>
 					
 						<g:sortableColumn property="transferDay" title="${message(code: 'productBranchTransfer.transferDay.label', default: 'Transfer Day')}" />
 					
 						<g:sortableColumn property="transferHour" title="${message(code: 'productBranchTransfer.transferHour.label', default: 'Transfer Hour')}" />
 					
 						<g:sortableColumn property="transferMinute" title="${message(code: 'productBranchTransfer.transferMinute.label', default: 'Transfer Minute')}" />
+						
+						<g:sortableColumn property="enable" title="${message(code: 'productBranchTransfer.enable.label', default:' Enabled') }" />
 					
 					</tr>
 				</thead>
@@ -39,14 +41,24 @@
 					
 						<td><g:link action="show" id="${productBranchTransferInstance.id}">${fieldValue(bean: productBranchTransferInstance, field: "branchFrom")}</g:link></td>
 					
-						<td>${fieldValue(bean: productBranchTransferInstance, field: "branchTo")}</td>
+						<%--<td>${fieldValue(bean: productBranchTransferInstance, field: "branchTo")}</td> --%>
 					
-						<td>${fieldValue(bean: productBranchTransferInstance, field: "transferDay")}</td>
+						<td>
+							${fieldValue(bean: productBranchTransferInstance, field: "transferDay")}
+							<g:message code="default.day" />
+						</td>
 					
-						<td>${fieldValue(bean: productBranchTransferInstance, field: "transferHour")}</td>
+						<td>
+							${fieldValue(bean: productBranchTransferInstance, field: "transferHour")}
+							<g:message code="default.hour" />
+						</td>
 					
-						<td>${fieldValue(bean: productBranchTransferInstance, field: "transferMinute")}</td>
+						<td>
+							${fieldValue(bean: productBranchTransferInstance, field: "transferMinute")}
+							<g:message code="default.minute" />
+						</td>
 					
+						<td><g:formatBoolean boolean="${productBranchTransferInstance.enable}" /></td>
 					</tr>
 				</g:each>
 				</tbody>

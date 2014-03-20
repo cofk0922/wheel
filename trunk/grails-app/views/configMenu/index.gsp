@@ -95,6 +95,7 @@ p {
 			<h1><g:message code="default.submenu.branchuser" default="สาขา และ ผู้ใช้งาน"/></h1>
 			<ul>
 				<li><g:link controller="branch"><g:message code="default.submenu.branchuser.branch" default="สาขา"/></g:link></li>
+				<li><g:link controller="productBranchTransfer"><g:message code="default.submenu.branchuser.branchtransfer" /></g:link></li>
 				<li><g:link controller="user"><g:message code="default.submenu.branchuser.user" default="ผู้ใช้"/></g:link></li>
 				<li><g:link controller="role"><g:message code="default.submenu.branchuser.role" default="สิทธิการใช้งาน"/></g:link></li>
 				<li><g:link controller="userRole"><g:message code="default.submenu.branchuser.userrole" default="ผูกสิทธิการใช้งาน"/></g:link></li>
@@ -106,7 +107,6 @@ p {
 			<h1><g:message code="default.submenu.vendor" default="ผู้ผลิต และ จัดจำหน่าย ล้อแม็กซ์และอะไหล่"/></h1>
 			<ul>
 				<li><g:link controller="vendor"><g:message code="default.submenu.vendor.vendor" default="รายชื่อผู้ผลิต และ จัดจำหน่าย"/></g:link></li>
-				<li><g:link controller="vendor"><g:message code="default.submenu.vendor.vendorbranch" default="ตั้งค่าการขนส่ง"/></g:link></li>
 			</ul>
 		</div>
 		<hr />

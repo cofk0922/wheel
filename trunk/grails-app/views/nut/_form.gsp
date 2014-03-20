@@ -1,6 +1,12 @@
 <%@ page import="th.ac.chula.bsd.wheel.Nut" %>
 
-
+<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productType', 'error')} required">
+	<label for="productType">
+		<g:message code="nut.productType.label" default="Product Type" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="productType" from="${[params.prodType]}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${nutInstance?.productType?.name()}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
@@ -58,14 +64,6 @@
 </li>
 </ul>
 
-</div> 
-
-<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productType', 'error')} required">
-	<label for="productType">
-		<g:message code="nut.productType.label" default="Product Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductType?.values()}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${nutInstance?.productType?.name()}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productVendorTransfers', 'error')} ">

@@ -11,7 +11,11 @@
 	</content>
 	<content tag="content">
 		<div id="create-productBranchTransfer" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+			<h1>
+				<g:message code="default.create.label" args="[entityName]" />
+				:
+				<g:message code="${params.branch.branchName}" />
+			</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>

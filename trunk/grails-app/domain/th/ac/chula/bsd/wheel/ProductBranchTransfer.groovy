@@ -4,6 +4,7 @@ class ProductBranchTransfer {
 	int transferDay = 0
 	int transferHour = 0
 	int transferMinute = 0
+	Boolean enable = true
 	
 	Branch branchFrom
 	Branch branchTo
@@ -13,5 +14,10 @@ class ProductBranchTransfer {
 		]
 
 	static constraints = {
+	}
+	
+	public void initialProductBranchTransfer(Branch bFrom, Branch bTo){
+		this.branchFrom = bFrom
+		this.branchTo = bTo
 	}
 }

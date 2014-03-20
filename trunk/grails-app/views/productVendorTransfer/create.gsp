@@ -7,7 +7,7 @@
 	</head>
 	<body>
 	<content tag="navleft">
-		<g:render template="/layouts/submenu" />
+		<g:render template="submenu" />
 	</content>
 	<content tag="content">
 		<div id="create-productVendorTransfer" class="content scaffold-create" role="main">
