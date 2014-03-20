@@ -17,7 +17,7 @@
 	</label>
 	<g:textField name="vendorAddress" required="" value="${vendorInstance?.vendorAddress}"/>
 </div>
-
+<%--
 <div class="fieldcontain ${hasErrors(bean: vendorInstance, field: 'productVendors', 'error')} ">
 	<label for="productVendors">
 		<g:message code="vendor.productVendors.label" default="Product Vendors" />
@@ -34,4 +34,4 @@
 </ul>
 
 </div>
-
+ --%>

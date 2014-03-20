@@ -41,7 +41,10 @@
 				<li class="fieldcontain">
 					<span id="transferDay-label" class="property-label"><g:message code="productBranchTransfer.transferDay.label" default="Transfer Day" /></span>
 					
-						<span class="property-value" aria-labelledby="transferDay-label"><g:fieldValue bean="${productBranchTransferInstance}" field="transferDay"/></span>
+						<span class="property-value" aria-labelledby="transferDay-label">
+						<g:fieldValue bean="${productBranchTransferInstance}" field="transferDay"/>
+						<g:message code="default.day" />
+						</span>
 					
 				</li>
 				</g:if>
@@ -50,7 +53,10 @@
 				<li class="fieldcontain">
 					<span id="transferHour-label" class="property-label"><g:message code="productBranchTransfer.transferHour.label" default="Transfer Hour" /></span>
 					
-						<span class="property-value" aria-labelledby="transferHour-label"><g:fieldValue bean="${productBranchTransferInstance}" field="transferHour"/></span>
+						<span class="property-value" aria-labelledby="transferHour-label">
+						<g:fieldValue bean="${productBranchTransferInstance}" field="transferHour"/>
+						<g:message code="default.hour" />
+						</span>
 					
 				</li>
 				</g:if>
@@ -59,7 +65,10 @@
 				<li class="fieldcontain">
 					<span id="transferMinute-label" class="property-label"><g:message code="productBranchTransfer.transferMinute.label" default="Transfer Minute" /></span>
 					
-						<span class="property-value" aria-labelledby="transferMinute-label"><g:fieldValue bean="${productBranchTransferInstance}" field="transferMinute"/></span>
+						<span class="property-value" aria-labelledby="transferMinute-label">
+						<g:fieldValue bean="${productBranchTransferInstance}" field="transferMinute"/>
+						<g:message code="default.minute" />
+						</span>
 					
 				</li>
 				</g:if>

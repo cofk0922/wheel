@@ -165,9 +165,9 @@ class BootStrap {
     }
     def destroy = {
     }
-	
+	/*
 	def messageSource
 	def saveMessageResources={
 		messageSource.clearCache()
-	}
+	}*/
 }

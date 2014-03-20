@@ -16,10 +16,12 @@ class NutController {
     }
 
     def show(Nut nutInstance) {
+		params.prodID = nutInstance.id
         respond nutInstance
     }
 
     def create() {
+		params.prodType = ProductType.NUT
         respond new Nut(params)
     }
 
@@ -34,12 +36,12 @@ class NutController {
             respond nutInstance.errors, view:'create'
             return
         }
-
+		nutInstance.productType = ProductType.NUT
         nutInstance.save flush:true
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'nutInstance.label', default: 'Nut'), nutInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'nutInstance.label', default: 'Nut'), nutInstance.prodName])
                 redirect nutInstance
             }
             '*' { respond nutInstance, [status: CREATED] }
@@ -47,6 +49,7 @@ class NutController {
     }
 
     def edit(Nut nutInstance) {
+		params.prodType = ProductType.NUT
         respond nutInstance
     }
 
@@ -61,12 +64,12 @@ class NutController {
             respond nutInstance.errors, view:'edit'
             return
         }
-
+		nutInstance.productType = ProductType.NUT
         nutInstance.save flush:true
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Nut.label', default: 'Nut'), nutInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Nut.label', default: 'Nut'), nutInstance.prodName])
                 redirect nutInstance
             }
             '*'{ respond nutInstance, [status: OK] }

@@ -109,7 +109,7 @@
 				<td>- <g:link controller="inventory"><g:message code="default.menu.inventory.label"/></g:link></td>
 			</tr>
 			<tr>
-				<td>- <a class="setting" href="${createLink(uri: '/configMenu?lang=th')}"><g:message code="default.menu.setting.label" /></a></td>
+				<td>- <a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.menu.setting.label" /></a></td>
 			</tr>
 	 <!-- 
 			<tr>
