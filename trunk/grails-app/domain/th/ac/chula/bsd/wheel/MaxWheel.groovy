@@ -12,6 +12,7 @@ class MaxWheel extends Product{
 	Float weight
 	SpokeType spoke
 	ProdStatus pStatus
+	CarBand forCarBand
 	
 	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel, maxWheelColor: MaxWheelColor]
 
@@ -22,11 +23,15 @@ class MaxWheel extends Product{
 		width nullable: false;
 		weight nullable: true;
 		pcdCode nullable: false;
+		forCarBand nullable: true;
     }
 	
-	public Double getCmSize()
-	{
+	public Double getCmSize()	{
 		return this.size * 0.0254
+	}
+	
+	public getInchOffSet(){
+		return this.offSet * 0.0393701	
 	}
 }
 
