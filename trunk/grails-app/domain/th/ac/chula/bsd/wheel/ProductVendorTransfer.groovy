@@ -14,4 +14,8 @@ class ProductVendorTransfer {
 	
 	static constraints = {
 	}
+	
+	String toString() {
+		return this.product.prodName
+	}
 }

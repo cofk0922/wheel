@@ -32,7 +32,10 @@
 						<g:sortableColumn property="nutSize" title="${message(code: 'nut.nutSize.label', default: 'Nut Size')}" />
 					
 						<%--<g:sortableColumn property="productType" title="${message(code: 'nut.productType.label', default: 'Product Type')}" /> --%>
-					
+						
+						<th><g:message code="nut.stock.label" default="Stock" /></th>
+						
+						<th><g:message code="nut.vendorCount.label" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,10 +50,25 @@
 					
 						<td>${fieldValue(bean: nutInstance, field: "productPartAmount")}</td>
 					 --%>
-						<td>${fieldValue(bean: nutInstance, field: "nutSize")}</td>
+						<td>
+							${fieldValue(bean: nutInstance, field: "nutSize")}
+							<g:message code="default.millimeter" />
+						</td>
 					
 						<%--<td>${fieldValue(bean: nutInstance, field: "productType")}</td> --%>
-					
+						<td>
+							<g:if test="${nutInstance.getProductStock(params.branch) > 0}">
+								${nutInstance.getProductStock(params.branch)}
+								<g:message code="default.count.nut"/>
+							</g:if>
+							<g:else>
+								-
+							</g:else>
+						</td>
+						
+						<td>
+							${nutInstance.countVendor(params.branch)}
+						</td>
 					</tr>
 				</g:each>
 				</tbody>

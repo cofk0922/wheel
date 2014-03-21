@@ -49,6 +49,14 @@
 	<g:message code="default.millimeter"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'stock', 'error')} required">
+	<label for="nutStock">
+		<g:message code="nut.stock.label" />
+	</label>
+	<g:field name="stock" type="number" value="${params.stock}" />
+	<g:message code="default.count.nut"/>
+</div>
+
 <%--<div class="fieldcontain ${hasErrors(bean: nutInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="nut.productStocks.label" default="Product Stocks" />

@@ -37,9 +37,19 @@ class Product {
 	}
 	
 	public int getProductStock(Branch b) {
+		int stock = -1
 		Product prod = Product.get(this.id)
 		def prodStock = prod.productStocks.find{it.branch.id == b.id}
-		return prodStock.stock
+		if(prodStock){
+			stock = prodStock.stock
+		}
+		return stock
+	}
+	
+	public int countVendor(Branch b){
+		Product prod = Product.get(this.id)
+		def vendorTLists = prod.productVendorTransfers.findAll{it -> it.branch.id == b.id && it.product.id == prod.id}
+		return vendorTLists.size()
 	}
 	
 	public int calPartUsage(int amount) {

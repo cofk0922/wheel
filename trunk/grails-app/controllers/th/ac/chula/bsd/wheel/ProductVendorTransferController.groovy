@@ -145,8 +145,8 @@ class ProductVendorTransferController {
 
     @Transactional
     def delete(ProductVendorTransfer productVendorTransferInstance) {
-		params.prodID = params.prodID
-		params.prodType = params.prodType.name()
+		params.prodID = productVendorTransferInstance.product.id
+		params.prodType = productVendorTransferInstance.product.productType.name()
         if (productVendorTransferInstance == null) {
             notFound()
             return
@@ -156,8 +156,8 @@ class ProductVendorTransferController {
 
         request.withFormat {
             form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'ProductVendorTransfer.label', default: 'ProductVendorTransfer'), productVendorTransferInstance.id])
-                redirect action:"index", method:"GET"
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'ProductVendorTransfer.label', default: 'ProductVendorTransfer'), ''])
+                redirect action:"index", method:"GET", params:[prodID: params.prodID, prodType: params.prodType]
             }
             '*'{ render status: NO_CONTENT }
         }
