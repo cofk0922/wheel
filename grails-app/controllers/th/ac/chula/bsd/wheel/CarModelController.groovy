@@ -47,23 +47,7 @@ class CarModelController {
 		}
 	}
 	
-	def assignStar(CarModel carModelInstance, UsageType uType){
-		//find mean
-		//SD = root(sum((x-mean)^2)/N)
-		def listResult = CarWheelList.withCriteria {
-			eq('carModel', carModelInstance)
-			eq('usageType', uType)
-		}
-		Float wCount = listResult.size()
-		Float sumTractive = (Float)listResult.sum(tractiveEnergy)
-		Float TractiveBar = sumTractive/wCount
-		Float sumDrive = (Float)listResult.sum(drivingEnergy)
-		Float DriveBar = sumDrive/wCount
-		
-		for (item in listResult){
-			
-		}
-	}
+	
 	
 	def initialWheelListForNewCar(CarModel carModelInstance){
 		
@@ -102,6 +86,16 @@ class CarModelController {
 			}
 		}
 	}
+	
+	@Transactional
+	def assignStar(CarModel carModelInstance){
+		//for each CarWheelList call setDriveStar and setTractiveStar
+		def allWheelLists = carModelInstance.wheelLists
+		for (wheelListInstance in allWheelLists){
+			wheelListInstance.setDriveStar();
+			wheelListInstance.setTractiveStar();
+		}
+	}
 
     @Transactional
     def save(CarModel carModelInstance) {
@@ -117,6 +111,7 @@ class CarModelController {
 
         carModelInstance.save flush:true
 		initialWheelListForNewCar(carModelInstance)
+		assignStar(carModelInstance)
 
         request.withFormat {
             form {
