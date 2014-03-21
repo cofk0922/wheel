@@ -82,11 +82,11 @@ class CarModelController {
 				println("initialWheelListForNewCar : "+item.band.name+item.prodName+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
 				
 				//Mention Width :maxWheel.width and carModel.defaultWheel.width
-				if(abs(item.width-carModelInstance.defaultWheel.width)<=2){
+				if(Math.abs(item.width-carModelInstance.defaultWheel.width)<=2){
 					//Mention Space for offset: maxWheel.width maxWheel.offset and carModel.defaultWheel.width carModel.defaultWheel.offset
 					def defaultWideSpace = (carModelInstance.defaultWheel.width/2)-carModelInstance.defaultWheel.getInchOffSet()
 					def itemWideSpace = (item.width/2)-item.getInchOffSet()
-					if(abs(defaultWideSpace-itemWideSpace)<=2){
+					if(Math.abs(defaultWideSpace-itemWideSpace)<=2){
 						//if wheel condition is OK create CarWheelList object
 						initialCarWheelList(carModelInstance, item)
 						println("initialWheelListForNewCar : Add to List")
