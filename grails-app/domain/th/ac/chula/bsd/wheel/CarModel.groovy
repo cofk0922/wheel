@@ -10,7 +10,7 @@ class CarModel {
 	Float offSet
 	Float weight
 	Float gearRatio
-	//MaxWheel defaultWheel
+	MaxWheel defaultWheel
 	int defaultTireSize
 	float nutSize
 	
@@ -20,7 +20,7 @@ class CarModel {
 	static hasOne = [band: CarBand]
 	
 	static constraints = {
-		
+		defaultWheel nullable: false
 	}
 	
 	String toString() {

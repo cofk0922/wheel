@@ -67,19 +67,38 @@ class CarModelController {
 	
 	def initialWheelListForNewCar(CarModel carModelInstance){
 		
+		//Use criteria to select wheel that possible to mount with car's axle
 		def wheelResult = MaxWheel.withCriteria {
-			float cond1 = carModelInstance.defaultTireSize -10
-//			float cond2 = offSet + carModelInstance.offSet
-//			float cond3 = cond2 + 1
-//			float cond4 = cond2 - 1
+			float cond1 = carModelInstance.defaultWheel.size+2
 			eq('pcdCode', carModelInstance.pcdCode)
-			le('size', cond1)
-//			le('width'/2-'offSet', carModelInstance.offSet)
+			and{
+				ge('size', carModelInstance.defaultWheel.size)
+				le('size', cond1)
+			}
 		}
 		if(wheelResult.size() > 0){
 			for (item in wheelResult) {
-				println(item.band.name+item.prodName)
-				initialCarWheelList(carModelInstance, item)
+				//fetch and put suited wheel into CarWheelList
+				println("initialWheelListForNewCar : "+item.band.name+item.prodName+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
+				
+				//Mention Width :maxWheel.width and carModel.defaultWheel.width
+				if(abs(item.width-carModelInstance.defaultWheel.width)<=2){
+					//Mention Space for offset: maxWheel.width maxWheel.offset and carModel.defaultWheel.width carModel.defaultWheel.offset
+					def defaultWideSpace = (carModelInstance.defaultWheel.width/2)-carModelInstance.defaultWheel.getInchOffSet()
+					def itemWideSpace = (item.width/2)-item.getInchOffSet()
+					if(abs(defaultWideSpace-itemWideSpace)<=2){
+						//if wheel condition is OK create CarWheelList object
+						initialCarWheelList(carModelInstance, item)
+						println("initialWheelListForNewCar : Add to List")
+					}
+					else{
+						println("initialWheelListForNewCar : Not in offset condition")
+					}
+				}
+				else{
+					println("initialWheelListForNewCar : Not in width condition")
+				}
+				
 			}
 		}
 	}
