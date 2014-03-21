@@ -81,8 +81,10 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent) {
 					var dateStr = item.day.split("-");
 					var monthStr = dateStr.length === 3 ? dateStr[1] : ""; 
 					var dateStr = dateStr.length === 3 ? dateStr[2] : "";
+					var yearStr = dateStr.length === 3 ? dateStr[2] : "";
 					if (monthStr !== "" && dateStr !== "") {
 						var selectorStr = parseInt(monthStr, 10) + '/' + parseInt(dateStr, 10);
+						
 						var col = $(':contains("' + selectorStr + '")');
 						if (col.length > 0) {
 							var classSelector = col.last().attr("class");
@@ -195,8 +197,8 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent) {
 	$('#calendar').fullCalendar('gotoDate', currentEvent.start.getFullYear(), currentEvent.start.getMonth(), currentEvent.start.getDate());
 };
 
-var fncGetData = function() {		
-	$.post( "../appointment/getEventsForEdit",{ 'apID' = getUrlVars()["id"] }; function(result) {
+var fncGetData = function() {
+	$.post( "../appointment/getEventsForEdit",{ 'apID' : getUrlVars()["id"] }, function(result) {
 		var data =[];
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
