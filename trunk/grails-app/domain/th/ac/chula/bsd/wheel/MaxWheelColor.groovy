@@ -13,7 +13,8 @@ class MaxWheelColor {
 	
 	String wheelImage
 	
-	static hasOne = [maxWheel: MaxWheel]
+	//static hasOne = [maxWheel: MaxWheel]
+	static belongsTo = [maxWheel: MaxWheel]
 	
     static constraints = {
     }
