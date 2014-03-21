@@ -25,6 +25,9 @@ class MaxWheelController {
 
     @Transactional
     def save(MaxWheel maxWheelInstance) {
+		
+		
+		
         if (maxWheelInstance == null) {
             notFound()
             return
@@ -34,7 +37,9 @@ class MaxWheelController {
             respond maxWheelInstance.errors, view:'create'
             return
         }
-
+		
+		//TODO save Wheel
+		maxWheelInstance.productType = ProductType.WHEEL
         maxWheelInstance.save flush:true
 
         request.withFormat {
@@ -354,6 +359,14 @@ class MaxWheelController {
 	
 	@Transactional
 	def imageInput(){
+		return
+	}
+	
+	def  addWheel(){
+		
+		
+		
+		
 		return
 	}
 }
