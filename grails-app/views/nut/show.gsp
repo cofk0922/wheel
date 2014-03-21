@@ -59,11 +59,38 @@
 				<li class="fieldcontain">
 					<span id="nutSize-label" class="property-label"><g:message code="nut.nutSize.label" default="ขนาดเกลียวน๊อต(มิลลิเมตร)" /></span>
 					
-						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${nutInstance}" field="nutSize"/></span>
+						<span class="property-value" aria-labelledby="nutSize-label">
+							<g:fieldValue bean="${nutInstance}" field="nutSize"/>
+							<g:message code="default.millimeter" />
+						</span>
 					
 				</li>
 				</g:if>
 			
+				<li class="fieldcontain">
+					<span id="nutStock-label" class="property-label"><g:message code="nut.stock.label" /></span>
+					
+						<span class="property-value" aria-labelledby="nutStock-label">
+							<g:if test="${nutInstance.getProductStock(params.branch) > 0}">
+								${nutInstance.getProductStock(params.branch)}
+								<g:message code="default.count.nut"/>
+							</g:if>
+							<g:else>
+								-
+							</g:else>
+						</span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+						<span id="vendorCount-label" class="property-label"><g:message code="nut.vendorCount.label" /></span>
+					
+						<span class="property-value" aria-labelledby="vendorCount-label">
+							${nutInstance.countVendor(params.branch)}
+						</span>
+					
+				</li>
+				
 				<%--<g:if test="${nutInstance?.productStocks}">
 				<li class="fieldcontain">
 					<span id="productStocks-label" class="property-label"><g:message code="nut.productStocks.label" default="Product Stocks" /></span>
