@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat
+import java.util.Locale;
 
 import th.ac.chula.bsd.inventory.PreProductPurchaseLine;
 import th.ac.chula.bsd.inventory.PreProductPurchaseStatus;
@@ -26,9 +27,9 @@ class AppointmentController {
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def timeFormat = new SimpleDateFormat('HH:mm')
-	def shortDateFormat = new SimpleDateFormat('yyyy-MM-dd')
-	def dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm')
+	def timeFormat = new SimpleDateFormat('HH:mm', Locale.US)
+	def shortDateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
+	def dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm', Locale.US)
 	
     def index(Integer max) {
 		def u = springSecurityService.currentUser
@@ -62,32 +63,6 @@ class AppointmentController {
 		//respond appointLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: appointLists.size()]
         respond Appointment.list(params), model:[appointmentInstanceCount: Appointment.count()]
     }
-	
-	def showSearch = {
-		render (view: 'index')
-	}
-	
-	def search = {
-		def key = '%%'
-		if(params.keyword) {
-			key = '%'+params.keyword+'%'
-		} 
-		def appointLists = Appointment.withCriteria {
-			eq('branch.id', b.id)
-			or{
-			like('customer.carCode', key)
-			like('customer.customerName', key)
-			like('customer.customerTel', key)
-		}
-			and {
-				order('startDate', 'asc')
-				order('customerName', 'asc')
-			}
-			//maxResults(new Integer( params.max))
-			//firstResult(new Integer(params.offset))
-		}
-		render(template:'searchResults', model:[appointmentInstanceList: appointLists, appointmentInstanceCount: appointLists.size()])
-	}
 	
     def show(Appointment appointmentInstance) {
         respond appointmentInstance
@@ -401,26 +376,50 @@ class AppointmentController {
 	def appointmentGrid(){
 		return
 	}
+	
 	def getEventsGrid(){
-		println 'Get Event Grid'
-		// default search all when "searchStr" = string empty
-		println "getEventsGrid"
-		println "searchStr = " + params.searchStr;
-		
 		def events = []
-		
+		println 'param: ' + params.searchStr
 		// May
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
 		b.refresh()
 		
 		// get appointment
-		def appointDBs = Appointment.withCriteria {
-			and{
-				eq('branch.id', b.id)
-				not {'in'("status",[AppointmentStatus.CANCEL, AppointmentStatus.CAR_RETURNED])}
+		def appointDBs = []
+		if(params.searchStr.length() == 0){
+			println 'no key'
+			appointDBs = Appointment.withCriteria {
+				and{
+					eq('branch.id', b.id)
+					not {'in'("status",[AppointmentStatus.CANCEL, AppointmentStatus.CAR_RETURNED])}
+				}
+				and {
+					order('startDate', 'asc')
+					order('appointmentNo', 'asc')
+					order('customerName', 'asc')
+				}
+			}
+		}else{
+			println 'has key'
+			def key = '%'+params.searchStr+'%'
+			appointDBs = Appointment.withCriteria {
+			eq('branch.id', b.id)
+			or{
+				like('appointmentNo', key)
+				like('customer.carCode', key)
+				like('customer.customerName', key)
+				like('customer.customerTel', key)
+				}
+			not {'in'("status",[AppointmentStatus.CANCEL, AppointmentStatus.CAR_RETURNED])}
+			and {
+				order('startDate', 'asc')
+				order('appointmentNo', 'asc')
+				order('customerName', 'asc')
+				}
 			}
 		}
+		
 		for(ap in appointDBs){
 			Appointment appoint = ap
 			def item = [
@@ -435,53 +434,7 @@ class AppointmentController {
 				]
 			events.add(item)
 		}
-		
-		
-		//appointmentID is hidden fields
-		/*
-		def responseData = [
-			'appointmentID': '001',
-			'appointmentNo': '1',
-			'CustomerName':'Panda',
-			'CarCode': 'PD 1234',
-			'StartDate': '2014-03-17 9:30',
-			'EndDate': '2014-03-17 10:30',
-			'Status': 'New'
-		]
-
-		def responseData2 = [
-			'appointmentID': '002',
-			'appointmentNo': '2',
-			'CustomerName':'Barny',
-			'CarCode': 'Barny 1234',
-			'StartDate': '2014-03-14 12:00',
-			'EndDate': '2014-03-14 12:30',
-			'Status': 'miss'
-		]
-		
-		def responseData3 = [
-			'appointmentID': '003',
-			'appointmentNo': '3',
-			'CustomerName':'Scott',
-			'CarCode': 'Scott 1234',
-			'StartDate': '2014-03-20 12:00',
-			'EndDate': '2014-03-20 12:30',
-			'Status': 'Cancel'
-			
-		]
-		
-		if (params.searchStr == ""){
-		events.add(responseData)
-		events.add(responseData2)
-		events.add(responseData3)
-		}
-		else{
-			events.add(responseData)
-			events.add(responseData2)
-		}
-		*/
 		render events as JSON
-		
 	}
 	
 	def appointmentCalendar(){
@@ -670,7 +623,7 @@ class AppointmentController {
 	}
 	
 	def getEventsForEdit(){
-		println "getEvents Calendar"
+		println "getEvents Calendar id: "+ params.id
 		def apID = params.apID
 		// May
 		def u = springSecurityService.currentUser
@@ -840,9 +793,9 @@ class AppointmentController {
 		//May
 		Appointment ap = session['currentAppointment']
 		println('AP NO: '+ ap.appointmentNo)
-		println('AP StartDate: '+ ap.startdate)
-		println('param startDate: ' + params.startdate)
-		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+		println('AP StartDate: '+ ap.startDate)
+		println('param startDate: ' + params.startDate)
+		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss', Locale.US)
 		def calendar = new GregorianCalendar()
 		calendar.setTime(ap.startDate)
 		calendar.add(calendar.DATE, params.dayDelta.toInteger())
@@ -856,7 +809,7 @@ class AppointmentController {
 		// if id = "null" that's mean add new event else meaning is edit event
 		if (params.id == null){
 			println "act = " : params.act
-			println "startdate = " + params.startdate
+			println "startdate = " + params.startDate
 			println "id = " + params.id
 		}else{
 		println "id = " + params.event
