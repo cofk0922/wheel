@@ -39,7 +39,7 @@
 			<ul>
 				<!--  <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>-->
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.menu.home.label"/></a></li>
-				<li><a class="choose_wheel" href="${createLink(uri: '/')}"><g:message code="default.menu.chooseWheel.label"/></a></li>
+				<li><a class="choose_wheel" href="${createLink(uri: '/maxWheel/inputWheel')}"><g:message code="default.menu.chooseWheel.label"/></a></li>
 				<li><a class="appointment" href="${createLink(uri: '/appointment')}"><g:message code="default.menu.appointment.label"/></a></li>
 				<li><a class="install" href="${createLink(uri: '/')}"><g:message code="default.menu.install.label"/></a></li>
 				<li>

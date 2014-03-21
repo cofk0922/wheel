@@ -89,7 +89,7 @@
      			</sec:ifAllGranted>
 			</sec:ifLoggedIn>
  			<tr>
-				<td>- <g:link controller="appointment"><g:message code="default.menu.chooseWheel.label"/></g:link></td>
+				<td>- <g:link controller="maxWheel" action="inputWheel"><g:message code="default.menu.chooseWheel.label"/></g:link></td>
 			</tr>
 			<tr>
 				<td>- <g:link controller="appointment"><g:message code="default.menu.appointment.label"/></g:link></td>
