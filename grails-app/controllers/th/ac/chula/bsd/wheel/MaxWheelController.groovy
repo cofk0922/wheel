@@ -1,135 +1,133 @@
 package th.ac.chula.bsd.wheel
 
-
-
 import static org.springframework.http.HttpStatus.*
-import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class MaxWheelController {
-	def springSecurityService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def burningImageService
-    def index(Integer max) {
-		def u = springSecurityService.currentUser
-		params.branch = u.branch
-        params.max = Math.min(max ?: 10, 100)
-        respond MaxWheel.list(params), model:[maxWheelInstanceCount: MaxWheel.count()]
-    }
 
-    def show(MaxWheel maxWheelInstance) {
-		def parameter = [:]
-		def u = springSecurityService.currentUser
-		parameter.branch = u.branch
-		parameter.colorList = maxWheelInstance.maxWheelColor
-		parameter.maxWheelInstance = maxWheelInstance
-		render(view:'show',model:parameter)
-    }
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def create() {
-        respond new MaxWheel(params)
-    }
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond MaxWheel.list(params), model:[maxWheelInstanceCount: MaxWheel.count()]
+	}
 
-    @Transactional
-    def save(MaxWheel maxWheelInstance) {
-		
-		
-		
-        if (maxWheelInstance == null) {
-            notFound()
-            return
-        }
+	def show(MaxWheel maxWheelInstance) {
+		respond maxWheelInstance
+	}
 
-        if (maxWheelInstance.hasErrors()) {
-            respond maxWheelInstance.errors, view:'create'
-            return
-        }
-		
-		//TODO save Wheel
-        maxWheelInstance.save flush:true
+	def create() {
+		respond new MaxWheel(params)
+	}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'maxWheelInstance.label', default: 'MaxWheel'), maxWheelInstance.id])
-                redirect maxWheelInstance
-            }
-            '*' { respond maxWheelInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(MaxWheel maxWheelInstance) {
-        respond maxWheelInstance
-    }
-
-    @Transactional
-    def update(MaxWheel maxWheelInstance) {
-        if (maxWheelInstance == null) {
-            notFound()
-            return
-        }
-
-        if (maxWheelInstance.hasErrors()) {
-            respond maxWheelInstance.errors, view:'edit'
-            return
-        }
-
-        maxWheelInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'MaxWheel.label', default: 'MaxWheel'), maxWheelInstance.id])
-                redirect maxWheelInstance
-            }
-            '*'{ respond maxWheelInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(MaxWheel maxWheelInstance) {
-
-        if (maxWheelInstance == null) {
-            notFound()
-            return
-        }
-
-        maxWheelInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaxWheel.label', default: 'MaxWheel'), maxWheelInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'maxWheelInstance.label', default: 'MaxWheel'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
-	
 	@Transactional
-	def inputWheel(){		
+	def save(MaxWheel maxWheelInstance) {
+		if (maxWheelInstance == null) {
+			notFound()
+			return
+		}
+
+		if (maxWheelInstance.hasErrors()) {
+			respond maxWheelInstance.errors, view:'create'
+			return
+		}
+		//TODO save Wheel
+		maxWheelInstance.productType = ProductType.WHEEL
+		maxWheelInstance.save flush:true
+
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.created.message', args: [message(code: 'maxWheelInstance.label', default: 'MaxWheel'), maxWheelInstance.id])
+				redirect maxWheelInstance
+			}
+			'*' { respond maxWheelInstance, [status: CREATED] }
+		}
+	}
+
+	def edit(MaxWheel maxWheelInstance) {
+		respond maxWheelInstance
+	}
+
+	@Transactional
+	def update(MaxWheel maxWheelInstance) {
+		if (maxWheelInstance == null) {
+			notFound()
+			return
+		}
+
+		if (maxWheelInstance.hasErrors()) {
+			respond maxWheelInstance.errors, view:'edit'
+			return
+		}
+
+		maxWheelInstance.save flush:true
+
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [message(code: 'MaxWheel.label', default: 'MaxWheel'), maxWheelInstance.id])
+				redirect maxWheelInstance
+			}
+			'*'{ respond maxWheelInstance, [status: OK] }
+		}
+	}
+
+	@Transactional
+	def delete(MaxWheel maxWheelInstance) {
+
+		if (maxWheelInstance == null) {
+			notFound()
+			return
+		}
+
+		maxWheelInstance.delete flush:true
+
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaxWheel.label', default: 'MaxWheel'), maxWheelInstance.id])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
+
+	protected void notFound() {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: 'maxWheelInstance.label', default: 'MaxWheel'), params.id])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
+	
+
+	def inputWheel(){
 		def parameter = [:]
 		parameter.listCarBand = CarBand.list()
+		//println "OK"
+		if (params.bandId){
+			println "bandid"
+			def selectedBand = CarBand.get(params.bandId)
+			parameter.listCarModel = CarModel.findByBand(selectedBand)
+		}else{
 		parameter.listCarModel = CarModel.list()
-		parameter.listCarColor = CarColor.list()
+		}
+		//parameter.listCarColor = CarColor.list()
 		render(view:'inputWheel',model:parameter)
 	}
 	
-	@Transactional
+
 	def selectCarModel(){
-		def selectedBand = CarBand.get(params.bandId)
+		println params
 		def parameter = [:]
-		parameter.listCarModel = CarModel.findByBand(selectedBand)
+		def selectedBand = CarBand.get(params.bandId)
+		//parameter.listCarModel = CarModel.findByBand(selectedBand)
 		render(view:'inputWheel',model:parameter)
+		//render(template:'../layouts/ModelCar', model:parameter)
+		//def parameter = [:]
+		//parameter.listCarModel = CarModel.findByBand(selectedBand)
+		//render(view:'inputWheel',model:parameter)
 	}
 	
 	@Transactional
@@ -165,13 +163,13 @@ class MaxWheelController {
 	}
 	
 	@Transactional
-	def detectImage() {	
+	def detectImage() {
 		
 		println params.carImage
 		println params.modelId
 		
 		def parameter = [:]
-		parameter.carImage = params.carImage		
+		parameter.carImage = params.carImage
 		parameter.modelInstance = CarModel.get(params.modelId.toLong())
 		
 		// Set Color
@@ -237,7 +235,7 @@ class MaxWheelController {
 	
 	
 	@Transactional
-	def detectColor(){		
+	def detectColor(){
 		
 		def fileCropName
 		def f = request.getFile('myFile')
@@ -247,10 +245,15 @@ class MaxWheelController {
 			return
 		}
 		def carImage = f.originalFilename
-		
+		//int a = (int) (Math.random()*10);
 		//grailsApplication.config.uploadFolder is Define Path image in local config in  cofig.groovy line 89
-		
+				
 		def fullPath = grailsApplication.config.uploadFolder+carImage
+		File imgFile=new File(fullPath)
+		//if(imgFile.exists()){
+		//	imgFile.delete()
+		//	f.transferTo(new File(fullPath))
+		//}else {f.transferTo(imgFile)}
 		f.transferTo(new File(fullPath))
 		//response.sendError(200, 'Done')
 		flash.message = 'upload success !'
@@ -266,11 +269,11 @@ class MaxWheelController {
 		
 		println fileSumPath
 		parameter.carImage = fileSumPath
-		parameter.modelInstance = CarModel.get(params.modelId.toLong())		
+		parameter.modelInstance = CarModel.get(params.modelId.toLong())
 		render(view: "detectColor", model: parameter)
 	}
 
-    @Transactional
+	@Transactional
 	def saveCarColor(){
 		// get Model
 		println params.modelId
@@ -316,7 +319,7 @@ class MaxWheelController {
 			backWidth: params.backWidth,
 			colorName: params.colorName
 				)
-        Boolean isSave = carColorInstance.save flush:true
+		Boolean isSave = carColorInstance.save flush:true
 		redirect(action:"inputWheel")
 	}
 	
@@ -347,150 +350,84 @@ class MaxWheelController {
 	}
 	
 	@Transactional
-	def selectedMaxWheel(CarModel carModelInstance, UsageType usageType, Branch branch){
-		//Send max wheel list for specific car
-		def parameter = [:]
-		def carWheelList = CarWheelList.withCriteria{
-			eq('car', carModelInstance)
-			and{
-				eq('usageType', usageType)
-			}
-		}
-		def selectedCarWheelList = []
-		for(item in carWheelList){
-			if(item.wheel.getProductStock(branch)>0)
-			selectedCarWheelList.add(item)
-		}
-		parameter.selectedWheelList =
-		render(view:'inputWheel',model:parameter)
-	}
-	
-	@Transactional
-	def imageInput(){
-		return
-	}
-	
-	def  addWheel(){
-		
-		//def modelId = params.modelId.toLong()
-		def modelInstance = MaxWheel.get(1)
+	def selectedMaxWheel(){
+		println params.carImage
+		println params.modelId
 		
 		def parameter = [:]
-		parameter.listWheelBand = WheelBand.list()
-		parameter.listWheelModel = MaxWheel.list()
-		parameter.modelInstance = modelInstance
-		//parameter.listCarColor = CarColor.list()
-		render(view:'addWheel',model:parameter)
-
-	}
-	
-	def detectWheelColor(){
-		
-		def fileCropName
-		def f = request.getFile('myFile')
-		if (f.empty) {
-			flash.message = 'file cannot be empty'
-			render(view: 'addWheel')
-			return
-		}
-		def wheelImage = f.originalFilename
-		
-		//grailsApplication.config.uploadFolder is Define Path image in local config in  cofig.groovy line 89
-		
-		def fullPath = grailsApplication.config.uploadFolder+wheelImage
-		f.transferTo(new File(fullPath))
-		//response.sendError(200, 'Done')
-		flash.message = 'upload success !'
-		
-				
-		def parameter = [:]
-		def fileSumPath = '../images/'+wheelImage
-		
-		parameter.wheelImage = fileSumPath
-		parameter.modelInstance = MaxWheel.get(params.modelId.toLong())
-		render(view: "detectWheelColor", model: parameter)
-	}
-	
-	
-	def detectWheelImage() {
-		
-		println params
-	
-		
-		def parameter = [:]
-		parameter.wheelImage = params.wheelImage
-		parameter.modelInstance = MaxWheel.get(params.modelId.toLong())
+		parameter.hVal = params.hVal
+		parameter.sVal = params.sVal
+		parameter.vVal = params.vVal
+		parameter.hexVal = params.hexVal
+		parameter.colorName = params.colorName
+		parameter.carImage = params.carImage
 		
 		// Set Color
+		println params.hVal
+		println params.sVal
+		println params.vVal
+		println params.hexVal
+		println params.colorName
 		parameter.hVal = params.hVal
 		parameter.sVal = params.sVal
 		parameter.vVal = params.vVal
 		parameter.hexVal = params.hexVal
 		parameter.colorName = params.colorName
 		
-		render(view: "detectWheelImage", model: parameter)
+		// Set Front Wheel front
+		println params.frontX1
+		println params.frontX2
+		println params.frontY1
+		println params.frontY2
+		println params.frontHeight
+		println params.frontWidth
+		parameter.frontX1 = params.frontX1
+		parameter.frontX2 = params.frontX2
+		parameter.frontY1 = params.frontY1
+		parameter.frontY2 = params.frontY2
+		parameter.frontHeight = params.frontHeight
+		parameter.frontWidth = params.frontWidth
+		
+		// Set Front Wheel back
+		println params.backX1
+		println params.backX2
+		println params.backY1
+		println params.backY2
+		println params.backHeight
+		println params.backWidth
+		parameter.backX1 = params.backX1
+		parameter.backX2 = params.backX2
+		parameter.backY1 = params.backY1
+		parameter.backY2 = params.backY2
+		parameter.backHeight = params.backHeight
+		parameter.backWidth = params.backWidth
+		
+		parameter.modelInstance = CarModel.get(params.modelId.toLong())
+		
+		render(view: "selectedMaxWheel", model: parameter)
+		
 		
 	}
 	
+	//def selectedMaxWheel(CarModel carModelInstance, UsageType usageType, Branch branch){
+		//Send max wheel list for specific car
+		//def parameter = [:]
+		//def carWheelList = CarWheelList.withCriteria{
+		//	eq('car', carModelInstance)
+		//	and{
+		//		eq('usageType', usageType)
+		//	}
+		//}
+		//def selectedCarWheelList = []
+		//for(item in carWheelList){
+		//	if(item.wheel.getProductStock(branch)>0)
+		//	selectedCarWheelList.add(item)
+		//}
+		//parameter.selectedWheelList =
+		//render(view:'inputWheel',model:parameter)
+	//}
 	
 	@Transactional
-	def saveMaxWheel(){
-		
-		def maxWhellInstance = MaxWheel.get(params.modelId.toLong())
-		
-		def maxwheel = new MaxWheelColor(
-			colorName:params.colorName,
-			hVal:params.hVal,
-			sVal:params.sVal,
-			vVal:params.vVal,
-			hexVal:params.hexVal,
-			wheelImage:params.wheelImage,
-			prodName:maxWhellInstance.series,
-			productType:ProductType.WHEEL,
-			maxWheel:maxWhellInstance
-			)
-		
-		
-		if (!maxwheel.save()) {
-			maxwheel.errors.each {
-				println it
-			}
-		}else{
-		maxwheel.save(flush:true)
-		}
-		
-		redirect(action: "show", id: params.modelId )
-	}
-	def dynamicDropdown = {
-	}
-	
-	def findModelForBand = {
-				println params
-				def band = WheelBand.get(params.band.id)
-				render(template: '../layouts/modelSelection', model:  [models: band.wheelModel])
-			}
-	
-	def inputWheelCrop(){
-		return
-	}
-	
-	def upload() {
-		def parameter = [:]
-		def fileCropName
-		def f = request.getFile('myFile')
-		if (f.empty) {
-			flash.message = 'file cannot be empty'
-			render(view: 'inputWheel')
-			return
-		}
-		def filename = f.originalFilename
-		def fullPath = grailsApplication.config.uploadFolder+filename
-		f.transferTo(new File(fullPath))
-		//response.sendError(200, 'Done')
-		flash.message = 'upload success !'
-		
-		parameter.fileCropName = fileCropName
-		parameter.filename = filename
-		render(view: "inputWheelCrop", model: parameter)
+	def imageInput(){
 	}
 }
