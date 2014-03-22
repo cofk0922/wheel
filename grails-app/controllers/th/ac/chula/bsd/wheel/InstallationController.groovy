@@ -52,6 +52,28 @@ class InstallationController {
 
 	
 	// Bird
+	def getEventDetails(){
+		
+		println "id = "+ params.id
+		
+		def details = [ 'appointmentNo': '007','carNo': 'CR 7','customerName':'Ronaldo','status':'INSTALLING']
+//		NEW,
+//		PREPARE_INSTALL,
+//		//READY_INSTALL,
+//		INSTALLING,
+//		FINISHED,
+//		CANCEL
+		render details as JSON
+	}
+	
+	
+	def updateStatus(){
+		
+		println "id = "+ params.id
+		println "id = "+ params.nextStatus
+		
+	}
+	
 	def installCalendar(){
 		return
 	}

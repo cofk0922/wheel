@@ -126,6 +126,7 @@ class Installation {
 enum InstallationStatus {
 	NEW,
 	PREPARE_INSTALL,
+	//READY_INSTALL,
 	INSTALLING,
 	FINISHED,
 	CANCEL
