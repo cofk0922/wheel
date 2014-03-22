@@ -116,7 +116,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 			});				
 		},
 		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-			$.post('../appointment/validateDeltaTime', { 'id': event.title,'dayDelta':dayDelta,'minuteDelta':minuteDelta }, function(result){
+			$.post('../appointment/validateDeltaTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta }, function(result){
 				if (result.isValid){
 					var aQryStr = "ต้องการ 'ย้าย' การนัดหมายของ " +event.title+" ใช่หรือไม่ ?";
 					$('#confirm-move').html(aQryStr);
