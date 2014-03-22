@@ -379,6 +379,7 @@ class AppointmentController {
 	
 	def getEventsGrid(){
 		def events = []
+		println 'getEventsGrid';
 		println 'param: ' + params.searchStr
 		// May
 		def u = springSecurityService.currentUser
@@ -866,7 +867,7 @@ class AppointmentController {
 	
 	
 	def install(){
-		
+		println 'install'
 		println "id = "+params.id
 		def js = [isValid: true]
 		render js as JSON

@@ -126,11 +126,11 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 						autoOpen: false,
 						modal: true,
 						buttons: {
-							"OK": function() {
+							"ตกลง": function() {
 								$( this ).dialog( "close" );
 								$('#calendar').fullCalendar('unselect')
 							},
-							Cancel: function() {
+							"ยกเลิก": function() {
 								$( this ).dialog( "close" );
 								revertFunc();
 								$('#calendar').fullCalendar('unselect')
