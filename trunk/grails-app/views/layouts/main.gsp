@@ -41,9 +41,10 @@
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.menu.home.label"/></a></li>
 				<li><a class="choose_wheel" href="${createLink(uri: '/maxWheel/inputWheel')}"><g:message code="default.menu.chooseWheel.label"/></a></li>
 				<li><a class="appointment" href="${createLink(uri: '/appointment/appointmentGrid')}"><g:message code="default.menu.appointment.label"/></a></li>
+				<li><a class="appointmentStuck" href="${createLink(uri: '/appointment/appointmentStuck')}"><g:message code="default.menu.appointmentStuck.label"/></a></li>
 				<li><a class="install" href="${createLink(uri: '/')}"><g:message code="default.menu.install.label"/></a></li>
 				<li>
-					<a class="inventory" href="${createLink(uri: '/')}"><g:message code="default.menu.inventory.label"/></a>
+					<a class="inventory" href="${createLink(uri: '/preProductTransferLine?isViewNew=true')}"><g:message code="default.menu.inventory.label"/></a>
 					<ul>
 						<li><a class="list" href="${createLink(uri: '/preProductTransferLine?isViewNew=true')}"><g:message code="default.menu.inventort.transferto"/></a></li>
 						<li><a class="list" href="${createLink(uri: '/preProductTransferLine/transferfrom?isViewNew=true')}"><g:message code="default.menu.inventort.transferFrom"/></a></li>

@@ -96,17 +96,14 @@
 			</tr>
 			
 			<tr>
-				<td>- <g:link controller="appointment" action="appointmentCalendar"><g:message code=""/>เพิ่มการนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
+				<td>- <g:link controller="appointment" action="appointmentStuck"><g:message code="default.menu.appointmentStuck.label"/></g:link></td>
 			</tr>
-			<tr>
-				<td>- <g:link controller="appointment" action="manageCalendar"><g:message code=""/>จัดการตารางนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
-			</tr>
-			
+
 			<tr>
 				<td>- <g:link controller="installation"><g:message code="default.menu.install.label"/></g:link></td>
 			</tr>
 			<tr>
-				<td>- <g:link controller="inventory"><g:message code="default.menu.inventory.label"/></g:link></td>
+				<td>- <g:link controller="preProductTransferLine" action="index" params="[isViewNew:true]"><g:message code="default.menu.inventory.label"/></g:link></td>
 			</tr>
 			<tr>
 				<td>- <a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.menu.setting.label" /></a></td>
