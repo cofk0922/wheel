@@ -79,7 +79,7 @@
 		<g:message code="maxWheel.forCarBand.label" default="forCarBand" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="forCarBand" name="forCarBand.id" from="${th.ac.chula.bsd.wheel.CarBand.list()}" optionKey="id" optionValue="bandName" required="" value="${maxWheelInstance?.forCarBand?.id}" class="many-to-one"/>
+	<g:select id="forCarBand" name="forCarBand.id" from="${th.ac.chula.bsd.wheel.CarBand.list()}" optionKey="id" optionValue="bandName"  noSelection="['':'กรุณาเลือกยี่ห้อรถ']" value="${maxWheelInstance?.forCarBand?.id}" class="many-to-one"/>
 </div>
 
 <%--<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productStocks', 'error')} ">
