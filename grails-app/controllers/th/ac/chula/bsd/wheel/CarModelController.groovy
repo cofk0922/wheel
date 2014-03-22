@@ -26,7 +26,7 @@ class CarModelController {
 	@Transactional
 	def initialCarWheelList(CarModel carModelInstance, MaxWheel maxWheelInstance)
 	{
-		println("Match: ["+carModelInstance.modelName+"] with ["+maxWheelInstance.prodName+"]")
+		println("Match: ["+carModelInstance.modelName+"] with ["+maxWheelInstance.series+"]")
 		def usageResult = UsageScore.withCriteria {
 			eq('sType', maxWheelInstance.spoke)
 			ne('score', 0)
@@ -42,7 +42,7 @@ class CarModelController {
 						 println ("Error: "+it)
 					 }
 				 } else {
-					 println ("Create carWheelList Success : "+ carWheelList.car.modelName+" : "+carWheelList.wheel.prodName + " : "+carWheelList.usageScore)
+					 println ("Create carWheelList Success : "+ carWheelList.car.modelName+" : "+carWheelList.wheel.series + " : "+carWheelList.usageScore)
 				 }
 			}
 		}
@@ -64,7 +64,7 @@ class CarModelController {
 		if(wheelResult.size() > 0){
 			for (item in wheelResult) {
 				//fetch and put suited wheel into CarWheelList
-				println("initialWheelListForNewCar : "+item.band.name+item.prodName+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
+				println("initialWheelListForNewCar : "+item.band.name+item.series+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
 				
 				//Mention Width :maxWheel.width and carModel.defaultWheel.width
 				if(Math.abs(item.width-carModelInstance.defaultWheel.width)<=2){
