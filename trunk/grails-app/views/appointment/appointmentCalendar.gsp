@@ -134,6 +134,11 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 								$( this ).dialog( "close" );
 								revertFunc();
 								$('#calendar').fullCalendar('unselect')
+							},
+							close: function() {
+								$( this ).dialog( "close" );
+								revertFunc();
+								$('#calendar').fullCalendar('unselect')
 							}
 						}
 					});
@@ -204,7 +209,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 						autoOpen: false,
 						modal: true,
 						buttons: {
-							"OK": function() {
+							"ตกลง": function() {
 								$('#calendar').fullCalendar( 'removeEvents' , newevent.id);
 								$('#calendar').fullCalendar('renderEvent',
 									{
@@ -223,7 +228,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 								$( this ).dialog( "close" );
 								$('#calendar').fullCalendar('unselect')
 							},
-							Cancel: function() {
+							"ยกเลิก": function() {
 								$( this ).dialog( "close" );
 								$('#calendar').fullCalendar('unselect')
 							}
