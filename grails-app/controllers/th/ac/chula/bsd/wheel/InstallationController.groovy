@@ -1,44 +1,68 @@
 package th.ac.chula.bsd.wheel
 
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat
 
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 import grails.converters.JSON
 
-//@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class InstallationController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-	def springSecurityService
+	def timeFormat = new SimpleDateFormat('HH:mm',Locale.US)
+	def shortDateFormat = new SimpleDateFormat('yyyy-MM-dd',Locale.US)
+	def dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm',Locale.US)
 	
+	def springSecurityService
+   @Transactional
     def index(Integer max) {
 		def	listInstall= Installation.withCriteria {
-			and {
+		    or {
 				eq("status",InstallationStatus.NEW)
-				//eq("status",InstallationStatus.PREPARE_INSTALL)
-				//eq("status",InstallationStatus.INSTALLING)
+				eq("status",InstallationStatus.PREPARE_INSTALL)
+				eq("status",InstallationStatus.INSTALLING) 
 			}
 			and {
 				order("startDate", "asc")
 				order("endDate", "asc")
 			}
 		}
-		def install = listInstall.find{it}
+	/*	for (ins in listInstall ){
+			//prinln('status:'+ins)
+			
+			if(ins == InstallationStatus.NEW){
+				install.checkprepareInstall()
+				install.save flush:true
+				println 'Status PrepareInstall :' + install.status
+			}
+			elsif (ins == InstallationStatus.PREPARE_INSTALL){
+				install.checkinstalling()
+				install.save flush:true
+				println 'Status Installing :' + install.status
+			}
+			elsif(ins == InstallationStatus.INSTALLING){
+				install.checkfinished()
+				install.save flush:true
+				println 'Status Finished:' + install.status
+			}
+			 
+		}*/
+	 	def install = listInstall.find{it}
 		install.checkprepareInstall()
 		install.save flush:true
 		println 'Status PrepareInstall :' + install.status
 	 
-		 install.checkinstalling()
+		install.checkinstalling()
 		install.save flush:true
 		println 'Status Installing :' + install.status
 		 
 		install.checkfinished()
 		install.save flush:true
-		println 'Status Finished:' + install.status
+		println 'Status Finished:' + install.status  
   
 		/*
         params.max = Math.min(max ?: 10, 100)
@@ -49,31 +73,93 @@ class InstallationController {
     def show(Installation installationInstance) {
         respond installationInstance
     }
-
-	
+    
+ // Bird
+ 	def getEventDetails(){
+ 		
+		 println "id = "+ params.id
+		 
+		 def u = springSecurityService.currentUser
+		 Branch b = u.branch
+		 b.refresh()
+		  
+		 Installation ins = Installation.get(params.id.toInteger())
+		 
+		 def details = [ 'appointmentNo':ins.appointment.appointmentNo,
+			 'carNo':ins.appointment.customer.carCode,
+			 'customerName':ins.appointment.customer.customerName,
+			 'status':ins.status.name()]
+		 
+		 render details as JSON		 
+ 	}
+	 
+	@Transactional
+ 	def updateStatus(){
+		 		
+ 		 println "id = "+ params.id
+ 		
+		 
+		 def u = springSecurityService.currentUser
+		 Branch b = u.branch
+		 b.refresh()
+		  
+		 
+		 Installation ins = Installation.get(params.id.toInteger())
+		 def istatus = ins.status
+		 
+		 println('status:'+istatus)
+		 
+		 if(istatus == InstallationStatus.NEW){
+			println('Bestatus:'+ins.status)
+		 	ins.checkprepareInstall()			 
+			println('forstatus:'+ins.status)
+			ins.save flush:true		
+			 if (!ins.save()){
+				 ins.errors.each{
+					 println it
+				 }
+			 }		
+		 }
+		 
+		 else if (istatus == InstallationStatus.PREPARE_INSTALL){
+			 println('Bestatus:'+ins.status)
+			 ins.checkreadyInstall()
+			 println('forstatus:'+ins.status)
+			 ins.save flush:true
+			 if (!ins.save()){
+				 ins.errors.each{
+					 println it
+				 }
+			 }			 
+		 }
+		 
+		 else if (istatus == InstallationStatus.READY_INSTALL){
+			 println('Bestatus:'+ins.status)
+			 ins.checkinstalling()
+			 println('forstatus:'+ins.status)
+			 ins.save flush:true
+			 if (!ins.save()){
+				 ins.errors.each{
+					 println it
+				 }
+			 }
+		 }
+		 else if (istatus == InstallationStatus.INSTALLING){
+			 println('Bestatus:'+ins.status)
+			 ins.checkfinished()
+			 println('forstatus:'+ins.status)
+			 ins.save flush:true
+			 if (!ins.save()){
+				 ins.errors.each{
+					 println it
+				 }
+			 }
+		 }
+	 
+		 println "id = "+ params.nextStatus	
+ 	}
+	 
 	// Bird
-	def getEventDetails(){
-		
-		println "id = "+ params.id
-		
-		def details = [ 'appointmentNo': '007','carNo': 'CR 7','customerName':'Ronaldo','status':'INSTALLING']
-//		NEW,
-//		PREPARE_INSTALL,
-//		//READY_INSTALL,
-//		INSTALLING,
-//		FINISHED,
-//		CANCEL
-		render details as JSON
-	}
-	
-	
-	def updateStatus(){
-		
-		println "id = "+ params.id
-		println "id = "+ params.nextStatus
-		
-	}
-	
 	def installCalendar(){
 		return
 	}
@@ -81,42 +167,100 @@ class InstallationController {
 	def getAllEvents(){
 		
 		println "getEvents"
+		 
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
 		
+		Date today = new Date()
+		
+		// Get workoff
+		def workOffDBs = b.workdays.findAll{it -> it.workActive == false}
+		def daysoff = []
+		for(doff in workOffDBs){
+			WorkDay wdayoff = doff
+			def jsonItem = [day: wdayoff.convertDayCodeToStiong()]
+			daysoff.add(jsonItem)
+		}
+		
+		// Get Min workHour
+		def minLists = WorkDay.withCriteria {
+			and{
+				order('startHour', 'asc')
+				order('startMinute', 'asc')
+			}
+		}
+		def minWork = minLists.find{it}
+		def mintime = ''
+		if(minWork.startMinute == 0){
+			mintime = minWork.startHour+":00"
+		} else if (minWork.startMinute < 10) {
+			mintime = minWork.startHour+":0"+minWork.startMinute
+		} else {
+			mintime = minWork.startHour+":"+minWork.startMinute
+		}
+		
+		// Get Max WorkHour
+		def maxLists = WorkDay.withCriteria {
+			and{
+				order('endHour', 'desc')
+				order('endMinute', 'desc')
+			}
+		}
+		def maxWork = minLists.find{it}
+		def maxtime = ''
+		if(maxWork.startMinute == 0){
+			maxtime = maxWork.endHour+":00"
+		} else if (maxWork.endMinute < 10) {
+			maxtime = maxWork.endHour+":0"+maxWork.endMinute
+		} else {
+			maxtime = maxWork.endHour+":"+maxWork.endMinute
+		}
+		
+		// Get Holiday
+		def holidayDBs = b.getAllHoliday(today)
+		def holidays = []
+		for(hitem in holidayDBs){
+			Holiday holiday = hitem
+			def jsonItem = [ day: shortDateFormat.format(holiday.holidayDate) ]
+			holidays.add(jsonItem)
+		}
+		
+		// Get Installation
 		def events = []
-		def responseData = [
-			'id': '999',
-			'title':'Panda',
-			'start': '2014-03-17 9:30',
-			'end': '2014-03-17 10:30',
-			'allDay': false
-		]
-
-		def responseData2 = [
-			'id': '20',
-			'title':'Scott',
-			'start': '2014-03-14 12:00',
-			'end': '2014-03-14 12:30',
-			'allDay': false
-		]
-		
-		def responseData3 = [
-			'id': '1',
-			'title':'Barny',
-			'start': '2014-03-20 12:00',
-			'end': '2014-03-20 12:30',
-			'allDay': false
-		]
-
-		events.add(responseData)
-		events.add(responseData2)
-		events.add(responseData3)
-		
-		def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
-		def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
-		
-		def js = ['maxtime':'22:00','mintime':'8:00','events':events,'daysoff':daysoff,'holidays':holidays];
+		def installation = Installation.withCriteria {
+			or {
+				eq("status",InstallationStatus.NEW)
+				eq("status",InstallationStatus.READY_INSTALL)
+				eq("status",InstallationStatus.INSTALLING)
+				eq("status",InstallationStatus.PREPARE_INSTALL)
+		   }
+		   and {
+			   order("startDate", "asc")
+		   }
+		}
+  
+	//	println('Installation:'+installation.size())
+					 
+		for(inst in installation){
+		 	Installation ins = inst
+			def jsonItem = [
+				 'id': ins.id,
+				 'title': ins.appointment.customer.carCode,
+				 'start': dateTimeFormat.format(ins.startDate),
+				 'end': dateTimeFormat.format(ins.endDate),
+				 'allDay': false
+				]
+			 events.add(jsonItem)
+			 println('Test Add jsonItem '+jsonItem)
+		}
+			 
+		println('holidays '+ holidays)
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays];
+	 	 
 		render js as JSON
 	}
+	
 	
     def create() {
         respond new Installation(params)
