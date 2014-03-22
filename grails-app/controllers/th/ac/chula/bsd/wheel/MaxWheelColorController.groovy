@@ -78,7 +78,8 @@ class MaxWheelColorController {
             respond maxWheelColorInstance.errors, view:'edit'
             return
         }
-
+		
+		maxWheelColorInstance.productType = ProductType.WHEEL
         maxWheelColorInstance.save flush:true
 
         request.withFormat {

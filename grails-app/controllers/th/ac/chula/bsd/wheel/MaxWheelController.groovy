@@ -20,10 +20,12 @@ class MaxWheelController {
     }
 
     def show(MaxWheel maxWheelInstance) {
+		def parameter = [:]
 		def u = springSecurityService.currentUser
-		params.branch = u.branch
-		params.prodID = maxWheelInstance.id
-        respond maxWheelInstance
+		parameter.branch = u.branch
+		parameter.colorList = maxWheelInstance.maxWheelColor
+		parameter.maxWheelInstance = maxWheelInstance
+		render(view:'show',model:parameter)
     }
 
     def create() {
