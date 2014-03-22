@@ -8,6 +8,14 @@
 	<g:select name="productType" from="${[params.prodType]}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${maxWheelColorInstance?.productType?.name()}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'maxWheel', 'error')} required">
+	<label for="maxWheel">
+		<g:message code="maxWheelColor.maxWheel.label" default="Max Wheel" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="maxWheel" name="maxWheel.id"  from="${th.ac.chula.bsd.wheel.MaxWheel.list()}"  optionKey="id" optionValue="modelName" required="" value="${maxWheelColorInstance?.maxWheel?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
 		<g:message code="maxWheelColor.prodName.label" default="Prod Name" />
@@ -24,6 +32,7 @@
 	<g:textField name="prodDesc" value="${maxWheelColorInstance?.prodDesc}"/>
 </div>
 
+<%--
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'productPart', 'error')} ">
 	<label for="productPart">
 		<g:message code="maxWheelColor.productPart.label" default="Product Part" />
@@ -39,6 +48,7 @@
 	</label>
 	<g:field name="productPartAmount" type="number" value="${maxWheelColorInstance.productPartAmount}" required=""/>
 </div>
+--%>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'colorName', 'error')} ">
 	<label for="colorName">
@@ -56,6 +66,22 @@
 	<g:textField name="hVal" value="${maxWheelColorInstance?.hVal}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'sVal', 'error')} ">
+	<label for="sVal">
+		<g:message code="maxWheelColor.sVal.label" default="SV al" />
+		
+	</label>
+	<g:textField name="sVal" value="${maxWheelColorInstance?.sVal}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'vVal', 'error')} ">
+	<label for="vVal">
+		<g:message code="maxWheelColor.vVal.label" default="VV al" />
+		
+	</label>
+	<g:textField name="vVal" value="${maxWheelColorInstance?.vVal}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'hexVal', 'error')} ">
 	<label for="hexVal">
 		<g:message code="maxWheelColor.hexVal.label" default="Hex Val" />
@@ -64,14 +90,7 @@
 	<g:textField name="hexVal" value="${maxWheelColorInstance?.hexVal}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'maxWheel', 'error')} required">
-	<label for="maxWheel">
-		<g:message code="maxWheelColor.maxWheel.label" default="Max Wheel" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="maxWheel" name="maxWheel.id" from="${th.ac.chula.bsd.wheel.MaxWheel.list()}" optionKey="id" required="" value="${maxWheelColorInstance?.maxWheel?.id}" class="many-to-one"/>
-</div>
-
+<%--
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="maxWheelColor.productStocks.label" default="Product Stocks" />
@@ -105,23 +124,7 @@
 </li>
 </ul>
 
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'sVal', 'error')} ">
-	<label for="sVal">
-		<g:message code="maxWheelColor.sVal.label" default="SV al" />
-		
-	</label>
-	<g:textField name="sVal" value="${maxWheelColorInstance?.sVal}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'vVal', 'error')} ">
-	<label for="vVal">
-		<g:message code="maxWheelColor.vVal.label" default="VV al" />
-		
-	</label>
-	<g:textField name="vVal" value="${maxWheelColorInstance?.vVal}"/>
-</div>
+</div> --%>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'wheelImage', 'error')} ">
 	<label for="wheelImage">

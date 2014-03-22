@@ -160,6 +160,46 @@
 				</g:if> --%>
 			
 			</ol>
+			
+			<table>
+			<thead>
+					<tr>
+					
+						<th><g:message code="maxWheel.maxWheelColor.prodName" default="ProdName" /></th>
+						
+						<th><g:message code="maxWheel.maxWheelColor.prodDesc" default="ProdDesc" /></th>
+						
+						<th><g:message code="maxWheel.maxWheelColor.hValue" default="hValue" /></th>
+						
+						<th><g:message code="maxWheel.maxWheelColor.sValue" default="sValue" /></th>
+						
+						<th><g:message code="maxWheel.maxWheelColor.vValue" default="vValue" /></th>
+						
+						<th><g:message code="maxWheel.maxWheelColor.hexValue" default="hexValue" /></th>
+						
+					</tr>
+				</thead>
+				<tbody>
+				<g:each in="${colorList}" status="i" var="maxwheelColor">
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					
+						<td><g:link controller="maxWheelColor" action="show" id="${maxwheelColor.id}">${fieldValue(bean: maxwheelColor, field: "prodName")}</g:link></td>
+					
+						<td>${fieldValue(bean: maxwheelColor, field: "prodDesc")}</td>
+					
+						<td>${fieldValue(bean: maxwheelColor, field: "hVal")}</td>
+					
+						<td>${fieldValue(bean: maxwheelColor, field: "sVal")}</td>
+					
+						<td>${fieldValue(bean: maxwheelColor, field: "vVal")}</td>
+					
+						<td>${fieldValue(bean: maxwheelColor, field: "hexVal")}</td>
+					
+					</tr>
+				</g:each>
+				</tbody>
+			</table>
+			
 			<g:form url="[resource:maxWheelInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
 					<g:link class="list" action="detectColor" controller="maxWheel" params="${[wheelID:maxWheelInstance.id]}"><g:message code="maxWheel.detectColor.label" /></g:link>
