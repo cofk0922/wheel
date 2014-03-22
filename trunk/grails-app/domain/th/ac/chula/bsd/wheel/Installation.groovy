@@ -44,7 +44,6 @@ class Installation {
 	
 	public void prepareInstall(){
 		this.status = InstallationStatus.PREPARE_INSTALL
-		// TODO set requisition status -> ready requsit
 		 for(req in this.requisitions){		 
 			 RequisitionLine r = req
 			 r.readyRequisit();
@@ -52,13 +51,17 @@ class Installation {
 		 }
 	}
 	
-	public void cancelInstall(){
-		this.status = InstallationStatus.CANCEL
-		// TODO return requisit to stock and set status 'Cancel'
-		for(req in this.requisitions){
-			RequisitionLine r =req
-			r.cancelRequisit()
+	public Boolean cancelInstall(){
+		Boolean isSuccess = false
+		if(this.status == InstallationStatus.NEW){
+			this.status = InstallationStatus.CANCEL
+			for(req in this.requisitions){
+				RequisitionLine r =req
+				r.cancelRequisit()
+			}
+			isSuccess = true
 		}
+		return isSuccess
 	}
 	
 	public void installing(){
@@ -81,19 +84,19 @@ class Installation {
 	
 	public Boolean checkprepareInstall(){
 		Boolean result = false
-		if(status==InstallationStatus.NEW){
-		   def isProductstock = checkProdstock()  
-		    if (isProductstock) {    
-			prepareInstall() 
-			result =true
+		if(this.status==InstallationStatus.NEW){
+		    if (this.checkProdstock()) {    
+				this.prepareInstall() 
+				result =true
 		    }
 		}
+		println 'install install isSuccess: '+ result
 		return result
 	}
 	
 	public Boolean checkinstalling(){  
 		Boolean result = false
-		if(status==InstallationStatus.PREPARE_INSTALL ){ 
+		if(this.status==InstallationStatus.PREPARE_INSTALL ){ 
 		  installing()	
 		  result=true
 		}
@@ -102,7 +105,7 @@ class Installation {
 	
 	public Boolean checkfinished(){
 		Boolean result = false
-		if(status==InstallationStatus.INSTALLING){
+		if(this.status==InstallationStatus.INSTALLING){
 			finishedInstall()
 			result = true
 		}
