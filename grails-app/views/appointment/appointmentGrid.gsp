@@ -66,9 +66,6 @@ var grid = $("#list").jqGrid({
 		loadonce:true,
 		sortable: true,
 		columnReordering:false,
-		loadComplete: function() {
-			jQuery("#myGridID").trigger("reloadGrid"); // Call to fix client-side sorting
-		},
 		onSelectRow : function(rowid){
 			var rowData = jQuery(this).getRowData(rowid);
 			var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" valign="center">Appointment No. ' +rowData['appointmentNo']+'</span><BR>'+
@@ -85,13 +82,20 @@ var grid = $("#list").jqGrid({
 				autoOpen: false,
 				buttons: {
 					"ติดตั้ง": function() {
+						$.post( "../appointment/install", { 'id':  rowData['appointmentID']});
 						$( this ).dialog( "close" );
+						jQuery("#list").trigger("reloadGrid");
 					},
 					"เลื่อน": function() {
 						$( this ).dialog( "close" );
 						window.location = "/wheel/appointment/manageCalendar?id="+ rowData['appointmentID'];
 					},
 					"รับรถ": function() {
+						$.post( "../appointment/returnCar", { 'id':  rowData['appointmentID']});
+						$( this ).dialog( "close" );
+						jQuery("#list").trigger("reloadGrid");
+					},
+					"ยกเลิก": function() {
 						$( this ).dialog( "close" );
 					}
 				}
