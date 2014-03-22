@@ -76,7 +76,8 @@ class Appointment {
 			this.subOrders.add(orderKnot)
 		}*/
 		this.calNetTotal()
-		this.calStartEndAppointment()
+		Date today = new Date()
+		this.calStartEndAppointment(today)
 	}
 	
 	public void removeProduct(User u, int pID) {
@@ -89,7 +90,8 @@ class Appointment {
 		}*/
 		this.subOrders.remove(order)
 		this.calNetTotal()
-		this.calStartEndAppointment()
+		Date today = new Date()
+		this.calStartEndAppointment(today)
 	}
 	
 	public void setNewCustomer(String custName, String custTel, String custAdd, String custCar){
@@ -170,6 +172,11 @@ class Appointment {
 			}
 		}
 		return isSuccess
+	}
+	
+	public void idelAppointment(){
+		this.status = AppointmentStatus.IDEL
+		this.parking.status = ParkingStatus.IDEL
 	}
 	
 	public void changeAppointmentDate(Date newStartDate, Date newEndDate, Boolean isInstallNow){
@@ -306,16 +313,16 @@ class Appointment {
 		}
 	}
 	
-	private void calStartEndAppointment(){
+	public void calStartEndAppointment(Date date){
+		Date today = new Date()
 		// cal Fastest Start End
-		Date today = new Date() //
-		Date startDate = today
-		Date endDate = today
-		Date installStartDate = today
-		Date installEndDate = today
+		Date startDate = date
+		Date endDate = date
+		Date installStartDate = date
+		Date installEndDate = date
 		
 		for(or in this.subOrders){
-			Date newStartDate = or.getStartInstallationDate(today, this.branch)
+			Date newStartDate = or.getStartInstallationDate(startDate, this.branch)
 			//println 'new Start Date : '+ newStartDate
 			if(newStartDate > startDate){
 				startDate = newStartDate

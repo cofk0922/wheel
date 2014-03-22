@@ -31,6 +31,8 @@ class AppointmentController {
 	def shortDateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
 	def dateTimeFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm', Locale.US)
 	
+	def displayDateTimeFormat = new SimpleDateFormat('dd-MM-yyyy HH:mm', Locale.US)
+	
     def index(Integer max) {
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
@@ -150,6 +152,35 @@ class AppointmentController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def appointmentStuck(){
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+
+		def appointLists = Appointment.withCriteria {
+			eq('branch.id', b.id)
+			ge('endDate', new Date())
+			//not {'in'("status",[AppointmentStatus.CAR_RETURNED, AppointmentStatus.IDEL, AppointmentStatus.CANCEL, AppointmentStatus.INPROCESS])}
+			'in'("status",[AppointmentStatus.NEW, AppointmentStatus.INSTALL_FINISED])
+			and {
+				order('startDate', 'asc')
+				order('customerName', 'asc')
+			}
+		}
+		println('appoint size = ' + appointLists.size())
+		//respond appointLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: appointLists.size()]
+		respond appointLists, model:[appointmentInstanceCount: appointLists.size()]
+	}
+	
+	@Transactional
+	def idelAppointment(Appointment appointmentInstance){
+		println 'idel'
+		appointmentInstance.idelAppointment()
+		appointmentInstance.save flush:true 
+		
+		redirect action: "appointmentStuck", method: "GET"
+	}
 	
 	
 	@Transactional
@@ -378,10 +409,12 @@ class AppointmentController {
 	}
 	
 	def getEventsGrid(){
+		println 'get Event Grid'
 		def events = []
+		
+		// May
 		println 'getEventsGrid';
 		println 'param: ' + params.searchStr
-		// May
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
 		b.refresh()
@@ -428,10 +461,10 @@ class AppointmentController {
 				'appointmentNo': appoint.appointmentNo,
 				'customerName':appoint.customer.customerName,
 				'carCode': appoint.customer.carCode,
-				'startDate': dateTimeFormat.format(appoint.startDate),
-				'endAppointDate': dateTimeFormat.format(appoint.endAppointmentDate),
-				'endDate': dateTimeFormat.format(appoint.endDate),
-				'status': 'New'
+				'startDate': displayDateTimeFormat.format(appoint.startDate),
+				'endAppointDate': displayDateTimeFormat.format(appoint.endAppointmentDate),
+				'endDate': displayDateTimeFormat.format(appoint.endDate),
+				'status': appoint.status.name()
 				]
 			events.add(item)
 		}
@@ -623,23 +656,30 @@ class AppointmentController {
 	}
 	
 	def getEventsForEdit(){
-		println "getEvents Calendar id: "+ params.id
-		def apID = params.apID
+		println "getEvents Edit Calendar id: "+ params.id
+		def apID = params.id
 		// May
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
 		b.refresh()
 		
-		// Test Appointment
 		Appointment ap = Appointment.get(apID)
+		println 'ap : ' + ap
 		def currentEvent = [
+			'id':ap.id,
 			'title':ap.customer.carCode,
 			'start': dateTimeFormat.format(ap.startDate),
 			'end': dateTimeFormat.format(ap.endAppointmentDate),
 			'allDay': false
 		]
 		session['currentAppointment'] = ap
-		// End Test
+		
+		def details = [ 
+			'appointmentNo': ap.appointmentNo,
+			'carNo': ap.customer.carCode,
+			'customerName':ap.customer.customerName,
+			'status':ap.status.name()]
+		
 		
 		Date today = new Date()
 		
@@ -711,116 +751,87 @@ class AppointmentController {
 				]
 			events.add(jsonItem)
 		}
-		
-		// end May
-
-		/*
-		def events = []
-		def responseData = [
-			'id': '999',
-			'title':'Panda',
-			'start': '2014-03-17 9:30',
-			'end': '2014-03-17 10:30',
-			'allDay': false
-		]
-
-		def responseData2 = [
-			'id': '20',
-			'title':'Scott',
-			'start': '2014-03-14 12:00',
-			'end': '2014-03-14 12:30',
-			'allDay': false
-		]
-		*/
-		/*
-		def newevent = [
-			'id': '1',
-			'title':'Barny',
-			'start': '2014-03-20 12:00',
-			'end': '2014-03-20 12:30',
-			'allDay': false
-		]
-		*/
-		/*
-		//{
-		//			id: 999,
-		//			title: '[ CR7 2222 ]',
-//					start: new Date(y, m, d-3, 16, 0),
-//					end: new Date(y, m, d-3, 18, 0),
-//					color: '#acacac',
-//					editable: false,
-//					url: 'http://google.com/',
-//					allDay: false
-//				},
-
-		events.add(responseData)
-		events.add(responseData2)
-		*/
-		//example
-		
-//		def jsonResult = results.collect{
-//			[
-//						customerId:it.customer.id,
-//						customerName:it.customer.customerName,
-//						customerSiteName:it.customerSiteName,
-//						address:(it.addressBillToLine1?it.addressBillToLine1:"")+" "+(it.addressBillToLine2?it.addressBillToLine2:""),
-//						subDistrict:it.addressBillToLine3?it.addressBillToLine3:"",
-//						district:it.addressBillToLine4?it.addressBillToLine4:"",
-//						province:it.provinceBillTo,
-//						zipCode:it.zipBillTo,
-//						creditTerm:it.termName,
-//						customerTax:it.customer.customerTax?it.customer.customerTax:"-",
-//						cdgCode:it.cdgCode,
-//						customerSiteId:it.id,
-//					]
-//		}
-//		def js = [total:results.getTotalCount(),rows:jsonResult]
-		
-		//def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
-		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
-			
-		//def js = ['daysoff':daysoff,'holidays':holidays]
-		def details = [ 'appointmentNo': '007','carNo': 'CR 7','customerName':'Ronaldo','status':'single']
-		
+				
 		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'currentEvent':currentEvent,'details':details];
 		render js as JSON
 	}
 	
-	def validateDeltaTime(){
-		println "validateTime"
+	def validateDeltaTime(){ // when drag
+		println "vali Delta dateTime"
+		println "startdate = " + params.startDate
+		println "id = " + params.id
+		println "apID = "+params.apID
+		println "time = " + params.time
+		println "act = " : params.act
+		println "params.event = " + params.event
+		println "params.dayDelta = "+ params.dayDelta
+		println "params.minuteDelta = " + params.minuteDelta
 		
-		println "id = " + params.event
-		println "dayDelta = " + params.dayDelta
-		println "minuteDelta = " + params.minuteDelta
+		Boolean isValid = false
 		
-		def js = [isValid: true]
+		//May
+		Appointment ap = null
+		if (params.id == null){ // For new Appointment
+			println "act = " : params.act
+			println "startdate = " + params.startDate
+			println "id = " + params.id
+			
+			ap = session['currentAppointment']
+		}else{ // For edit Appointment
+			ap = Appointment.get(params.id.toInteger())
+		}
+		println 'ap : '+ ap
+		def calendar = new GregorianCalendar()
+		calendar.setTime(ap.startDate)
+		calendar.add(calendar.DATE, params.dayDelta.toInteger())
+		calendar.add(calendar.MINUTE, params.minuteDelta.toInteger())
+		Date newDate = calendar.getTime()
+		isValid = ap.checkValidAppointment(newDate)
+		
+		def js = ['isValid': isValid]
 		render js as JSON
 	}
 	
-	def validateSelectTime(){
-		println "validateTime"
+	def validateSelectTime(){ // when
+		println "vali Select dateTime"
+		println "vali Delta dateTime"
 		println "startdate = " + params.startDate
 		println "id = " + params.id
+		println "apID = "+ params.apID
 		println "time = " + params.time
+		println "act = " : params.act
+		println "params.event = " + params.event
+		println "params.dayDelta = "+ params.dayDelta
+		println "params.minuteDelta = " + params.minuteDelta
+		
+		Boolean isValid = false
 		
 		//May
-//		Appointment ap = session['currentAppointment']
-//		println('AP NO: '+ ap.appointmentNo)
-//		println('AP StartDate: '+ ap.startDate)
-//		println('param startDate: ' + params.startDate)
-//		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss', Locale.US)
-//		def calendar = new GregorianCalendar()
-//		calendar.setTime(ap.startDate)
-//		calendar.add(calendar.DATE, params.dayDelta.toInteger())
-//		calendar.add(calendar.MINUTE, params.minuteDelta.toInteger())
-//		
-//		Date newDate = calendar.getTime()
-//		
-//		Boolean isvalid = ap.checkValidAppointment(newDate)
-//		println 'result======= '+ isvalid
+		Appointment ap = null
+		if (params.id == null){ // For new Appointment
+			println "act = " : params.act
+			println "startdate = " + params.startDate
+			println "id = " + params.id
+			
+			ap = session['currentAppointment']
+		}else{ // For edit Appointment
+			ap = Appointment.get(params.id.toInteger())
+		}
+		println 'ap : '+ ap
+		def newCalendar = new GregorianCalendar()
+		newCalendar.setTime(shortDateFormat.parse(params.startDate))
 		
-		//return
-		def js = [isValid: true]
+		def calendar = new GregorianCalendar()
+		calendar.setTime(ap.startDate)
+		
+		newCalendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR))
+		newCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
+
+		Date newDate = newCalendar.getTime()
+		println 'newDate = '+ newDate
+		isValid = ap.checkValidAppointment(newDate)
+		println 'isValid = '+isValid
+		def js = ['isValid': isValid]
 		render js as JSON
 	}
 	
@@ -831,8 +842,20 @@ class AppointmentController {
 		println "address = "+ params.address
 		println "tel = "+ params.tel
 		println "carCode = "+ params.carCode
-		
-		def js = [isValid: true]
+		def js = []
+		if (params.act == "add"){
+			
+			js = [
+				id: params.title+"-id",
+				title: params.title,
+				start: params.startdate,
+				end:params.end,
+				allDay: params.allDay
+				]
+		}else{
+			js = [isValid: true]
+		}
+		js = [isValid: true]
 		
 		render js as JSON
 //		def dateRecieveInstance = new DateRecieveInstance()
@@ -841,35 +864,49 @@ class AppointmentController {
 //		dateRecieveInstance.save(flush:true)
 	}
 	
-	
+	@Transactional
 	def editEvent(){
 		
 		println "editEvent"
 		println "id = "+params.id
-		println "start = "+params.start
-	
-		def js = [isValid: true]
-		render js as JSON
-//		def dateRecieveInstance = new DateRecieveInstance()
+		println "startdate "+ params.start
+		Date newStart = new Date(new Date().parse(params.start))
 		
-//		dateRecieveInstance.startTime = xxx
-//		dateRecieveInstance.title = params.title
-//
-//		dateRecieveInstance.save(flush:true)
+		Appointment ap = Appointment.get(params.id.toInteger())
+		ap.calStartEndAppointment(newStart)
+		ap.confirmAppointment(false)
+		ap.status = AppointmentStatus.NEW
+		Boolean isSave = ap.save flush:true 
+		
+		def js = [isValid: isSave]
+
+		render js as JSON
 	}
 
+	@Transactional
 	def returnCar(){
-		
-		println "id = "+params.id
-		def js = [isValid: true]
+		def u = springSecurityService.currentUser
+		Appointment ap = Appointment.get(params.id.toInteger())
+		Boolean isSuccess = ap.checkReturnCar(u)
+		if(isSuccess){
+			ap.save flush:true
+		}
+		println 'isSuccess: '+ isSuccess
+		def js = [isValid: isSuccess]
 		render js as JSON
 	}
 	
-	
+	@Transactional
 	def install(){
-		println 'install'
-		println "id = "+params.id
-		def js = [isValid: true]
+		def u = springSecurityService.currentUser		
+		Appointment ap = Appointment.get(params.id.toInteger())
+		Boolean isSuccess = ap.beginInstall(u)
+
+		if(isSuccess){
+			ap.save flush:true
+		}
+		
+		def js = [isValid: isSuccess]
 		render js as JSON
 	}	
 	
