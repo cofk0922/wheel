@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="../css/demos.css" type="text/css" />
 <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
 <link href="../css/detectImage/imgareaselect-animated.css" rel="stylesheet" type="text/css" />
-
 <g:javascript src="jquery.min.js" />
 <g:javascript src="jquery-1.6.1.min.js" />
 <g:javascript src="jquery.imgareaselect.pack.js" />
@@ -49,16 +48,8 @@
 	document.getElementById('y1w'+btn).value=document.getElementById('y1').value;
 	document.getElementById('y2w'+btn).value=document.getElementById('y2').value;
 	}
+
 </script>
-<style type="text/css">
-#target {
-	background-color: #ccc;
-	width: 500px;
-	height: 330px;
-	font-size: 24px;
-	display: block;
-}
-</style>
 </head>
 <body>
 	<div class="container">
@@ -70,11 +61,12 @@
 					</div><table>
 						<tr>
 							<td width=50%>
-							<div><g:img dir="images" file="${carImage}" id="photo" width="500" height="300"/></div>
-									<table>	<tr>
-										<td align="left">
+						<g:img id="photo" dir="images" file="${carImage}" style="width:500px;height:300px;"/>
+						
+									<table width="100%">	<tr>
+										<td style="text-align: left;">
 										<button name="btn1" onclick="buttonClick('1');">กำหนดล้อหน้า</button></td>
-										<td align="right">
+										<td style="text-align: right;">
 										<button name="btn2" onclick="buttonClick('2');">กำหนดล้อหลัง</button></td>
 									</tr>
 							</table>
@@ -90,7 +82,7 @@
 						<g:hiddenField name="colorName" value="${colorName}" />
 								<table><tr><td colspan="2">
 											<div id="preview" style="width: 100px; height: 100px; overflow: hidden; border-radius: 50%;">
-												<g:img dir="images" file="${carImage}" />
+												<g:img dir="images" file="${carImage}" width="100" height="100"/>
 											</div>
 										</td>
 									</tr>
@@ -106,7 +98,7 @@
 										<td>&nbsp; <b>ค่า offSet:</b>&nbsp;${modelInstance.offSet}</td>
 										<td>&nbsp; <b>รหัส PCD:</b>&nbsp;${modelInstance.pcdCode}</td>
 									</tr>
-									<tr><td colspan="2" align="right"><button name="btnNext">เลือกล้อแม็กซ์</button>
+									<tr><td colspan="2" style="text-align: right;"><button name="btnNext">เลือกล้อแม็กซ์</button>
 								</td></tr>
 								</table>
 								<table style="margin-top: 1em;display: none;">

@@ -16,19 +16,20 @@
 		<g:javascript src="jquery-1.6.1.min.js" />
 		<g:javascript src="jquery.imgareaselect.pack.js" />
              
-  <script type="text/javascript">
+ <script type="text/javascript">
         var canvas;
         var ctx;
         var images = [ 
                       '${carImage}'
        ];
         var iActiveImage = 0;
-
         $(function(){
-
             // drawing active image
             var image = new Image();
             image.onload = function () {
+                image.width=500;
+                image.height=300;
+                //alert(image.width +':'+ image.height);
                 ctx.drawImage(image, 0, 0, image.width, image.height); // draw the image on the canvas
             }
             image.src = images[iActiveImage];
@@ -80,7 +81,6 @@
 
 
 
-
         
 function rgb2hsv (r,g,b) {
 		var computedH = 0;
@@ -123,6 +123,12 @@ function rgb2hsv (r,g,b) {
 
 // return [computedH,computedS,computedV];
 }
+
+function setCaretPosition(){
+	alert('กรุณากรอกค่าสี !');
+    document.getElementById('colorName').focus();
+    }
+
         </script>
     </head>
     <body  >
@@ -138,8 +144,8 @@ function rgb2hsv (r,g,b) {
 						<g:hiddenField name="modelId" value="${modelInstance.id}" />
 						<g:hiddenField name="carImage" value="${carImage}" />
 			<table>
-			<tr><td >
-			<canvas id="panel" width="500" height="300"></canvas>
+			<tr><td>
+						<canvas id="panel" width="500" height="300" onClick="setCaretPosition();"></canvas>
             </td>
             <td>
             <table><tr><td>
@@ -164,26 +170,28 @@ function rgb2hsv (r,g,b) {
     						&nbsp;${modelInstance.pcdCode}
 			</td></tr>
 			<tr><td>
-			<div class="page-header" align="left"><g:submitButton name="กำหนดตำแหน่งล้อ"/>
-			</div>
+			<div>สี : <input type="text" id="colorName" name="colorName" value=""></div>   
 			</td></tr>
-            </table></td>
+			<tr><td style="text-align: right;">
+			<g:submitButton name="กำหนดตำแหน่งล้อ"/>
+			</td></tr>
+            </table></td></tr>
             </table>
             <div style="clear:both;"></div>
 			</form>
 </div></div></div></div>
-        
- 		<table><tr><td>
-                <div style="display: none;">R: <input type="text" id="rVal" ></div>
-                <div style="display: none;">G: <input type="text" id="gVal" ></div>
-                <div style="display: none;">B: <input type="text" id="bVal" ></div>
-                <div style="display: none;">H: <input type="text" id="hVal" name="hVal"></div>
-                <div style="display: none;">S: <input type="text" id="sVal" name="sVal"></div>
-                <div style="display: none;">V: <input type="text" id="vVal" name="vVal"></div>
-                <div style="display: none;">RGB:<input type="text" id="rgbVal" ></div>
-  				<div style="display: none;">RGBA: <input type="text" id="rgbaVal" ></div>
-                <div style="display: none;">HEX: <input type="text" id="hexVal" name="hexVal" ></div>   
-                <div style="display: none;">Color Name: <input type="text" id="colorName" name="colorName" value="Color"></div>   
+
+ 		<table style="display: none;" ><tr><td>
+                <div>R: <input type="text" id="rVal" ></div>
+                <div>G: <input type="text" id="gVal" ></div>
+                <div>B: <input type="text" id="bVal" ></div>
+                <div>H: <input type="text" id="hVal" name="hVal"></div>
+                <div>S: <input type="text" id="sVal" name="sVal"></div>
+                <div>V: <input type="text" id="vVal" name="vVal"></div>
+                <div>RGB:<input type="text" id="rgbVal" ></div>
+  				<div>RGBA: <input type="text" id="rgbaVal" ></div>
+                <div>HEX: <input type="text" id="hexVal" name="hexVal" ></div>   
+            
                 </td></tr>			
   		</table>
     </body>
