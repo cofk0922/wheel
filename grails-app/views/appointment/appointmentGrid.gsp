@@ -20,11 +20,13 @@
 		}
 
 </style>
+
 <title>รายการนัดหมายติดตั้งล้อแม็กซ์</title>
 </head>
+
 <body>
 	<p>&nbsp;</p>
-	<label for="txtKeyword">Search Keyword</label><input type="text" name="txtKeyword" id="txtKeyword"><button id="btnSearch">Search</button>
+	<label for="txtKeyword">Search Keyword</label><input type="text" name="txtKeyword" id="txtKeyword"><button id="btnSearch">ค้นหา</button>
     <p>&nbsp;</p>
     <table id="list"><tr><td></td></tr></table>
     <div id="pager"></div> 
@@ -65,7 +67,6 @@ var grid = $("#list").jqGrid({
 		hidegrid: false,
 		loadonce:true,
 		sortable: true,
-		columnReordering:false,
 		onSelectRow : function(rowid){
 			var rowData = jQuery(this).getRowData(rowid);
 			var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" valign="center">Appointment No. ' +rowData['appointmentNo']+'</span><BR>'+
@@ -84,7 +85,7 @@ var grid = $("#list").jqGrid({
 					"ติดตั้ง": function() {
 						$.post( "../appointment/install", { 'id':  rowData['appointmentID']});
 						$( this ).dialog( "close" );
-						jQuery("#list").trigger("reloadGrid");
+						reloadGrid();
 					},
 					"เลื่อน": function() {
 						$( this ).dialog( "close" );
@@ -93,38 +94,27 @@ var grid = $("#list").jqGrid({
 					"รับรถ": function() {
 						$.post( "../appointment/returnCar", { 'id':  rowData['appointmentID']});
 						$( this ).dialog( "close" );
-						jQuery("#list").trigger("reloadGrid");
+						reloadGrid();
 					},
-					"ยกเลิก": function() {
+					"ปิด": function() {
 						$( this ).dialog( "close" );
 					}
 				}
 			});
 			$( "#edit-event" ).dialog( 'open' );
-    	    /*var aQryStr = "appointmentID = " + rowData['appointmentID'] + " & Status = " + rowData['Status'];
-			$('#edit-event').html(aQryStr);
-    	    $( "#edit-event" ).dialog({
-				width: 'auto',
-				height: 'auto',
-				modal: true,
-				autoOpen: false,
-				buttons: {
-					Ok: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-			});
-			$( "#edit-event" ).dialog( 'open' );*/
-			
 		}
     	        
 	});
-$("#list").jqGrid('hideCol','Appointment No');
+//$("#list").jqGrid('hideCol','Appointment No');
 
 $( "#btnSearch" ).on('click', function() {
 	var keywordStr = $('#txtKeyword').val();
-	grid.setGridParam({postData: { 'searchStr': keywordStr },datatype:'json'}).trigger('reloadGrid');
+	reloadGrid();
 });
+
+function reloadGrid(){
+	grid.setGridParam({postData: { 'searchStr': keywordStr },datatype:'json'}).trigger('reloadGrid');
+}
 
  </script>
 </body>
