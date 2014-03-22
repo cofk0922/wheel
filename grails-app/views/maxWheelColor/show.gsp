@@ -3,25 +3,39 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="submain">
 		<g:set var="entityName" value="${message(code: 'maxWheelColor.label', default: 'MaxWheelColor')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#show-maxWheelColor" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+	<content tag="navleft">
+		<g:render template="/layouts/submenu" />
+	</content>
+	<content tag="content">
 		<div id="show-maxWheelColor" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list maxWheelColor">
+			
+				<g:if test="${maxWheelColorInstance?.productType}">
+				<li class="fieldcontain">
+					<span id="productType-label" class="property-label"><g:message code="maxWheelColor.productType.label" default="Product Type" /></span>
+					
+						<span class="property-value" aria-labelledby="productType-label"><g:fieldValue bean="${maxWheelColorInstance}" field="productType"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${maxWheelColorInstance?.maxWheel}">
+				<li class="fieldcontain">
+					<span id="maxWheel-label" class="property-label"><g:message code="maxWheelColor.maxWheel.label" default="Max Wheel" /></span>
+					
+						<span class="property-value" aria-labelledby="maxWheel-label"><g:link controller="maxWheel" action="show" id="${maxWheelColorInstance?.maxWheel?.id}">${maxWheelColorInstance?.maxWheel?.modelName}</g:link></span>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${maxWheelColorInstance?.prodName}">
 				<li class="fieldcontain">
@@ -86,15 +100,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${maxWheelColorInstance?.maxWheel}">
-				<li class="fieldcontain">
-					<span id="maxWheel-label" class="property-label"><g:message code="maxWheelColor.maxWheel.label" default="Max Wheel" /></span>
-					
-						<span class="property-value" aria-labelledby="maxWheel-label"><g:link controller="maxWheel" action="show" id="${maxWheelColorInstance?.maxWheel?.id}">${maxWheelColorInstance?.maxWheel?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${maxWheelColorInstance?.productStocks}">
 				<li class="fieldcontain">
 					<span id="productStocks-label" class="property-label"><g:message code="maxWheelColor.productStocks.label" default="Product Stocks" /></span>
@@ -102,15 +107,6 @@
 						<g:each in="${maxWheelColorInstance.productStocks}" var="p">
 						<span class="property-value" aria-labelledby="productStocks-label"><g:link controller="productStock" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${maxWheelColorInstance?.productType}">
-				<li class="fieldcontain">
-					<span id="productType-label" class="property-label"><g:message code="maxWheelColor.productType.label" default="Product Type" /></span>
-					
-						<span class="property-value" aria-labelledby="productType-label"><g:fieldValue bean="${maxWheelColorInstance}" field="productType"/></span>
 					
 				</li>
 				</g:if>
@@ -156,11 +152,12 @@
 			</ol>
 			<g:form url="[resource:maxWheelColorInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="list" action="index" controller="productVendorTransfer" params="${[prodID:maxWheelColorInstance.id, prodType:maxWheelColorInstance.productType]}"><g:message code="nut.maxWheelColorInstance.label" /></g:link>
+					<g:link class="list" action="index" controller="productVendorTransfer" params="${[prodID:maxWheelColorInstance.id, prodType:maxWheelColorInstance.productType]}"><g:message code="maxWheelColor.productVendorTransfers.label" /></g:link>
 					<g:link class="edit" action="edit" resource="${maxWheelColorInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>
 		</div>
+		</content>
 	</body>
 </html>
