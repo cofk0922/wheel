@@ -146,12 +146,15 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 		},
 		eventClick: function(event, element) {
 			if (event.id === newevent.id){
-				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +event.id+'</span><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">ชื่อ  :  '+details.customerName+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">ทะเบียนรถ  :  '+details.carNo+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  '+ details.status+'</span></p>';
+				var aQryStr = '<p><span style="float:center; margin:0 10px 7px 0;"> Appointment No. ' +details.appointmentNo+
+				'</span><BR>&nbsp;<BR><label for="name">ชื่อลูกค้า</label><input type="text" name="name" id="name" style="margin-bottom:12px; width:95%; padding: .4em;"><BR>'+
+				'<label for="carCode" >ทะเบียนรถ</label><input type="text" name="carCode" id="carCode" value="" style="margin-bottom:12px; width:95%; padding: .4em;"><BR>'+
+				'<label for="tel" >เบอร์โทรศํพท์</label><input type="text" name="tel" id="tel" value="" style="margin-bottom:12px; width:95%; padding: .4em;"><BR>'+
+				'<label for="address" >ที่อยู่</label><textarea name="address" id="address" style="width:95%; height:50px"></textarea><BR>&nbsp;<BR>'+
+				'<span style="float:left; margin:0 10px 7px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span><BR>'+
+				'<span style="float:left; margin:0 10px 7px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span><BR>'+
+				'<span style="float:left; margin:0 10px 7px 0;">ค่าใช้จ่าย  :  '+ details.price+'</span></p>';
+			
 				$("#confirm-event").html(aQryStr);
 				$( "#confirm-event" ).dialog({
 					width: 'auto',
@@ -161,10 +164,10 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 					buttons: {
 						"บันทึก": function() {
 							$( this ).dialog( "close" );
-							$.post( "../appointment/saveEvent", { 'event':  event});
+							$.post( "../appointment/saveEvent", { 'start':  event.start,'name': $('#name').val(),'carCode' : $('#carCode').val(),'tel' : $('#tel').val(), 'address': $('textarea#address').val()});
 							$('#calendar').fullCalendar('unselect')
 						},
-						Cancel: function() {
+						"ยกเลิก": function() {
 							$( this ).dialog( "close" );
 							$('#calendar').fullCalendar('unselect')
 						}
@@ -177,7 +180,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 		select: function(start,end) {
 			var currentView = $('#calendar').fullCalendar('getView');
 			if (currentView.name === "month") {
-				$.post('../appointment/validateSelectTime', { 'id': newevent.id,'startDate': start.getFullYear()+"-"+(start.getMonth()+1)+"-"+start.getDate(), 'Time': null}, function(result) {
+				$.post('../appointment/validateSelectTime', { 'id': newevent.id,'startDate': start.getFullYear()+"-"+(start.getMonth()+1)+"-"+start.getDate(), 'time': null}, function(result) {
 					if (result.isValid){
 						$('#calendar').fullCalendar('changeView', 'agendaDay' );
 						$('#calendar').fullCalendar('gotoDate', start.getFullYear(), start.getMonth(), start.getDate());
@@ -190,7 +193,7 @@ var fncRender = function(data,max,min,daysoff,holidays,newevent,details) {
 			}
 			else
 			{
-				$.post('../appointment/validateSelectTime', { 'id': newevent.id,'startDate': start.getFullYear()+"-"+(start.getMonth()+1)+"-"+start.getDate(), 'Time': start.getHours()+":"+start.getMinutes()}, function(result) {
+				$.post('../appointment/validateSelectTime', { 'id': newevent.id,'startDate': start.getFullYear()+"-"+(start.getMonth()+1)+"-"+start.getDate(), 'time': start.getHours()+":"+start.getMinutes()}, function(result) {
 				if (result.isValid){
 					var aQryStr = "ต้องการ 'ย้าย' การนัดหมายของ " +newevent.title+" ใช่หรือไม่ ?";
 					$('#confirm-add').html(aQryStr);
@@ -281,7 +284,6 @@ $(document).ready(function() {
 	#calendar {
 		margin: 0 auto;
 		}
-
 </style>
 
 

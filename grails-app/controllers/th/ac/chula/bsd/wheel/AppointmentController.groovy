@@ -425,12 +425,12 @@ class AppointmentController {
 			def item = [
 				'appointmentID': appoint.id,
 				'appointmentNo': appoint.appointmentNo,
-				'CustomerName':appoint.customer.customerName,
-				'CarCode': appoint.customer.carCode,
-				'StartDate': dateTimeFormat.format(appoint.startDate),
-				'EndAppointDate': dateTimeFormat.format(appoint.endAppointmentDate),
-				'EndDate': dateTimeFormat.format(appoint.endDate),
-				'Status': 'New'
+				'customerName':appoint.customer.customerName,
+				'carCode': appoint.customer.carCode,
+				'startDate': dateTimeFormat.format(appoint.startDate),
+				'endAppointDate': dateTimeFormat.format(appoint.endAppointmentDate),
+				'endDate': dateTimeFormat.format(appoint.endDate),
+				'status': 'New'
 				]
 			events.add(item)
 		}
@@ -613,6 +613,7 @@ class AppointmentController {
 		
 		//def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
 		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
+		def details = ['appointmentNo':'00000','price':'4,900']
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
@@ -783,40 +784,59 @@ class AppointmentController {
 		render js as JSON
 	}
 	
-	def validateTime(){
+	def validateDeltaTime(){
 		println "validateTime"
 		
-		//May
-		Appointment ap = session['currentAppointment']
-		println('AP NO: '+ ap.appointmentNo)
-		println('AP StartDate: '+ ap.startDate)
-		println('param startDate: ' + params.startDate)
-		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss', Locale.US)
-		def calendar = new GregorianCalendar()
-		calendar.setTime(ap.startDate)
-		calendar.add(calendar.DATE, params.dayDelta.toInteger())
-		calendar.add(calendar.MINUTE, params.minuteDelta.toInteger())
-		
-		Date newDate = calendar.getTime()
-		
-		Boolean isvalid = ap.checkValidAppointment(newDate)
-		println 'result======= '+ isvalid
-		
-		// if id = "null" that's mean add new event else meaning is edit event
-		if (params.id == null){
-			println "act = " : params.act
-			println "startdate = " + params.startDate
-			println "id = " + params.id
-		}else{
 		println "id = " + params.event
-		println "act = " : params.act
 		println "dayDelta = " + params.dayDelta
 		println "minuteDelta = " + params.minuteDelta
-		}
-			
-		//return
-		def js = [isValid: isvalid]
+		
+		def js = [isValid: true]
 		render js as JSON
+	}
+	
+	def validateSelectTime(){
+		println "validateTime"
+		println "startdate = " + params.startDate
+		println "id = " + params.id
+		println "time = " + params.time
+		
+		//May
+//		Appointment ap = session['currentAppointment']
+//		println('AP NO: '+ ap.appointmentNo)
+//		println('AP StartDate: '+ ap.startDate)
+//		println('param startDate: ' + params.startDate)
+//		def fullFormat = SimpleDateFormat('yyyy-MM-dd HH:mm:ss', Locale.US)
+//		def calendar = new GregorianCalendar()
+//		calendar.setTime(ap.startDate)
+//		calendar.add(calendar.DATE, params.dayDelta.toInteger())
+//		calendar.add(calendar.MINUTE, params.minuteDelta.toInteger())
+//		
+//		Date newDate = calendar.getTime()
+//		
+//		Boolean isvalid = ap.checkValidAppointment(newDate)
+//		println 'result======= '+ isvalid
+		
+		//return
+		def js = [isValid: true]
+		render js as JSON
+	}
+	
+	def saveEvent(){
+		
+		println "name = "+ params.name
+		println "start = "+ params.start
+		println "address = "+ params.address
+		println "tel = "+ params.tel
+		println "carCode = "+ params.carCode
+		
+		def js = [isValid: true]
+		
+		render js as JSON
+//		def dateRecieveInstance = new DateRecieveInstance()
+//		dateRecieveInstance.startTime = xxx
+//		dateRecieveInstance.title = params.title
+//		dateRecieveInstance.save(flush:true)
 	}
 	
 	
