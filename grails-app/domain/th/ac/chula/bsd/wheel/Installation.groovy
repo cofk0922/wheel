@@ -42,15 +42,6 @@ class Installation {
 		this.updatedBy = ap.updatedBy
 	}
 	
-	public void prepareInstall(){
-		this.status = InstallationStatus.PREPARE_INSTALL
-		 for(req in this.requisitions){		 
-			 RequisitionLine r = req
-			 r.readyRequisit();
-			 this.status = InstallationStatus.PREPARE_INSTALL		 
-		 }
-	}
-	
 	public Boolean cancelInstall(){
 		Boolean isSuccess = false
 		if(this.status == InstallationStatus.NEW){
@@ -64,16 +55,35 @@ class Installation {
 		return isSuccess
 	}
 	
-	public void installing(){
-		this.status = InstallationStatus.INSTALLING
+	public void prepareInstall(){
+		 for(req in this.requisitions){		 
+			 RequisitionLine r = req
+			 r.readyRequisit();
+			 this.status = InstallationStatus.PREPARE_INSTALL
+		 }
+	}
+	
+	public void readyInstall(){
+		this.status = InstallationStatus.READY_INSTALL
 		for(req in this.requisitions){
 			RequisitionLine r = req
 			r.requisited()
-		 }
+		}
+	}
+	
+	public void installing(){
+		this.status = InstallationStatus.INSTALLING
+		appointment.beginInstall()	
 	}	
 	
 	public void finishedInstall(){
-		this.status = InstallationStatus.FINISHED;	 
+		this.status = InstallationStatus.FINISHED	
+	    appointment.endInstallFinished()
+	}
+	
+	public void cancalInstall(){
+		this.status = InstallationStatus.CANCEL
+		appointment.cancelAppointment()
 	}
 	
 	public void addRequisition(Product prod, int amount){
@@ -84,28 +94,28 @@ class Installation {
 	
 	public Boolean checkprepareInstall(){
 		Boolean result = false
-		if(this.status==InstallationStatus.NEW){
-		    if (this.checkProdstock()) {    
-				this.prepareInstall() 
+		if(status==InstallationStatus.NEW){
+		   def isProductstock = checkProdstock()  
+		    if (isProductstock) {    
+				prepareInstall() 
 				result =true
 		    }
 		}
-		println 'install install isSuccess: '+ result
-		return result
+	 	//return result
 	}
 	
 	public Boolean checkinstalling(){  
 		Boolean result = false
-		if(this.status==InstallationStatus.PREPARE_INSTALL ){ 
-		  installing()	
-		  result=true
+		if(status==InstallationStatus.READY_INSTALL){ 
+			installing()	
+			result=true
 		}
 		return result
 	}
 	
 	public Boolean checkfinished(){
 		Boolean result = false
-		if(this.status==InstallationStatus.INSTALLING){
+		if(status==InstallationStatus.INSTALLING){
 			finishedInstall()
 			result = true
 		}
@@ -118,18 +128,26 @@ class Installation {
 		   RequisitionLine r = req	  
 		   if (!r.checkProductStock()){
 		     result = false
-			 break
+			 break		 
 		   }
+		} 	 
+		return result
+	}
+
+	public Boolean checkreadyInstall(){	
+		Boolean result = false
+		if(status==InstallationStatus.PREPARE_INSTALL ){
+			readyInstall()
+			result=true
 		}
 		return result
 	}
- 
 }
 
 enum InstallationStatus {
 	NEW,
 	PREPARE_INSTALL,
-	//READY_INSTALL,
+	READY_INSTALL,
 	INSTALLING,
 	FINISHED,
 	CANCEL
