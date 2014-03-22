@@ -258,6 +258,7 @@ var fncGetData = function() {
 		});
 		
 		var currentEvent = result.currentEvent;
+		currentEvent.id = currentEvent.id;
 		currentEvent.start = new Date(currentEvent.start);
 		currentEvent.end = new Date(currentEvent.end);
 		currentEvent.textColor = '#000000';
