@@ -3,11 +3,13 @@ package th.ac.chula.bsd.wheel
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class MaxWheelColorController {
-
+	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
