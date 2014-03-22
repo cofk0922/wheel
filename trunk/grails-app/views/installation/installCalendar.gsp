@@ -80,18 +80,16 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 									'<span style="float:left; margin:0 7px 20px 0;">ทะเบียนรถ  :  '+result.carNo+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span></p><BR>';		
-//				NEW,
-//		PREPARE_INSTALL,
-//		READY_INSTALL,
-//		INSTALLING,
-//		FINISHED,
-//		CANCEL
+									
 				var buttonlist = {"ปิด": function() {$( this ).dialog( "close" )}};
 				
 				if (result.status === "NEW"){
 					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  รายการใหม่</span></p>';
+				}
+				else if (result.status === "PREPARE_INSTALL")
+				{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  กำลังเตรียมการติดตั้ง</span></p>';
 					buttonlist = {
-					
 						"เบิกของ": function() {
 							$( this ).dialog( "close" );
 							$.post( "../installation/updateStatus", { 'id': event.id, 'nextStatus': "PREPARE_INSTALL" });
@@ -100,10 +98,6 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 							$( this ).dialog( "close" );
 						}
 					};
-				}
-				else if (result.status === "PREPARE_INSTALL")
-				{
-					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  กำลังเตรียมการติดตั้ง</span></p>';
 				}
 				else if (result.status === "READY_INSTALL")
 				{
@@ -137,9 +131,7 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 				else{
 					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  ไม่ทราบ</span></p>';
 				}
-				
 				$("#edit-event").html(aQryStr);
-				
 				$( "#edit-event" ).dialog({
 					width: 'auto',
 					height: 'auto',
@@ -170,7 +162,6 @@ var fncGetData = function() {
 			item.tile = item.tile;
 			data.push(item);
 		});
-
 		fncRender(data,result.maxtime,result.mintime,result.daysoff,result.holidays);
 	} );
 };
@@ -178,7 +169,6 @@ var fncGetData = function() {
 $(document).ready(function() {
 	fncGetData();
 });
-
 
 </script>
 <style>
