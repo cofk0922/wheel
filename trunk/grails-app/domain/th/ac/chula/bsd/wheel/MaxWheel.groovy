@@ -3,6 +3,7 @@ package th.ac.chula.bsd.wheel
 class MaxWheel {
 
 	WheelBand band
+	String modelName
 	String series
 	String pcdCode //Number of nuts depend on integer part of PCD Code (5-6)
 	Float offSet
