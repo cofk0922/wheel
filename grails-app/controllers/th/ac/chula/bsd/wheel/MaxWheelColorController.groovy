@@ -16,10 +16,15 @@ class MaxWheelColorController {
     }
 
     def show(MaxWheelColor maxWheelColorInstance) {
+		def u = springSecurityService.currentUser
+		params.branch = u.branch
+		params.prodID = maxWheelColorInstance.id
         respond maxWheelColorInstance
     }
 
     def create() {
+		params.prodType = ProductType.WHEEL
+		params.stock = 0
         respond new MaxWheelColor(params)
     }
 
@@ -34,8 +39,17 @@ class MaxWheelColorController {
             respond maxWheelColorInstance.errors, view:'create'
             return
         }
-
+		maxWheelColorInstance.productType = ProductType.WHEEL
         maxWheelColorInstance.save flush:true
+		println 'stock = '+ params.stock
+		if(params.stock){
+			def u = springSecurityService.currentUser
+			Branch b = u.branch
+			ProductStock maxWheel = new ProductStock()
+			maxWheel.initialProductStock(b, maxWheelColorInstance)
+			maxWheel.stock = params.stock.toInteger()
+			maxWheel.save()
+		}
 
         request.withFormat {
             form {
@@ -47,6 +61,7 @@ class MaxWheelColorController {
     }
 
     def edit(MaxWheelColor maxWheelColorInstance) {
+		params.prodType = ProductType.WHEEL
         respond maxWheelColorInstance
     }
 
