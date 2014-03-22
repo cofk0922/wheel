@@ -108,7 +108,6 @@
 </div>
 
 
-<g:hiddenField name="productType" value="WHEEL" />
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productVendorTransfers', 'error')} ">
 	<label for="productVendorTransfers">
@@ -126,6 +125,7 @@
 </ul>
 
 </div> --%>
+<g:hiddenField name="productType" value="WHEEL" />
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'spoke', 'error')} required">
 	<label for="spoke">

@@ -39,7 +39,7 @@
 		<g:message code="carModel.gearRatio.label" default="อัตราการทดแรงเกียร์พื้นฐาน(เท่า)" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="gearRatio" type="number" value="${fieldValue(bean: carModelInstance, field: 'gearRatio')}" required=""/>
+	<g:field name="gearRatio" type="number" value="${fieldValue(bean: carModelInstance, field: 'gearRatio')}" step="any" required=""/>
 	<g:message code="default.ratio"/>
 </div>
 
@@ -75,6 +75,14 @@
 	</label>
 	<g:field name="nutSize" type="number" value="${fieldValue(bean: carModelInstance, field: 'nutSize')}" step="any" required=""/>
 	<g:message code="default.millimeter"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: carModelInstance, field: 'defaultWheel', 'error')} required">
+	<label for="defaultWheel">
+		<g:message code="carModel.defaultWheel.label" default="defaultWheel" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="defaultWheel" name="defaultWheel.id" from="${th.ac.chula.bsd.wheel.MaxWheel.list()}" optionKey="id" optionValue="prodName" required="" value="${carModelInstance?.defaultWheel?.id}" class="many-to-one"/>
 </div>
 
 <%--
