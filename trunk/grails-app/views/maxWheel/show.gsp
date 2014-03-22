@@ -27,6 +27,15 @@
 				</li>
 				</g:if>
 						
+				<g:if test="${maxWheelInstance?.modelName}">
+				<li class="fieldcontain">
+					<span id="model-label" class="property-label"><g:message code="maxWheel.modelName.label" default="ชื่อรุ่นล้อแม็กซ์" /></span>
+					
+						<span class="property-value" aria-labelledby="modelName-label"><g:fieldValue bean="${maxWheelInstance}" field="modelName"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${maxWheelInstance?.series}">
 				<li class="fieldcontain">
 					<span id="model-label" class="property-label"><g:message code="maxWheel.series.label" default="ซีรี่ย์" /></span>
@@ -153,6 +162,7 @@
 			</ol>
 			<g:form url="[resource:maxWheelInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
+					<g:link class="list" action="detectColor" controller="maxWheel" params="${[wheelID:maxWheelInstance.id]}"><g:message code="maxWheel.detectColor.label" /></g:link>
 					<g:link class="edit" action="edit" resource="${maxWheelInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>

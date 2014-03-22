@@ -1,6 +1,12 @@
 <%@ page import="th.ac.chula.bsd.wheel.MaxWheelColor" %>
 
-
+<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'productType', 'error')} required">
+	<label for="productType">
+		<g:message code="maxWheelColor.productType.label" default="Product Type" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="productType" from="${[params.prodType]}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${maxWheelColorInstance?.productType?.name()}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'prodName', 'error')} required">
 	<label for="prodName">
@@ -83,13 +89,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'productType', 'error')} required">
-	<label for="productType">
-		<g:message code="maxWheelColor.productType.label" default="Product Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="productType" from="${th.ac.chula.bsd.wheel.ProductType?.values()}" keys="${th.ac.chula.bsd.wheel.ProductType.values()*.name()}" required="" value="${maxWheelColorInstance?.productType?.name()}"/>
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelColorInstance, field: 'productVendorTransfers', 'error')} ">
 	<label for="productVendorTransfers">

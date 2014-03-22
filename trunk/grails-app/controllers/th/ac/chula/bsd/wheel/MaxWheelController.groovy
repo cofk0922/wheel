@@ -3,19 +3,26 @@ package th.ac.chula.bsd.wheel
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
 @Transactional(readOnly = true)
 class MaxWheelController {
-
+	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+		def u = springSecurityService.currentUser
+		params.branch = u.branch
         params.max = Math.min(max ?: 10, 100)
         respond MaxWheel.list(params), model:[maxWheelInstanceCount: MaxWheel.count()]
     }
 
     def show(MaxWheel maxWheelInstance) {
+		def u = springSecurityService.currentUser
+		params.branch = u.branch
+		params.prodID = maxWheelInstance.id
         respond maxWheelInstance
     }
 
@@ -39,7 +46,6 @@ class MaxWheelController {
         }
 		
 		//TODO save Wheel
-		maxWheelInstance.productType = ProductType.WHEEL
         maxWheelInstance.save flush:true
 
         request.withFormat {

@@ -10,6 +10,14 @@
 	<g:select id="band" name="band.id" from="${th.ac.chula.bsd.wheel.WheelBand.list()}" optionKey="id" optionValue="name" required="" value="${maxWheelInstance?.band?.id}" class="many-to-one"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'modelName', 'error')} required">
+	<label for="modelName">
+		<g:message code="maxWheel.modelName.label" default="ชื่อรุ่นล้อแม็กซ์" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="modelName" required="" value="${maxWheelInstance?.modelName}"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'series', 'error')} required">
 	<label for="series">
 		<g:message code="maxWheel.series.label" default="ซีรี่ย์" />
@@ -39,7 +47,7 @@
 		<g:message code="maxWheel.weight.label" default="น้ำหนัก" />
 		
 	</label>
-	<g:field name="weight" type="number" value="${fieldValue(bean: maxWheelInstance, field: 'weight')}"/>
+	<g:field name="weight" type="number" value="${fieldValue(bean: maxWheelInstance, field: 'weight')}" step="any" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'pcdCode', 'error')} ">
