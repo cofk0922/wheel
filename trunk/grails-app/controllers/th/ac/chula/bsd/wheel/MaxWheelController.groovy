@@ -11,7 +11,7 @@ import grails.transaction.Transactional
 class MaxWheelController {
 	def springSecurityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	def burningImageService
     def index(Integer max) {
 		def u = springSecurityService.currentUser
 		params.branch = u.branch
@@ -372,9 +372,125 @@ class MaxWheelController {
 	
 	def  addWheel(){
 		
+		//def modelId = params.modelId.toLong()
+		def modelInstance = MaxWheel.get(1)
+		
+		def parameter = [:]
+		parameter.listWheelBand = WheelBand.list()
+		parameter.listWheelModel = MaxWheel.list()
+		parameter.modelInstance = modelInstance
+		//parameter.listCarColor = CarColor.list()
+		render(view:'addWheel',model:parameter)
+
+	}
+	
+	def detectWheelColor(){
+		
+		def fileCropName
+		def f = request.getFile('myFile')
+		if (f.empty) {
+			flash.message = 'file cannot be empty'
+			render(view: 'addWheel')
+			return
+		}
+		def wheelImage = f.originalFilename
+		
+		//grailsApplication.config.uploadFolder is Define Path image in local config in  cofig.groovy line 89
+		
+		def fullPath = grailsApplication.config.uploadFolder+wheelImage
+		f.transferTo(new File(fullPath))
+		//response.sendError(200, 'Done')
+		flash.message = 'upload success !'
+		
+				
+		def parameter = [:]
+		def fileSumPath = '../images/'+wheelImage
+		
+		parameter.wheelImage = fileSumPath
+		parameter.modelInstance = MaxWheel.get(params.modelId.toLong())
+		render(view: "detectWheelColor", model: parameter)
+	}
+	
+	
+	def detectWheelImage() {
+		
+		println params
+	
+		
+		def parameter = [:]
+		parameter.wheelImage = params.wheelImage
+		parameter.modelInstance = MaxWheel.get(params.modelId.toLong())
+		
+		// Set Color
+		parameter.hVal = params.hVal
+		parameter.sVal = params.sVal
+		parameter.vVal = params.vVal
+		parameter.hexVal = params.hexVal
+		parameter.colorName = params.colorName
+		
+		render(view: "detectWheelImage", model: parameter)
+		
+	}
+	
+	
+	@Transactional
+	def saveMaxWheel(){
+		
+		def maxWhellInstance = MaxWheel.get(params.modelId.toLong())
+		
+		def maxwheel = new MaxWheelColor(
+			colorName:params.colorName,
+			hVal:params.hVal,
+			sVal:params.sVal,
+			vVal:params.vVal,
+			hexVal:params.hexVal,
+			wheelImage:params.wheelImage,
+			prodName:maxWhellInstance.series,
+			productType:ProductType.WHEEL,
+			maxWheel:maxWhellInstance
+			)
 		
 		
+		if (!maxwheel.save()) {
+			maxwheel.errors.each {
+				println it
+			}
+		}else{
+		maxwheel.save(flush:true)
+		}
 		
+		redirect(action: "show", id: params.modelId )
+	}
+	def dynamicDropdown = {
+	}
+	
+	def findModelForBand = {
+				println params
+				def band = WheelBand.get(params.band.id)
+				render(template: '../layouts/modelSelection', model:  [models: band.wheelModel])
+			}
+	
+	def inputWheelCrop(){
 		return
+	}
+	
+	def upload() {
+		def parameter = [:]
+		def fileCropName
+		def f = request.getFile('myFile')
+		if (f.empty) {
+			flash.message = 'file cannot be empty'
+			render(view: 'inputWheel')
+			return
+		}
+		def filename = f.originalFilename
+		def fullPath = grailsApplication.config.uploadFolder+filename
+		f.transferTo(new File(fullPath))
+		//response.sendError(200, 'Done')
+		flash.message = 'upload success !'
+		
+		parameter.fileCropName = fileCropName
+		parameter.filename = filename
+		render(view: "inputWheelCrop", model: parameter)
 	}
 }
