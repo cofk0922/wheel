@@ -82,7 +82,7 @@
 		<g:message code="carModel.defaultWheel.label" default="defaultWheel" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="defaultWheel" name="defaultWheel.id" from="${th.ac.chula.bsd.wheel.MaxWheel.list()}" optionKey="id" optionValue="prodName" required="" value="${carModelInstance?.defaultWheel?.id}" class="many-to-one"/>
+	<g:select id="defaultWheel" name="defaultWheel.id" from="${th.ac.chula.bsd.wheel.MaxWheel.list()}" optionKey="id" optionValue="series" required="" value="${carModelInstance?.defaultWheel?.id}" class="many-to-one"/>
 </div>
 
 <%--

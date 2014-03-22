@@ -26,15 +26,6 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${maxWheelInstance?.prodName}">
-				<li class="fieldcontain">
-					<span id="prodName-label" class="property-label"><g:message code="maxWheel.prodName.label" default="รุ่นล้อแม็กซ์" /></span>
-					
-						<span class="property-value" aria-labelledby="prodName-label"><g:fieldValue bean="${maxWheelInstance}" field="prodName"/></span>
-					
-				</li>
-				</g:if>
 						
 				<g:if test="${maxWheelInstance?.series}">
 				<li class="fieldcontain">
@@ -54,33 +45,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${maxWheelInstance?.prodDesc}">
-				<li class="fieldcontain">
-					<span id="prodDesc-label" class="property-label"><g:message code="maxWheel.prodDesc.label" default="รายละเอียด" /></span>
-					
-						<span class="property-value" aria-labelledby="prodDesc-label"><g:fieldValue bean="${maxWheelInstance}" field="prodDesc"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${maxWheelInstance?.productPart}">
-				<li class="fieldcontain">
-					<span id="productPart-label" class="property-label"><g:message code="maxWheel.productPart.label" default="Product Part" /></span>
-					
-						<span class="property-value" aria-labelledby="productPart-label"><g:link controller="product" action="show" id="${maxWheelInstance?.productPart?.id}">${maxWheelInstance?.productPart?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${maxWheelInstance?.productPartAmount}">
-				<li class="fieldcontain">
-					<span id="productPartAmount-label" class="property-label"><g:message code="maxWheel.productPartAmount.label" default="Product Part Amount" /></span>
-					
-						<span class="property-value" aria-labelledby="productPartAmount-label"><g:fieldValue bean="${maxWheelInstance}" field="productPartAmount"/></span>
-					
-				</li>
-				</g:if>
-
 				<g:if test="${maxWheelInstance?.width}">
 				<li class="fieldcontain">
 					<span id="width-label" class="property-label"><g:message code="maxWheel.width.label" default="หน้ากว้าง" /></span>

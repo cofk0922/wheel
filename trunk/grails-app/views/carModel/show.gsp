@@ -104,7 +104,7 @@
 				<li class="fieldcontain">
 					<span id="defaultWheel-label" class="property-label"><g:message code="carModel.defaultWheel.label" default="ล้อพื้นฐาน" /></span>
 					
-						<span class="property-value" aria-labelledby="defaultWheel-label"><g:link controller="ProdName" action="show" id="${carModelInstance?.defaultWheel?.id}">${carModelInstance?.defaultWheel?.prodName}</g:link></span>
+						<span class="property-value" aria-labelledby="defaultWheel-label"><g:link controller="series" action="show" id="${carModelInstance?.defaultWheel?.id}">${carModelInstance?.defaultWheel?.series}</g:link></span>
 					
 				</li>
 				</g:if>
