@@ -42,7 +42,9 @@ class CarModelController {
 						 println ("Error: "+it)
 					 }
 				 } else {
-					 println ("Create carWheelList Success : "+ carWheelList.car.modelName+" : "+carWheelList.wheel.series + " : "+carWheelList.usageScore)
+					 carModelInstance.wheelLists.add(carWheelList)
+					 carModelInstance.save(flush:true)
+					 //println ("Create carWheelList Success : "+ carWheelList.car.modelName+" : "+carWheelList.wheel.series + " : "+carWheelList.usageScore)
 				 }
 			}
 		}
@@ -64,7 +66,7 @@ class CarModelController {
 		if(wheelResult.size() > 0){
 			for (item in wheelResult) {
 				//fetch and put suited wheel into CarWheelList
-				println("initialWheelListForNewCar : "+item.band.name+item.series+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
+				//println("initialWheelListForNewCar : "+item.band.name+item.series+" : "+carModelInstance.band.bandName+carModelInstance.modelName)
 				
 				//Mention Width :maxWheel.width and carModel.defaultWheel.width
 				if(Math.abs(item.width-carModelInstance.defaultWheel.width)<=2){
@@ -74,14 +76,14 @@ class CarModelController {
 					if(Math.abs(defaultWideSpace-itemWideSpace)<=2){
 						//if wheel condition is OK create CarWheelList object
 						initialCarWheelList(carModelInstance, item)
-						println("initialWheelListForNewCar : Add to List")
+						println("- : Add to List")
 					}
 					else{
-						println("initialWheelListForNewCar : Not in offset condition")
+						println("- : Not in offset condition")
 					}
 				}
 				else{
-					println("initialWheelListForNewCar : Not in width condition")
+					println("- : Not in width condition")
 				}
 				
 			}

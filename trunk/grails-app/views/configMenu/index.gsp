@@ -92,6 +92,8 @@ p {
 <body>
 	<div class="configMenu">
 		<div class="menuSection">
+		<sec:ifLoggedIn>
+		<g:set var="userObject" value="${th.ac.chula.bsd.security.User.findByUsername(sec.loggedInUserInfo(field:'username'))}"/>
 			<h1><g:message code="default.submenu.branchuser" default="สาขา และ ผู้ใช้งาน"/></h1>
 			<ul>
 				<li><g:link controller="branch"><g:message code="default.submenu.branchuser.branch" default="สาขา"/></g:link></li>
@@ -99,7 +101,7 @@ p {
 				<li><g:link controller="user"><g:message code="default.submenu.branchuser.user" default="ผู้ใช้"/></g:link></li>
 				<li><g:link controller="role"><g:message code="default.submenu.branchuser.role" default="สิทธิการใช้งาน"/></g:link></li>
 				<li><g:link controller="userRole"><g:message code="default.submenu.branchuser.userrole" default="ผูกสิทธิการใช้งาน"/></g:link></li>
-				<li><g:message code="default.submenu.branchuser.edituser" default="แก้ไขข้อมูลส่วนตัว"/></li>
+				<li><g:link controller="user"action="show"id='${userObject.id}'><g:message code="default.submenu.branchuser.edituser" default="แก้ไขข้อมูลส่วนตัว"/></g:link></li>
 			</ul>
 		</div>
 		<hr />
@@ -138,6 +140,8 @@ p {
 				<li><g:link controller="holiday"><g:message code="default.submenu.other.holiday"/></g:link></li>
 			</ul>
 		</div>
+		
+		</sec:ifLoggedIn>
 	</div>		
 			
 			

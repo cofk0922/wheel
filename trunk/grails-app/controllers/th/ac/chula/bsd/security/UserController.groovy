@@ -80,10 +80,6 @@ class UserController {
     @Transactional
     def save(User userInstance) {
 		def u = springSecurityService.currentUser
-		Branch b = u.branch
-		b.refresh()
-		
-//		userInstance.branch = b
 		
         if (userInstance == null) {
             notFound()
@@ -96,6 +92,8 @@ class UserController {
         }
 
         userInstance.save flush:true
+		def normalRole = Role.findByAuthority("ROLE_USER")
+		new UserRole(role:normalRole, user:userInstance).save(flush:true)
 
         request.withFormat {
             form {

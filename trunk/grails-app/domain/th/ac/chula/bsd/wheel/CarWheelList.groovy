@@ -100,6 +100,6 @@ class CarWheelList {
 	{
 		def uScore = UsageScore.findBySTypeAndUType(this.wheel.spoke,  this.usageType)
 		this.usageScore =  uScore.score
-		println("[PONG]usageScore: "+ this.usageScore)
+		//println("[Found!!]usageScore: "+ this.usageScore)
 	}
 }

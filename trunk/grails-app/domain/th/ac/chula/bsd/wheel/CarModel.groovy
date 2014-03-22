@@ -14,7 +14,7 @@ class CarModel {
 	int defaultTireSize
 	float nutSize
 	
-//	Set wheelList = []
+	Set wheelLists = []
 	static hasMany = [wheelLists: CarWheelList, carColor: CarColor]
 	
 	static hasOne = [band: CarBand]
@@ -31,14 +31,14 @@ class CarModel {
 	public double getMeanDrivingEnergy(UsageType inputUsageType){
 		double sumEnergy
 		double meanValue = 0
-		def usgWheelList = this.wheelLists.find{it.usageType == inputUsageType}
+		def usgWheelList = this.wheelLists.findAll{it.usageType == inputUsageType}
 		if(usgWheelList.size()>0){
 			for(item in usgWheelList){
 				sumEnergy += item.drivingEnergy
 			}
 			meanValue = sumEnergy/usgWheelList.size()
 		}
-		println(inputUsageType+" mean : "+meanValue)
+		println(""+ inputUsageType +" mean : "+meanValue)
 		return meanValue
 	}
 	
@@ -46,28 +46,28 @@ class CarModel {
 		double powerSum2
 		double meanEnergy = getMeanDrivingEnergy(inputUsageType)
 		double stdev = 0
-		def usgWheelList = this.wheelLists.find{it.usageType == inputUsageType}
+		def usgWheelList = this.wheelLists.findAll{it.usageType == inputUsageType}
 		if(usgWheelList.size()>0){
 			for(item in usgWheelList){
 				powerSum2 += Math.pow(item.drivingEnergy-meanEnergy, 2)
 			}
-			stdev = Math.sqrt(powerSum2/usgWheelList.size());
+			stdev = (double)Math.sqrt(powerSum2/usgWheelList.size());
 		}
-		println(inputUsageType+" SD : "+stdev)
+		println(""+ inputUsageType +" SD : "+ stdev)
 		return stdev
 	}
 	
 	public double getMeanTractiveEnergy(UsageType inputUsageType){
 		double sumEnergy
 		double meanValue = 0
-		def usgWheelList = this.wheelLists.find{it.usageType == inputUsageType}
+		def usgWheelList = this.wheelLists.findAll{it.usageType == inputUsageType}
 		if(usgWheelList.size()>0){
 			for(item in usgWheelList){
 				sumEnergy += item.tractiveEnergy
 			}
 			meanValue = sumEnergy/usgWheelList.size()
 		}
-		println(inputUsageType+" mean : "+meanValue)
+		println(""+ inputUsageType +" mean : "+meanValue)
 		return meanValue
 	}
 	
@@ -75,14 +75,14 @@ class CarModel {
 		double powerSum2
 		double meanEnergy = getMeanTractiveEnergy(inputUsageType)
 		double stdev = 0
-		def usgWheelList = this.wheelLists.find{it.usageType == inputUsageType}
+		def usgWheelList = this.wheelLists.findAll{it.usageType == inputUsageType}
 		if(usgWheelList.size()>0){
 			for(item in usgWheelList){
 				powerSum2 += Math.pow(item.tractiveEnergy-meanEnergy, 2)
 			}
-			stdev = Math.sqrt(powerSum2/usgWheelList.size());
+			stdev = (double)Math.sqrt(powerSum2/usgWheelList.size());
 		}
-		println(inputUsageType+" SD : "+stdev)
+		println(""+ inputUsageType +" SD : "+stdev)
 		return stdev
 	}
 

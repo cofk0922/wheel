@@ -14,6 +14,8 @@ class MaxWheel {
 	ProdStatus pStatus
 	CarBand forCarBand
 	
+	Set wheelLists = []
+	Set maxWheelColor = []
 	static hasMany = [wheelLists: CarWheelList, dWheel: DefaultWheel, maxWheelColor: MaxWheelColor]
 
     static constraints = {

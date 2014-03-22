@@ -33,7 +33,6 @@ class MaxWheelController {
 			return
 		}
 		//TODO save Wheel
-		maxWheelInstance.productType = ProductType.WHEEL
 		maxWheelInstance.save flush:true
 
 		request.withFormat {
