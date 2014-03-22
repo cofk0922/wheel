@@ -25,6 +25,10 @@
 
 <script>
 
+function dateformat(dateObj){
+	return dateObj.getFullYear()+"-"+(dateObj.getMonth()+1)+"-"+dateObj.getDate() +" "+ dateObj.getHours()+":"+ ((dateObj.getMinutes()< 10) ? ("0"+dateObj.getMinutes()):dateObj.getMinutes());
+}
+
 var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 	$('#calendar').fullCalendar({
 		header: {
@@ -70,18 +74,34 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 			});				
 		},
 		eventClick: function(event, element) {
-			$( "#edit-event" ).dialog({
-				width: 'auto',
-				height: 'auto',
-				modal: true,
-				autoOpen: false,
-				buttons: {
-					Ok: function() {
-						$( this ).dialog( "close" );
+			$.post( "../appointment/getEventDetails", { 'id':  event.id }, function(result) {
+				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +event.id+'</span><BR>'+
+									'<span style="float:left; margin:0 7px 20px 0;">ชื่อ  :  '+result.customerName+'</span></p><BR>'+
+									'<span style="float:left; margin:0 7px 20px 0;">ทะเบียนรถ  :  '+result.carNo+'</span></p><BR>'+
+									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span></p><BR>'+
+									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span></p><BR>'+
+									'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  '+ result.status+'</span></p>';
+				$("#edit-event").html(aQryStr);
+				$( "#edit-event" ).dialog({
+					width: 'auto',
+					height: 'auto',
+					modal: true,
+					autoOpen: false,
+					buttons: {
+						"ติดตั้ง": function() {
+							$( this ).dialog( "close" );
+						},
+						"เลื่อน": function() {
+							$( this ).dialog( "close" );
+							window.location = "/wheel/appointment/manageCalendar?id="+ event.id;
+						},
+						"รับรถ": function() {
+							$( this ).dialog( "close" );
+						}
 					}
-				}
+				});
+				$( "#edit-event" ).dialog( 'open' );
 			});
-			$( "#edit-event" ).dialog( 'open' );
 		},
 		selectable: true,
 		select: function(start,end) {
