@@ -147,15 +147,29 @@ class Appointment {
 		return money - installTotal
 	}
 	
-	public void beginInstall(){
-		this.status = AppointmentStatus.INPROCESS
-		this.installation.prepareInstall()
+	public Boolean beginInstall(User u){
+		Boolean isSuccess = false
+		if(this.status == AppointmentStatus.NEW){
+			if(this.installation.checkprepareInstall()){
+				this.updateByUser(u)
+				this.status = AppointmentStatus.INPROCESS
+				isSuccess = true
+			}			
+		}
+		println 'ap install isSuccess: '+ isSuccess
+		return isSuccess
 	}
 	
-	public void cancelAppointment(){
-		this.status = AppointmentStatus.CANCEL
-		this.installation.cancelInstall()
-		this.parking.cancelPark()
+	public Boolean cancelAppointment(){
+		Boolean isSuccess = false
+		if(this.status == AppointmentStatus.NEW){
+			if(this.installation.cancelInstall()){
+				this.status = AppointmentStatus.CANCEL
+				this.parking.cancelPark()
+				isSuccess = true
+			}
+		}
+		return isSuccess
 	}
 	
 	public void changeAppointmentDate(Date newStartDate, Date newEndDate, Boolean isInstallNow){
@@ -164,11 +178,12 @@ class Appointment {
 		this.confirmAppointment(isInstallNow)
 	}
 	
-	public Boolean checkReturnCar(){
+	public Boolean checkReturnCar(User u){
 		Boolean result = false
 		if((this.installation.status == InstallationStatus.FINISHED) && (this.parking.status != ParkingStatus.UNRESERVE)){
 			this.parking.returnCar()
 			this.status = AppointmentStatus.CAR_RETURNED
+			this.updateByUser(u)
 			result = true
 		}
 		return result

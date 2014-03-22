@@ -41,20 +41,22 @@ class RequisitionLine {
 	
 	public void readyRequisit(){
 		this.status = RequisitionLineStatus.READY_REQUISIT
-		branch.decreaseProductStock(product,amount)
+		//branch.decreaseProductStock(product,amount)
 	  
 	}
 	 
  	public Boolean checkProductStock(){
 		Boolean result = false
-		def prod = product.getProductStock(branch)	 
-		if(prod > amount){
+		def prod = product.getProductStock(this.branch)	
+		println 'stock = '+ prod 
+		if(prod >= amount){
 		   result = true
 		}	 
 		return result
 	}
 	
 	public void requisited(){
+		this.branch.decreaseProductStock(this.product, this.amount)
 		this.status = RequisitionLineStatus.REQUISITED
 	}
 	
