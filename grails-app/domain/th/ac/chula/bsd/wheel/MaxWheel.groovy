@@ -1,8 +1,7 @@
 package th.ac.chula.bsd.wheel
 
-class MaxWheel extends Product{
+class MaxWheel {
 
-	// Inherit [prodName, prodDesc] from Product
 	WheelBand band
 	String series
 	String pcdCode //Number of nuts depend on integer part of PCD Code (5-6)

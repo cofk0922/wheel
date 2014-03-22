@@ -1,7 +1,8 @@
 package th.ac.chula.bsd.wheel
 
-class MaxWheelColor {
-
+class MaxWheelColor extends Product{
+	
+	// Inherit [prodName, prodDesc] from Product
 	String	colorName
 	//Color code in HSV standard
 	String  hVal = 0
