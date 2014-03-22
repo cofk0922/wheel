@@ -34,7 +34,7 @@ class AppointmentOrderList {
 	public Date getStartInstallationDate(Date startDate, Branch b){
 		def calendar = new GregorianCalendar()
 		calendar.setTime(startDate)
-		
+		println 'stock: '+ this.product.getProductStock(b)
 		if(this.amount > this.product.getProductStock(b)) {
 			def tranP = b.getBestTransfer(this.amount, this.product)
 			

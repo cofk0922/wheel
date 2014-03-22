@@ -50,6 +50,10 @@ class Appointment {
 		status nullable: false
 	}
 	
+	String toString() {
+		return this.appointmentNo
+	}
+	
 	public void initialAppointment(User u, Branch b){
 		Date today = new Date()
 		this.appointmentNo += (today.getTime()).toString()

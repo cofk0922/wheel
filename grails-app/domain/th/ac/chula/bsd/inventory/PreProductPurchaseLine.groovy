@@ -6,6 +6,8 @@ import th.ac.chula.bsd.security.User;
 import th.ac.chula.bsd.wheel.Appointment;
 import th.ac.chula.bsd.wheel.Branch;
 import th.ac.chula.bsd.wheel.Product;
+import th.ac.chula.bsd.wheel.ProductVendorTransfer;
+import th.ac.chula.bsd.wheel.Vendor;
 
 class PreProductPurchaseLine {
 
@@ -37,6 +39,21 @@ class PreProductPurchaseLine {
 		this.updatedBy = ap.updatedBy
 		this.product = prod
 		this.amount = amt
+	}
+	
+	public Vendor getSuggestVendorPurchase(){
+		def branchTran = ProductVendorTransfer.withCriteria {
+			eq('branch.id', this.branch.id)
+			eq('product.id', this.product.id)
+			and{
+				order('transferDay', 'asc')
+				order('transferHour', 'asc')
+				order('transferMinute', 'asc')
+			}
+			maxResults(1)
+		}
+		
+		return branchTran.find{it}
 	}
 	
 	public Boolean cancel(User u){
