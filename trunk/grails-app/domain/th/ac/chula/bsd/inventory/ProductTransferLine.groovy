@@ -66,7 +66,7 @@ class ProductTransferLine {
 			this.status = ProductTransferStatus.RECEIVED
 			
 			// increase stock branchFrom
-			this.branchFrom.increaseProductStock(this.product, this.amount)
+			this.branchTo.increaseProductStock(this.product, this.amount)
 			
 			isSuccess = true
 		}
