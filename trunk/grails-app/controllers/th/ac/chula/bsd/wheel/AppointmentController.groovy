@@ -779,8 +779,9 @@ class AppointmentController {
 		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
 			
 		//def js = ['daysoff':daysoff,'holidays':holidays]
+		def details = [ 'appointmentNo': '007','carNo': 'CR 7','customerName':'Ronaldo','status':'single']
 		
-		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'currentEvent':currentEvent];
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'currentEvent':currentEvent,'details':details];
 		render js as JSON
 	}
 	
@@ -843,24 +844,10 @@ class AppointmentController {
 	def editEvent(){
 		
 		println "editEvent"
-		println "action = "+params.act
 		println "id = "+params.id
-		println "startdate "+ params.startdate
-		println "dayDelta "+ params.dayDelta
-		println "minuteDelta "+ params.minuteDelta
-		def js = []
-		if (params.act == "add"){
-			
-			js = [
-				id: params.title+"-id",
-				title: params.title,
-				start: params.startdate,
-				end:params.end,
-				allDay: params.allDay
-				]
-		}else{
-			js = [isValid: true]
-		}
+		println "start = "+params.start
+	
+		def js = [isValid: true]
 		render js as JSON
 //		def dateRecieveInstance = new DateRecieveInstance()
 		
@@ -869,5 +856,21 @@ class AppointmentController {
 //
 //		dateRecieveInstance.save(flush:true)
 	}
+
+	def returnCar(){
+		
+		println "id = "+params.id
+		def js = [isValid: true]
+		render js as JSON
+	}
+	
+	
+	def install(){
+		
+		println "id = "+params.id
+		def js = [isValid: true]
+		render js as JSON
+	}	
+	
 	
 }

@@ -154,7 +154,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 		},
 		eventClick: function(event, element) {
 			if (event.id === currentEvent.id){
-				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +event.id+'</span><BR>'+
+				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +details.appointmentNo+'</span><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">ชื่อ  :  '+details.customerName+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">ทะเบียนรถ  :  '+details.carNo+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span></p><BR>'+
@@ -169,7 +169,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 					buttons: {
 						"บันทึกการแก้ไข": function() {
 							$( this ).dialog( "close" );
-							$.post( "../appointment/editEvent", { 'event':  event});
+							$.post( "../appointment/editEvent", { 'start':  event.start, 'id': event.id });
 							$('#calendar').fullCalendar('unselect')
 						},
 						Cancel: function() {
