@@ -17,7 +17,7 @@
 <p>&nbsp;</p>
 <div class = 'calendar' id='calendar'></div>
 
-<div id="edit-event" title="แก้ไขการนัดหมาย" style="display: none">
+<div id="edit-event" title="การติดตั้ง" style="display: none">
 	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
 			ยังไม่รู้ว่าจะโชว์อะไรใน dialog นี้
 	</p>
@@ -74,31 +74,78 @@ var fncRender = function(data,max,min,daysoff,holidays,gotoStart) {
 			});				
 		},
 		eventClick: function(event, element) {
-			$.post( "../appointment/getEventDetails", { 'id':  event.id }, function(result) {
-				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +event.id+'</span><BR>'+
+			$.post( "../installation/getEventDetails", { 'id':  event.id }, function(result) {
+				var aQryStr = '<p><span style="float:left; margin:0 7px 30px 0;" align="center">Appointment No. ' +result.appointmentNo+'</span><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">ชื่อ  :  '+result.customerName+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">ทะเบียนรถ  :  '+result.carNo+'</span></p><BR>'+
 									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาเริ่มนัด  :  '+ dateformat(event.start)+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span></p><BR>'+
-									'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  '+ result.status+'</span></p>';
+									'<span style="float:left; margin:0 7px 20px 0;">วันเวลาสิ้นสุด  :  '+ dateformat(event.end)+'</span></p><BR>';		
+//				NEW,
+//		PREPARE_INSTALL,
+//		READY_INSTALL,
+//		INSTALLING,
+//		FINISHED,
+//		CANCEL
+				var buttonlist = {"ปิด": function() {$( this ).dialog( "close" )}};
+				
+				if (result.status === "NEW"){
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  รายการใหม่</span></p>';
+					buttonlist = {
+					
+						"เบิกของ": function() {
+							$( this ).dialog( "close" );
+							$.post( "../installation/updateStatus", { 'id': event.id, 'nextStatus': "PREPARE_INSTALL" });
+						}
+						,"ปิด": function() {
+							$( this ).dialog( "close" );
+						}
+					};
+				}
+				else if (result.status === "PREPARE_INSTALL")
+				{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  กำลังเตรียมการติดตั้ง</span></p>';
+				}
+				else if (result.status === "READY_INSTALL")
+				{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  พร้อมติดตั้ง</span></p>';
+					buttonlist = {
+						"ทำการติดตั้ง": function() {
+							$( this ).dialog( "close" );
+							$.post( "../installation/updateStatus", { 'id': event.id, 'nextStatus': "INSTALLING" });
+						},"ปิด": function() {
+							$( this ).dialog( "close" );
+						}
+					};
+				}
+				else if (result.status === "INSTALLING")
+				{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  กำลังติดตั้ง</span></p>';
+					buttonlist = {
+						"ติดตั้งเสร็จ": function() {
+							$( this ).dialog( "close" );
+							$.post( "../installation/updateStatus", { 'id': event.id, 'nextStatus': "FINISHED" });
+						},
+						"ปิด": function() {
+							$( this ).dialog( "close" );
+						}
+					};
+				}
+				else if (result.status === "FINISHED")
+				{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  ติดตั้งเรียบร้อย</span></p>';
+				}
+				else{
+					aQryStr = aQryStr+'<span style="float:left; margin:0 7px 20px 0;">สถานะ  :  ไม่ทราบ</span></p>';
+				}
+				
 				$("#edit-event").html(aQryStr);
+				
 				$( "#edit-event" ).dialog({
 					width: 'auto',
 					height: 'auto',
 					modal: true,
 					autoOpen: false,
-					buttons: {
-						"ติดตั้ง": function() {
-							$( this ).dialog( "close" );
-						},
-						"เลื่อน": function() {
-							$( this ).dialog( "close" );
-							window.location = "/wheel/appointment/manageCalendar?id="+ event.id;
-						},
-						"รับรถ": function() {
-							$( this ).dialog( "close" );
-						}
-					}
+					buttons: buttonlist
 				});
 				$( "#edit-event" ).dialog( 'open' );
 			});
