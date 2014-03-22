@@ -163,22 +163,24 @@ class BootStrap {
 			netSize:0.3).save(flush:true)
 	
 		*/
-		new UsageScore(sType:'PAN',uType:'CITY',score:'4').save(flush:true)
-		new UsageScore(sType:'PAN',uType:'HEAVY',score:'5').save(flush:true)
-		new UsageScore(sType:'PAN',uType:'LONGWAY',score:'5').save(flush:true)
-		new UsageScore(sType:'PAN',uType:'OFFROAD',score:'5').save(flush:true)
-		new UsageScore(sType:'WIDE',uType:'CITY',score:'4').save(flush:true)
-		new UsageScore(sType:'WIDE',uType:'HEAVY',score:'4').save(flush:true)
-		new UsageScore(sType:'WIDE',uType:'LONGWAY',score:'5').save(flush:true)
-		new UsageScore(sType:'WIDE',uType:'OFFROAD',score:'5').save(flush:true)
-		new UsageScore(sType:'NARROW',uType:'CITY',score:'5').save(flush:true)
-		new UsageScore(sType:'NARROW',uType:'HEAVY',score:'3').save(flush:true)
-		new UsageScore(sType:'NARROW',uType:'LONGWAY',score:'2').save(flush:true)
-		new UsageScore(sType:'NARROW',uType:'OFFROAD',score:'1').save(flush:true)
-		new UsageScore(sType:'NET',uType:'CITY',score:'4').save(flush:true)
-		new UsageScore(sType:'NET',uType:'HEAVY',score:'2').save(flush:true)
-		new UsageScore(sType:'NET',uType:'LONGWAY',score:'2').save(flush:true)
-		new UsageScore(sType:'NET',uType:'OFFROAD',score:'1').save(flush:true)
+		if(UsageScore.count() <= 0) {
+			new UsageScore(sType:'PAN',uType:'CITY',score:'4').save(flush:true)
+			new UsageScore(sType:'PAN',uType:'HEAVY',score:'5').save(flush:true)
+			new UsageScore(sType:'PAN',uType:'LONGWAY',score:'5').save(flush:true)
+			new UsageScore(sType:'PAN',uType:'OFFROAD',score:'5').save(flush:true)
+			new UsageScore(sType:'WIDE',uType:'CITY',score:'4').save(flush:true)
+			new UsageScore(sType:'WIDE',uType:'HEAVY',score:'4').save(flush:true)
+			new UsageScore(sType:'WIDE',uType:'LONGWAY',score:'5').save(flush:true)
+			new UsageScore(sType:'WIDE',uType:'OFFROAD',score:'5').save(flush:true)
+			new UsageScore(sType:'NARROW',uType:'CITY',score:'5').save(flush:true)
+			new UsageScore(sType:'NARROW',uType:'HEAVY',score:'3').save(flush:true)
+			new UsageScore(sType:'NARROW',uType:'LONGWAY',score:'2').save(flush:true)
+			new UsageScore(sType:'NARROW',uType:'OFFROAD',score:'1').save(flush:true)
+			new UsageScore(sType:'NET',uType:'CITY',score:'4').save(flush:true)
+			new UsageScore(sType:'NET',uType:'HEAVY',score:'2').save(flush:true)
+			new UsageScore(sType:'NET',uType:'LONGWAY',score:'2').save(flush:true)
+			new UsageScore(sType:'NET',uType:'OFFROAD',score:'1').save(flush:true)
+		}
     }
     def destroy = {
     }
