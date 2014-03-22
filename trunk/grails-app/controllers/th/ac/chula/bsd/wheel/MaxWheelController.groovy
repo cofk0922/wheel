@@ -404,28 +404,24 @@ class MaxWheelController {
 		
 		parameter.modelInstance = CarModel.get(params.modelId.toLong())
 		
+		//find wheel list for display
+		CarModel carModelInstance = CarModel.get(params.modelId.toLong())
+		UsageType usageType = params.usageType // input usageType here!!!!!
+		def carWheelList = CarWheelList.withCriteria{
+			eq('car', carModelInstance)
+			and{
+				eq('usageType', usageType)
+				order('tractiveEnergy', 'asc')//Last Piority
+				order('drivingEnergy', 'asc')
+				order('usageScore', 'desc')//First Piority
+			}
+		}
+		parameter.selectedWheelList = carWheelList // use this for display!!!
 		render(view: "selectedMaxWheel", model: parameter)
 		
 		
 	}
 	
-	//def selectedMaxWheel(CarModel carModelInstance, UsageType usageType, Branch branch){
-		//Send max wheel list for specific car
-		//def parameter = [:]
-		//def carWheelList = CarWheelList.withCriteria{
-		//	eq('car', carModelInstance)
-		//	and{
-		//		eq('usageType', usageType)
-		//	}
-		//}
-		//def selectedCarWheelList = []
-		//for(item in carWheelList){
-		//	if(item.wheel.getProductStock(branch)>0)
-		//	selectedCarWheelList.add(item)
-		//}
-		//parameter.selectedWheelList =
-		//render(view:'inputWheel',model:parameter)
-	//}
 	
 	@Transactional
 	def imageInput(){
