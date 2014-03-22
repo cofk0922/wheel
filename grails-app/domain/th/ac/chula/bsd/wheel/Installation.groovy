@@ -56,10 +56,10 @@ class Installation {
 	}
 	
 	public void prepareInstall(){
+		 this.status = InstallationStatus.PREPARE_INSTALL
 		 for(req in this.requisitions){		 
 			 RequisitionLine r = req
-			 r.readyRequisit();
-			 this.status = InstallationStatus.PREPARE_INSTALL
+			 r.readyRequisit();	
 		 }
 	}
 	
@@ -78,7 +78,7 @@ class Installation {
 	
 	public void finishedInstall(){
 		this.status = InstallationStatus.FINISHED	
-	    appointment.endInstallFinished()
+	    appointment.installFinished()
 	}
 	
 	public void cancalInstall(){
@@ -101,7 +101,7 @@ class Installation {
 				result =true
 		    }
 		}
-	 	//return result
+	 	 return result
 	}
 	
 	public Boolean checkinstalling(){  
