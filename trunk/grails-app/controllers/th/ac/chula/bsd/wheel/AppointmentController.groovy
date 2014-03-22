@@ -548,9 +548,7 @@ class AppointmentController {
 		}
 		
 		// end May
-		
-		
-		
+
 		/*
 		def events = []
 		def responseData = [
@@ -713,9 +711,7 @@ class AppointmentController {
 		}
 		
 		// end May
-		
-		
-		
+
 		/*
 		def events = []
 		def responseData = [
