@@ -165,6 +165,15 @@
 					
 				</li>
 				</g:if>
+				
+				<g:if test="${maxWheelInstance?.forCarBand}">
+				<li class="fieldcontain">
+					<span id="forCarBand-label" class="property-label"><g:message code="maxWheel.forCarBand.label" default="ยี่ห้อ" /></span>
+					
+						<span class="property-value" aria-labelledby="forCarBand-label"><g:link controller="wheelBand" action="show" id="${maxWheelInstance?.forCarBand?.id}">${maxWheelInstance?.forCarBand?.bandName}</g:link></span>
+					
+				</li>
+				</g:if>
 			
 				<%--<g:if test="${maxWheelInstance?.wheelLists}">
 				<li class="fieldcontain">
