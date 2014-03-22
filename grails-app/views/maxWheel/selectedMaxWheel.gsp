@@ -42,6 +42,10 @@ div.desc
 <script type="text/javascript">
 function ChangeWheel(imgSrc){
 var src=imgSrc;
+//document.getElementById('imgShow').style.width = "0px";
+//document.getElementById('imgShow').style.hight= "0px";
+//document.getElementById('imgShow').style.visibility = 'hidden';//visible
+//document.getElementById('imgShowMaxWheel').style.visibility = 'visible';
 document.getElementById('imgWheel1').src=src;
 document.getElementById('imgWheel1').width=document.getElementById('w').value;
 document.getElementById('imgWheel1').height=document.getElementById('h').value;
@@ -56,21 +60,24 @@ document.getElementById('imgWheel2').width=document.getElementById('ww').value;
 document.getElementById('imgWheel2').height=document.getElementById('hh').value;
 //document.getElementById("imgWheel2").style.marginTop=Integer.toString((Integer.parseInt(document.getElementById('yy1').value);+10))+'px';
 document.getElementById("imgWheel2").style.marginTop=document.getElementById('yy1').value+'px';
+//document.getElementById("imgWheel2").style.marginLeft=document.getElementById('xx1').value;
 document.getElementById("imgWheel2").style.marginLeft=(document.getElementById('xx1').value-document.getElementById('x2').value)+'px';
 //document.getElementById("imgWheel2").style.marginRight=document.getElementById('xx1').value+'px';
 //document.getElementById("imgWheel2").style.marginBottom=document.getElementById('yy2').value+'px';
 }
+
+// Checkbox Color onChange
+function CheckboxCheck()
+{
+	if (document.getElementById('chkColor').checked){
+		document.getElementById('tPerformance').style.visibility='hidden';
+		}else{
+		document.getElementById('tPerformance').style.visibility='visible';
+		}
+}
 </script> 
 
-<style type="text/css">
-#target {
-	background-color: #ccc;
-	width: 500px;
-	height: 330px;
-	font-size: 24px;
-	display: block;
-}
-</style>
+
 
 </head>
 <body>
@@ -103,15 +110,16 @@ document.getElementById("imgWheel2").style.marginLeft=(document.getElementById('
 					</div>
 					<table border="0">
 						<tr>
-							<td width="50%">
-							<div style="background-image:url(${carImage});width:500px;height:300px;">
+							<td>
+							<div id="imgShowMaxWheel" style="background-image:url(${carImage});width:500px;height:300px;" >
+							<%--<img id="imgShow" src="${carImage}" style="width:500px;height:300px;" />--%>
 							<img id="imgWheel1" style="border-radius: 50%;"/><img id="imgWheel2"  style="border-radius: 50%;"/> 
 							</div>
 							</td>
 			<td>
 			<table>
 							<tr>
-										<td><input type="checkbox" name="chkColor" value="Color"/><b>เหมาะสมกับสีรถ</b></td>
+										<td><input type="checkbox" id="chkColor" name="chkColor" value="Color" onchange="CheckboxCheck();"/><b>เหมาะสมกับสีรถ</b></td>
 										<td><b>Max Size :</b><select name="maxSize" style="width:80px">
 					<option value="0">เลือก</option>
   <option value="17">ขอบ 17"</option>
@@ -127,20 +135,22 @@ document.getElementById("imgWheel2").style.marginLeft=(document.getElementById('
 				<td>&nbsp;<b>รายละเอียด :</b><label id="lblmaxDesc">น้ำหนักเบา</label></td>
 				<td>&nbsp;<b>หน้ากว้าง /PCD:</b><label id="lblmaxModel">-6 / S/123</label></br></td>
 				</tr>
+				</table>
+				<table id="tPerformance" width="100%">
 				<tr>
 					<td>&nbsp;ความเหมาะสมในการใช้งาน:<label id=""></label></td>
-					<td>
-					<img src="/wheel/static/images/imgStar5.png" width="100" height="40"/></td>
+					<td><img src="/wheel/static/images/imgStar5.png"/></td>
 				</tr>
 				<tr>
 					<td>&nbsp;อัตราการสิ้นเปลืองพลังงาน:<label id=""></label></td>
-					<td ><img src="/wheel/static/images/imgStar4.png" width="100" height="40"/></td>
+					<td><img src="/wheel/static/images/imgStar4.png"/></td>
 				</tr>
 				<tr>
 					<td>&nbsp;ความหนืดของการออกตัว :<label id=""></label></td>
-					<td ><img src="/wheel/static/images/imgStar3.png" width="100" height="40"/></td>
+					<td><img src="/wheel/static/images/imgStar3.png" /></td>
 				</tr>
-							</table>
+				</table>
+				
 
 			</td>
 </tr>
@@ -212,7 +222,8 @@ document.getElementById("imgWheel2").style.marginLeft=(document.getElementById('
 
 </td>
 </tr>
-<tr><td colspan="2">
+</table>
+</form></div></div></div></div>
 <table style="visibility:hidden">
  <tr>
           <td style="width: 10%;"><b>X<sub>1</sub>:marginLeft</b></td>
@@ -238,10 +249,6 @@ document.getElementById("imgWheel2").style.marginLeft=(document.getElementById('
           <td></td>
           <td></td>
         </tr>
-
 </table>
-</td></tr>
-</table>
-</form></div></div></div></div>
 </body>
 </html>
