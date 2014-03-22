@@ -124,7 +124,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 			});				
 		},
 		eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
-			$.post('../appointment/validateDeltaTime', { 'id': event.title,'dayDelta':dayDelta,'minuteDelta':minuteDelta }, function(result){
+			$.post('../appointment/validateDeltaTime', { 'id': event.id,'dayDelta':dayDelta,'minuteDelta':minuteDelta }, function(result){
 				if (result.isValid){
 					var aQryStr = "ต้องการ 'ย้าย' การนัดหมายของ " +event.title+" ใช่หรือไม่ ?";
 					$('#confirm-move').html(aQryStr);
@@ -172,7 +172,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 							$.post( "../appointment/editEvent", { 'start':  event.start, 'id': event.id });
 							$('#calendar').fullCalendar('unselect')
 						},
-						Cancel: function() {
+						"ปิด": function() {
 							$( this ).dialog( "close" );
 							$('#calendar').fullCalendar('unselect')
 						}
@@ -228,7 +228,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 								$( this ).dialog( "close" );
 								$('#calendar').fullCalendar('unselect')
 							},
-							Cancel: function() {
+							"ปิด": function() {
 								$( this ).dialog( "close" );
 								$('#calendar').fullCalendar('unselect')
 							}
