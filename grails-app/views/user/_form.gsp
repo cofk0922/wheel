@@ -33,15 +33,15 @@
 	</label>
 	<g:checkBox name="accountLocked" value="${userInstance?.accountLocked}" />
 </div>
-<%--
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'branch', 'error')} required">
 	<label for="branch">
 		<g:message code="user.branch.label" default="Branch" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="branch" name="branch.id" from="${th.ac.chula.bsd.wheel.Branch.list()}" optionKey="id" required="" value="${userInstance?.branch?.id}" class="many-to-one"/>
+	<g:select name="branch" from="${params.branchList}" optionKey="id" optionValue="branchName" required="" value="${userInstance?.branch?.id}" class="many-to-one"/>
 </div>
---%>
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'email', 'error')} ">
 	<label for="email">
 		<g:message code="user.email.label" default="Email" />

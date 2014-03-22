@@ -21,27 +21,59 @@ class UserController {
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
 		b.refresh()
-		params.max = Math.min(max ?: 10, 100)
-		params.offset = params.int('offset') ?: 0
-
-		def userLists = User.withCriteria {
-			eq('branch.id', b.id)
-			and {
-				order('username', 'asc')
+		
+		def userRole = u.getAuthorities()
+		
+		if(userRole.find{it -> it.authority == 'ROLE_SUPERADMIN'}||userRole.find{it -> it.authority == 'ROLE_ADMIN'}){
+			
+			params.max = Math.min(max ?: 10, 100)
+			params.offset = params.int('offset') ?: 0
+	
+			def userLists = User.withCriteria {
+				eq('branch.id', b.id)
+				and {
+					order('username', 'asc')
+				}
+				//maxResults(new Integer( params.max))
+				//firstResult(new Integer(params.offset))
 			}
-			//maxResults(new Integer( params.max))
-			//firstResult(new Integer(params.offset))
+			println('user size = ' + userLists.size())
+			//respond userLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: userLists.size()]
+			respond User.list(params), model:[userInstanceCount: User.count()]
+	
+		}else {
+			redirect(action:'show', id:u.id)
 		}
-		println('user size = ' + userLists.size())
-		//respond userLists.subList(params.int('offset') ? params.int('offset') - 1: 0, params.max), model:[appointmentInstanceCount: userLists.size()]
-		respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
     def show(User userInstance) {
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		def userRole = u.getAuthorities()
+		
+		if(userRole.find{it -> it.authority == 'ROLE_SUPERADMIN'}||userRole.find{it -> it.authority == 'ROLE_ADMIN'}){}else{
+			userInstance = u
+		}
         respond userInstance
     }
 
     def create() {
+		def bList = []
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		def userRole = u.getAuthorities()
+		
+		if(userRole.find{it -> it.authority == 'ROLE_SUPERADMIN'}){
+			bList = Branch.getAll()
+		}
+		else{
+			bList.add(b)
+		}
+		params.branchList = bList
         respond new User(params)
     }
 
@@ -51,7 +83,7 @@ class UserController {
 		Branch b = u.branch
 		b.refresh()
 		
-		userInstance.branch = b
+//		userInstance.branch = b
 		
         if (userInstance == null) {
             notFound()
@@ -75,6 +107,22 @@ class UserController {
     }
 
     def edit(User userInstance) {
+		def bList = []
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+
+		b.refresh()
+		
+		def userRole = u.getAuthorities()
+		
+		if(userRole.find{it -> it.authority == 'ROLE_SUPERADMIN'}||userRole.find{it -> it.authority == 'ROLE_ADMIN'}){
+			bList = Branch.getAll()
+		}
+		else{
+			bList.add(b)
+			userInstance = u
+		}
+		params.branchList = bList
         respond userInstance
     }
 
