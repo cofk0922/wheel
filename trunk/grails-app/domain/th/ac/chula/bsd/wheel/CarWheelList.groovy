@@ -25,6 +25,9 @@ class CarWheelList {
 		this.usageScoring()
 		this.drivingEnergy = this.calcDrivingEnergy()
 		this.tractiveEnergy = this.calcTractiveEnergy()
+		this.listOrder = 0
+		this.driveStar = 0
+		this.tractiveStar = 0
 	}
 	
 	public void setDriveStar(){
@@ -50,6 +53,7 @@ class CarWheelList {
 		else{
 			this.driveStar = 5
 		}
+		println("driveStar"+this.driveStar)
 	}
 	
 	public void setTractiveStar(){
@@ -61,20 +65,21 @@ class CarWheelList {
 		def fourStar = mean + (1.5 * stdev)
 		
 		if(this.tractiveEnergy <= oneStar){
-			this.driveStar = 1
+			this.tractiveStar = 1
 		}
 		else if(this.tractiveEnergy <= twoStar){
-			this.driveStar = 2
+			this.tractiveStar = 2
 		}
 		else if(this.tractiveEnergy <= threeStar){
-			this.driveStar = 3
+			this.tractiveStar = 3
 		}
 		else if(this.tractiveEnergy <= fourStar){
-			this.driveStar = 4
+			this.tractiveStar = 4
 		}
 		else{
-			this.driveStar = 5
+			this.tractiveStar = 5
 		}
+		println("tractiveStar"+this.tractiveStar)
 	}
 	
 	private double calcDrivingEnergy()

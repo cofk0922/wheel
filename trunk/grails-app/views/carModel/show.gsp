@@ -98,6 +98,15 @@
 						<span class="property-value" aria-labelledby="nutSize-label"><g:fieldValue bean="${carModelInstance}" field="nutSize"/></span>
 					
 				</li>
+				
+				</g:if>
+								<g:if test="${carModelInstance?.defaultWheel}">
+				<li class="fieldcontain">
+					<span id="defaultWheel-label" class="property-label"><g:message code="carModel.defaultWheel.label" default="ล้อพื้นฐาน" /></span>
+					
+						<span class="property-value" aria-labelledby="defaultWheel-label"><g:link controller="ProdName" action="show" id="${carModelInstance?.defaultWheel?.id}">${carModelInstance?.defaultWheel?.prodName}</g:link></span>
+					
+				</li>
 				</g:if>
 			
 				<%-- <g:if test="${carModelInstance?.wheelLists}">

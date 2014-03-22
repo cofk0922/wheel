@@ -34,14 +34,15 @@ class CarModelController {
 		if(usageResult.size() > 0){
 			for(item in usageResult)
 			{
-				def carWheelList = new CarWheelList(carModelInstance, maxWheelInstance, item.uType, item.score)
+				def carWheelList = new CarWheelList(carModelInstance, maxWheelInstance, item.uType)
+				assignStar(carModelInstance)
 				Boolean isSave = carWheelList.save flush:true
 				 if (!isSave) {
 					 carWheelList.errors.each {
-						 println it
+						 println ("Error: "+it)
 					 }
 				 } else {
-					 println ('Create PO Success : '+ carWheelList.car.modelName+" : "+carWheelList.wheel.prodName + " : "+carWheelList.usageScore)
+					 println ("Create carWheelList Success : "+ carWheelList.car.modelName+" : "+carWheelList.wheel.prodName + " : "+carWheelList.usageScore)
 				 }
 			}
 		}
