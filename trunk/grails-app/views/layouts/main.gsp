@@ -40,15 +40,15 @@
 				<!--  <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>-->
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.menu.home.label"/></a></li>
 				<li><a class="choose_wheel" href="${createLink(uri: '/maxWheel/inputWheel')}"><g:message code="default.menu.chooseWheel.label"/></a></li>
-				<li><a class="appointment" href="${createLink(uri: '/appointment')}"><g:message code="default.menu.appointment.label"/></a></li>
+				<li><a class="appointment" href="${createLink(uri: '/appointment/appointmentGrid')}"><g:message code="default.menu.appointment.label"/></a></li>
 				<li><a class="install" href="${createLink(uri: '/')}"><g:message code="default.menu.install.label"/></a></li>
 				<li>
 					<a class="inventory" href="${createLink(uri: '/')}"><g:message code="default.menu.inventory.label"/></a>
 					<ul>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventort.transferfrom"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventort.transferto"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.inventory.purchase"/></a></li>
-						<li><a class="list" href="${createLink(uri: '/')}"><g:message code="default.menu.invenotry.receivepo"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/preProductTransferLine?isViewNew=true')}"><g:message code="default.menu.inventort.transferto"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/preProductTransferLine/transferfrom?isViewNew=true')}"><g:message code="default.menu.inventort.transferFrom"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/preProductPurchaseLine')}"><g:message code="default.menu.inventory.purchase"/></a></li>
+						<li><a class="list" href="${createLink(uri: '/productPurchase')}"><g:message code="default.menu.invenotry.receivepo"/></a></li>
 					</ul>
 				</li>
 				<li><a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.menu.setting.label" /></a></li>

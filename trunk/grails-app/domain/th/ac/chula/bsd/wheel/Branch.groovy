@@ -390,12 +390,12 @@ class Branch {
 	}
 	
 	public Object getTransferFromOtherBranch(){
-		def tranLists = this.productTransferLineTos.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED}
+		def tranLists = this.productTransferLineFroms.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED}
 		return tranLists
 	}
 	
 	public Object getTransferOfBranch(){
-		def tranLists = this.productTransferLineFroms.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED || it.status == ProductTransferStatus.TRANSFERED}
+		def tranLists = this.productTransferLineTos.findAll{it -> it.status == ProductTransferStatus.NEW || it.status == ProductTransferStatus.REJECTED || it.status == ProductTransferStatus.TRANSFERED}
 		return tranLists
 	}
 }

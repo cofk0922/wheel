@@ -5,6 +5,7 @@ import java.util.Date;
 import th.ac.chula.bsd.security.User;
 import th.ac.chula.bsd.wheel.Branch;
 import th.ac.chula.bsd.wheel.Product;
+import th.ac.chula.bsd.wheel.ProductBranchTransfer;
 import th.ac.chula.bsd.wheel.ProductStock;
 import th.ac.chula.bsd.wheel.RequisitionLine;
 
@@ -34,24 +35,24 @@ class ProductTransferLine {
 		updatedDate blank: false
     }
 	
-	public void initProductTransferLine(User u, PreProductTransferLine preLine, Branch branchTo, int amount){
+	public void initProductTransferLine(User u, PreProductTransferLine preLine, Branch branchFrom, int amount){
 		this.createdBy = u
 		this.updatedBy = u
 		this.preTransferLine = preLine
-		this.branchFrom = preTransferLine.branch
-		this.branchTo = branchTo
+		this.branchFrom = branchFrom 
+		this.branchTo = preTransferLine.branch
 		this.product = preLine.product
 		this.amount = amount
 	}
 	
 	public Boolean beginTransferProduct(User u){
 		Boolean isSuccess = false
-		if(this.status == ProductTransferStatus.NEW && u.branch.id == this.branchTo.id){
+		if(this.status == ProductTransferStatus.NEW && u.branch.id == this.branchFrom.id){
 			this.updateByUser(u)
 			this.status = ProductTransferStatus.TRANSFERED
 			
 			// decrease stock branchTo
-			this.branchTo.decreaseProductStock(this.product, amount)
+			this.branchFrom.decreaseProductStock(this.product, amount)
 			
 			isSuccess = true
 		}
@@ -60,7 +61,7 @@ class ProductTransferLine {
 	
 	public Boolean receiveTransfer(User u){
 		Boolean isSuccess = false
-		if(this.status == ProductTransferStatus.TRANSFERED && u.branch.id == this.branchFrom.id){
+		if(this.status == ProductTransferStatus.TRANSFERED && u.branch.id == this.branchTo.id){
 			this.updateByUser(u)
 			this.status = ProductTransferStatus.RECEIVED
 			

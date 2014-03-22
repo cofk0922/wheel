@@ -6,6 +6,7 @@ import th.ac.chula.bsd.security.User;
 import th.ac.chula.bsd.wheel.Appointment;
 import th.ac.chula.bsd.wheel.Branch;
 import th.ac.chula.bsd.wheel.Product;
+import th.ac.chula.bsd.wheel.ProductBranchTransfer;
 
 class PreProductTransferLine {
 
@@ -44,14 +45,35 @@ class PreProductTransferLine {
 		this.amount = amt
 	}
 	
+	public Branch getSuggestBranchTransfer(){
+		def branchTran = ProductBranchTransfer.withCriteria {
+			eq('branchTo.id', this.branch.id)
+			eq('enable', true)
+			and{
+				order('transferDay', 'asc')
+				order('transferHour', 'asc')
+				order('transferMinute', 'asc')
+			}
+		}
+		
+		def result = null
+		for(bt in branchTran){
+			if(this.amount < this.product.getProductStock(bt.branchFrom)){
+				result = bt.branchFrom
+				break
+			}
+		}
+		return result
+	}
+	
 	public void cancel(User u){
 		this.updateByUser(u)
 		this.status = PreProductPurchaseStatus.CANCEL
 	}
 	
-	public void addProductTransferLine(User u, Branch branchTo, int transAmt){
+	public void addProductTransferLine(User u, Branch branchFrom, int transAmt){
 		ProductTransferLine line = new ProductTransferLine()
-		line.initProductTransferLine(u, this, branchTo, transAmt)
+		line.initProductTransferLine(u, this, branchFrom, transAmt)
 		this.productTransferLines.add(line)
 		this.status = PreProductTransferStatus.WAITING_FOR_TRANSFER
 	}
@@ -72,10 +94,10 @@ class PreProductTransferLine {
 				}
 			}
 			if(isComplete){
-				this.status = PreProductPurchaseStatus.COMPLETE
+				this.status = PreProductTransferStatus.COMPLETE
 			}
 		} else {
-			this.status = PreProductPurchaseStatus.NEW
+			this.status = PreProductTransferStatus.NEW
 		}
 	}
 	
