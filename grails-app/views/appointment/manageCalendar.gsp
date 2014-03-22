@@ -246,7 +246,7 @@ var fncRender = function(data,max,min,daysoff,holidays,currentEvent,details) {
 };
 
 var fncGetData = function() {
-	$.post( "../appointment/getEventsForEdit",{ 'apID' : getUrlVars()["id"] }, function(result) {
+	$.post( "../appointment/getEventsForEdit",{ 'id' : getUrlVars()["id"] }, function(result) {
 		var data =[];
 		$.each(result.events, function(i, item) {
 			item.start = new Date(item.start);
