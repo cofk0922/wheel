@@ -90,6 +90,14 @@
 	<g:select name="pStatus" from="${th.ac.chula.bsd.wheel.ProdStatus?.values()}" keys="${th.ac.chula.bsd.wheel.ProdStatus.values()*.name()}" required="" value="${maxWheelInstance?.pStatus?.name()}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'forCarBand', 'error')} required">
+	<label for="forCarBand">
+		<g:message code="maxWheel.forCarBand.label" default="forCarBand" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="forCarBand" name="forCarBand.id" from="${th.ac.chula.bsd.wheel.CarBand.list()}" optionKey="id" optionValue="bandName" required="" value="${maxWheelInstance?.forCarBand?.id}" class="many-to-one"/>
+</div>
+
 <%--<div class="fieldcontain ${hasErrors(bean: maxWheelInstance, field: 'productStocks', 'error')} ">
 	<label for="productStocks">
 		<g:message code="maxWheel.productStocks.label" default="Product Stocks" />
