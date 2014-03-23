@@ -478,14 +478,16 @@ class AppointmentController {
 		def u = springSecurityService.currentUser
 		Branch b = u.branch
 		b.refresh()
-		
+		println 'branch:' + b.id
 		// Test Appointment
 		Appointment ap = new Appointment()
 		ap.initialAppointment(u, b)
 		ap.addProduct(u, 1, 1)
 		
-		if(!maxID && !maxAmt){
+		if(!params.wheelID && !params.amt){
 			ap.addProduct(u, 2, 4)
+		}else{
+			ap.addProduct(u, params.wheelID.toInteger(), params.amt.toInteger())
 		}
 		
 		session['currentAppointment'] = ap
@@ -509,18 +511,12 @@ class AppointmentController {
 		b.refresh()
 		
 		// Test Appointment
-		Appointment ap = new Appointment()
+		Appointment ap = session['currentAppointment']
 		ap.initialAppointment(u, b)
-		ap.addProduct(u, 1, 1)
-		println '1 Total :' + ap.installTotal
-		println '1 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
-		ap.addProduct(u, 3, 4)
-		println '2 Total :' + ap.installTotal
-		println '2 StartDate : '+ ap.startDate + ' EndDate : '+ ap.endDate
-		ap.setNewCustomer("A", "08xxxxxxx", "Bangkok", "ABC1234")
+	
 		ap.confirmAppointment(false)
 		def newevent = [
-			'title':ap.customer.carCode,
+			'title':'',
 			'start': dateTimeFormat.format(ap.startDate),
 			'end': dateTimeFormat.format(ap.endAppointmentDate),
 			'allDay': false
@@ -853,6 +849,7 @@ class AppointmentController {
 		render js as JSON
 	}
 	
+	@Transactional
 	def saveEvent(){
 		
 		println "name = "+ params.name
@@ -860,26 +857,15 @@ class AppointmentController {
 		println "address = "+ params.address
 		println "tel = "+ params.tel
 		println "carCode = "+ params.carCode
-		def js = []
-		if (params.act == "add"){
-			
-			js = [
-				id: params.title+"-id",
-				title: params.title,
-				start: params.startdate,
-				end:params.end,
-				allDay: params.allDay
-				]
-		}else{
-			js = [isValid: true]
-		}
-		js = [isValid: true]
 		
+		Appointment ap = session['currentAppointment']
+		ap.setNewCustomer(params.name, params.tel, params.address, params.carCode)
+		ap.confirmAppointment(false)
+		Boolean isSave = ap.save flush:true
+		
+		def js = [isValid: isSave]
+
 		render js as JSON
-//		def dateRecieveInstance = new DateRecieveInstance()
-//		dateRecieveInstance.startTime = xxx
-//		dateRecieveInstance.title = params.title
-//		dateRecieveInstance.save(flush:true)
 	}
 	
 	@Transactional
