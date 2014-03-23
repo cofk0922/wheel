@@ -8,7 +8,7 @@ import th.ac.chula.bsd.wheel.Branch;
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER', 'ROLE_TECH'])
 @Transactional(readOnly = true)
 class PreProductTransferLineController {
 	def springSecurityService

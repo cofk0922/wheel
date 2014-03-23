@@ -20,7 +20,7 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
-@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER', 'ROLE_SALE'])
 @Transactional(readOnly = true)
 class AppointmentController {
 	def springSecurityService
@@ -472,6 +472,24 @@ class AppointmentController {
 	}
 	
 	def appointmentCalendar(){
+		def maxID = params.wheelID
+		def maxAmt = params.amt
+		
+		def u = springSecurityService.currentUser
+		Branch b = u.branch
+		b.refresh()
+		
+		// Test Appointment
+		Appointment ap = new Appointment()
+		ap.initialAppointment(u, b)
+		ap.addProduct(u, 1, 1)
+		
+		if(!maxID && !maxAmt){
+			ap.addProduct(u, 2, 4)
+		}
+		
+		session['currentAppointment'] = ap
+		 
 		return
 	}
 	

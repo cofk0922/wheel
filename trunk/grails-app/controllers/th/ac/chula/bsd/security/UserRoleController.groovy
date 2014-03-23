@@ -3,8 +3,10 @@ package th.ac.chula.bsd.security
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class UserRoleController {
 
@@ -41,7 +43,8 @@ class UserRoleController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'userRoleInstance.label', default: 'UserRole'), userRoleInstance.id])
-                redirect userRoleInstance
+                //redirect userRoleInstance
+				redirect action: "index", method: "GET"
             }
             '*' { respond userRoleInstance, [status: CREATED] }
         }

@@ -3,8 +3,10 @@ package th.ac.chula.bsd.security
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class RoleController {
 
