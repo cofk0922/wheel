@@ -661,11 +661,16 @@ class AppointmentController {
 		
 		//def daysoff = [[ day: 'sat' ],[ day: 'sun' ]]
 		//def holidays = [[ day: '2014-03-18' ],[ day: '2014-03-25' ]]
-		def details = ['appointmentNo':'00000','price':'4,900']
-			
+		def details = ['appointmentNo':ap.appointmentNo,'price':ap.installTotal]
+		ap.calNetTotal()	
+		
+		ap.subOrders.each{
+			println it.amount + " "+ it.unitPrice
+		}
+		
 		//def js = ['daysoff':daysoff,'holidays':holidays]
 		
-		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent,'details':['a':'a']];
+		def js = ['maxtime':maxtime,'mintime':mintime,'events':events,'daysoff':daysoff,'holidays':holidays,'newevent':newevent,'details':details];
 		render js as JSON
 	}
 	
