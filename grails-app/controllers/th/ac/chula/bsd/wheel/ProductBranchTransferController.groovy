@@ -50,13 +50,22 @@ class ProductBranchTransferController {
 			}
 			eq('branchTo.id', b.id)
 		}
-		
-		params.branchList = Branch.withCriteria{
-			and{
-				ne('id', b.id)
-				not{'in'('id', existBranchFrom)}
+		println ('existBranchFrom: '+ existBranchFrom)
+		if(existBranchFrom.size() <= 0){
+			params.branchList = Branch.withCriteria{
+				and{
+					ne('id', b.id)
+				}
+			}
+		} else {
+			params.branchList = Branch.withCriteria{
+				and{
+					ne('id', b.id)
+					not{'in'('id', existBranchFrom)}
+				}
 			}
 		}
+
         respond new ProductBranchTransfer(params)
     }
 

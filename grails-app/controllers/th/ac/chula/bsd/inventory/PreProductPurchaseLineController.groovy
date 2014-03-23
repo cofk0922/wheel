@@ -8,7 +8,7 @@ import grails.plugin.springsecurity.annotation.Secured;
 import grails.transaction.Transactional
 import grails.converters.JSON
 
-@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER'])
+@Secured(['ROLE_SUPERADMIN','ROLE_ADMIN', 'ROLE_USER', 'ROLE_TECH'])
 @Transactional(readOnly = true)
 class PreProductPurchaseLineController {
 	def springSecurityService
