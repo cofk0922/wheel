@@ -82,12 +82,7 @@
 	<body>		
 		<table>
 			<sec:ifLoggedIn>
-    			<sec:ifAllGranted roles="ROLE_USER">
-        			 <tr>
-						<td>- <g:link controller="appointment"><g:message code="default.menu.appointment.label"/>เลือกล้อแม็กซ์และนัดหมายติดตั้งล้อแม็กซ์</g:link></td>
-					</tr>
-     			</sec:ifAllGranted>
-			</sec:ifLoggedIn>
+    			<sec:ifAnyGranted roles="ROLE_SUPERADMIN,ROLE_ADMIN, ROLE_USER, ROLE_SALE">
  			<tr>
 				<td>- <g:link controller="maxWheel" action="inputWheel"><g:message code="default.menu.chooseWheel.label"/></g:link></td>
 			</tr>
@@ -98,16 +93,27 @@
 			<tr>
 				<td>- <g:link controller="appointment" action="appointmentStuck"><g:message code="default.menu.appointmentStuck.label"/></g:link></td>
 			</tr>
-
+				</sec:ifAnyGranted>
+			</sec:ifLoggedIn>
+			
+			<sec:ifLoggedIn>
+    			<sec:ifAnyGranted roles="ROLE_SUPERADMIN,ROLE_ADMIN, ROLE_USER, ROLE_TECH">
 			<tr>
 				<td>- <g:link controller="installation"><g:message code="default.menu.install.label"/></g:link></td>
 			</tr>
 			<tr>
 				<td>- <g:link controller="preProductTransferLine" action="index" params="[isViewNew:true]"><g:message code="default.menu.inventory.label"/></g:link></td>
 			</tr>
+				</sec:ifAnyGranted>
+			</sec:ifLoggedIn>
+			
+			<sec:ifLoggedIn>
+    			<sec:ifAnyGranted roles="ROLE_SUPERADMIN,ROLE_ADMIN">
 			<tr>
 				<td>- <a class="setting" href="${createLink(uri: '/configMenu')}"><g:message code="default.menu.setting.label" /></a></td>
 			</tr>
+				</sec:ifAnyGranted>
+			</sec:ifLoggedIn>
 	 <!-- 
 			<tr>
 				<td>- <g:link controller="appointment">ระบบนัดหมายติดตั้งล้อแม็กซ์</g:link></td>

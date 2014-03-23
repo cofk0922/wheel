@@ -11,6 +11,7 @@
 				<sec:ifLoggedIn>
     			<sec:ifAllGranted roles="ROLE_SUPERADMIN">
     				<li><g:link class="list" action="index" controller="userRole"><g:message code="default.list.label" args="[userRoleEntityName]" /></g:link></li>
+    				<li><g:link class="create" action="create" controller="userRole"><g:message code="default.create.label" args="[userRoleEntityName]" /></g:link></li>
      			</sec:ifAllGranted>
 				</sec:ifLoggedIn>
 				
