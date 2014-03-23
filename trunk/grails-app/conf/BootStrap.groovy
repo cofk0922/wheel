@@ -4,6 +4,7 @@ import th.ac.chula.bsd.wheel.Product
 import th.ac.chula.bsd.wheel.ProductType;
 import th.ac.chula.bsd.wheel.ProductStock
 import th.ac.chula.bsd.wheel.UsageScore
+import th.ac.chula.bsd.inventory.PurchasePaymentType;
 import th.ac.chula.bsd.security.Role;
 import th.ac.chula.bsd.security.RoleName;
 import th.ac.chula.bsd.security.User;
@@ -21,6 +22,10 @@ class BootStrap {
 			superAdminRole.save(flush:true)
 			def adminRole = new Role(authority:RoleName.ROLE_ADMIN)
 			adminRole.save(flush:true)
+			def saleRole =  new Role(authority:RoleName.ROLE_SALE)
+			saleRole.save(flush:true)
+			def techRole = new Role(authority:RoleName.ROLE_TECH)
+			techRole.save(flush:true)
 			
 			def initBranch = new Branch()
 			initBranch.branchName = "Main Branch"
@@ -39,6 +44,8 @@ class BootStrap {
 			def useradminRole = new UserRole(user:adminUser, role:adminRole)
 			useradminRole.save(flush:true)
 
+			
+			
 			// Initial Installation Product
 			def installation = new Product(prodName:'Installation', prodDesc:'Installation Price', productType:ProductType.INSTALLATION)
 			installation.save(flush:true)
@@ -50,6 +57,15 @@ class BootStrap {
 //			def user = User.findOrSaveWhere(username:'superadmin', password:'superadmin', branch: initBranch, firstName:'Superadmin', lastName:'Superadmin', email:'superadmin@wheel.com')
 //			UserRole.create(user, superAdminRole, true)
 		}
+		
+		// Initial Payment Type
+		if(PurchasePaymentType.count() <= 0){
+			def cash = new PurchasePaymentType(paymentTypeName:'Cash')
+			cash.save(flush:true)
+			def credit = new PurchasePaymentType(paymentTypeName:'Credit')
+			credit.save(flush:true)
+		}
+		
 		/*
 		Branch b = Branch.get(1)
 		Branch b2 = Branch.get(2)
